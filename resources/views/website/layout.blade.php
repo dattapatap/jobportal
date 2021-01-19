@@ -10,8 +10,8 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
     <!-- Title -->
     <title>IndiaPharma Job</title>
     <!-- Bootstrap Css -->
@@ -27,6 +27,8 @@
         rel="stylesheet" />
     <link href="{{ asset('assets/plugins/horizontal/horizontal-menu/horizontal.css') }}"
         rel="stylesheet" />
+    <!-- Drofify -->
+    <link href="{{ asset('assets/plugins/fileuploads/css/dropify.css') }}" rel="stylesheet" />
     <!--Select2 Plugin -->
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
     <!-- Cookie css -->
@@ -38,6 +40,7 @@
     <!-- Custom scroll bar css-->
     <link href="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.css') }}"
         rel="stylesheet" />
+    <link href="{{ asset('assets/color-skins/color-skins/color10.css') }}" rel="stylesheet" />
     <!-- COLOR-SKINS -->
     <link id="theme" rel="stylesheet" type="text/css" media="all"
         href="{{ asset('assets/color-skins/color-skins/color10.css') }}" />
@@ -49,9 +52,9 @@
 
 <body class="main-body">
     <!--Loader-->
-    <div id="global-loader">
+    <!-- <div id="global-loader">
         <img src="{{ asset('assets/images/loader.svg') }}" class="loader-img" alt="">
-    </div>
+    </div> -->
 
     <!-- Popup Intro-->
 
@@ -144,7 +147,7 @@
                     <div class="col-xl-5 col-lg-5 col-sm-8 col-5">
                         <div class="top-bar-right">
                             <ul class="custom">
-							
+
                                 @guest
                                     @if(Route::has('login'))
                                         <li>
@@ -159,15 +162,15 @@
                                             <a href="{{ route('register') }}" class=""><i
                                                     class="fa fa-user mr-1"></i>
                                                 <span>{{ __('Register') }}</span></a>
-                                        </li>										 
-                                    @endif	
-                                    
+                                        </li>
+                                    @endif
+
                                     @if(Route::has('recregister'))
                                         <li>
-                                            <a href="{{ route('recregister') }}" class=""><i 
+                                            <a href="{{ route('recregister') }}" class=""><i
                                                     class="fa fa-black-tie mr-1"></i>
-                                                 <span>{{ __('For Employer') }}</span></a>
-										</li>
+                                                <span>{{ __('For Employer') }}</span></a>
+                                        </li>
                                     @endif
                                 @else
                                     <li class="dropdown">
@@ -250,18 +253,45 @@
                                 Resume</a></span>
                     </li>
                 </ul>
-                <ul class="mb-0 pr-2">
-                    <li class="d-none d-lg-flex">
-                        <span><a class="btn btn-secondary ad-post mt-1" href="#"><i class="fa fa-briefcase"></i> Submit
-                                a Job</a></span>
-                    </li>
-                </ul>
-                <ul class="mb-0 pl-2 create-resume-btn">
-                    <li class="d-none d-lg-flex">
-                        <span><a class="btn btn-info ad-post mt-1" href="#"><i class="fa fa-edit"></i> Create
-                                Resume</a></span>
-                    </li>
-                </ul>
+                @guest
+                    <ul class="mb-0 pr-2">
+                        <li class="d-none d-lg-flex">
+                            <span><a class="btn btn-secondary ad-post mt-1"
+                                    href="{{ url('recregister') }}"><i
+                                        class="fa fa-briefcase"></i> Submit
+                                    a Job</a></span>
+                        </li>
+                    </ul>
+                    <ul class="mb-0 pl-2 create-resume-btn">
+                        <li class="d-none d-lg-flex">
+                            <span><a class="btn btn-info ad-post mt-1"
+                                    href="{{ url('login') }}"><i
+                                        class="fa fa-edit"></i> Create
+                                    Resume</a></span>
+                        </li>
+                    </ul>
+                @else
+                    @if(Auth::user()->role_id == 2)
+                        <ul class="mb-0 pr-2">
+                            <li class="d-none d-lg-flex">
+                                <span><a class="btn btn-secondary ad-post mt-1"
+                                        href="{{ url('recregister') }}"><i
+                                            class="fa fa-briefcase"></i> Submit
+                                        a Job</a></span>
+                            </li>
+                        </ul>
+                    @endif
+                    @if(Auth::user()->role_id == 3 )
+                        <ul class="mb-0 pl-2 create-resume-btn">
+                            <li class="d-none d-lg-flex">
+                                <span><a class="btn btn-info ad-post mt-1"
+                                        href="{{ route('employee.profile') }}"><i
+                                            class="fa fa-edit"></i> Create
+                                        Resume</a></span>
+                            </li>
+                        </ul>
+                    @endif
+                @endguest
             </nav>
             <!--/Nav-->
         </div>
@@ -276,9 +306,10 @@
 
     <!--Footer Section-->
     <style>
-        .main-footer{
-            background-image: url("../../assets/images/world.jpg")!important; 
-            }
+        .main-footer {
+            background-image: url("../../assets/images/world.jpg") !important;
+        }
+
     </style>
 
     <section class="main-footer">
@@ -413,8 +444,8 @@
     <script src="{{ asset('assets/js/select2.js') }}"></script>
 
     <!-- Cookie js -->
-    <script src="{{ asset('assets/plugins/cookie/jquery.ihavecookies.js') }}"></script>
-    <script src="{{ asset('assets/plugins/cookie/cookie.js') }}"></script>
+    <!-- <script src="{{ asset('assets/plugins/cookie/jquery.ihavecookies.js') }}"></script>
+    <script src="{{ asset('assets/plugins/cookie/cookie.js') }}"></script> -->
 
     <!-- Ion.RangeSlider -->
     <script src="{{ asset('assets/plugins/jquery-uislider/jquery-ui.js') }}"></script>
@@ -431,11 +462,21 @@
     <script src="{{ asset('assets/js/jquery.showmore.js') }}"></script>
     <script src="{{ asset('assets/js/showmore.js') }}"></script>
 
+
+    <script src="{{ asset('assets/plugins/fileuploads/js/dropify.js') }}"></script>
+    <script src="{{ asset('assets/plugins/fileuploads/js/dropfy-custom.js') }}"></script>
+
+
+    <script src="{{ asset('assets/js/upload.js') }}"></script>
+    <script src="{{ asset('assets/js/swipe.js') }}"></script>
+
     <!-- Scripts Js-->
     <script src="{{ asset('assets/js/scripts2.js') }}"></script>
 
     <!-- Custom Js-->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+
+    @yield('scripts')
 
 </body>
 

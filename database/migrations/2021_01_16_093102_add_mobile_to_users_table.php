@@ -14,19 +14,19 @@ class AddMobileToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string("mobile")->after('email');
+            $table->string("mobile")->after('email')->nullable();
+            $table->json('social')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('mobile');
+            $table->dropColumn(['social']);
         });
     }
+
+    
 }
