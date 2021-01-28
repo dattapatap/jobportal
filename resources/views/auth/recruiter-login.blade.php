@@ -11,10 +11,10 @@
                         <div class="p-4 mb-5">
                             <h4 class="text-left font-weight-semibold fs-16">Login With</h4>
                             <div class="btn-list d-sm-flex">
-                                <a href="{{ url('/loginEmp/google') }}" class="btn btn-secondary mb-sm-0"><i
+                                <a href="{{ url('/loginEmployer/google') }}" class="btn btn-secondary mb-sm-0"><i
                                         class="fa fa-google fa-1x mr-2"></i> Google</a>
 
-                                <a href="{{ url('/loginEmp/facebook') }}" class="btn btn-info mb-0"><i
+                                <a href="{{ url('/loginEmployer/facebook') }}" class="btn btn-info mb-0"><i
                                         class="fa fa-facebook fa-1x mr-2"></i> Facebook</a>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form method="POST" id="login" class="card-body" tabindex="500" action="{{ route('login-employee') }}" >
+                        <form method="POST" id="login" class="card-body" tabindex="500" action="{{ route('login-recruiter') }}" >
                         @csrf
 
                             <div class="mail">
@@ -61,7 +61,7 @@
                             @if(Route::has('password.request'))
                                    <p class="mb-2"><a href="{{ route('password.request') }}">Forgot Password</a></p>
                             @endif
-                            <p class="text-dark mb-0">Don't have account?<a href="{{ route('register') }}"
+                            <p class="text-dark mb-0">Don't have account?<a href="{{ route('rec-regisetr') }}"
                                     class="text-primary ml-1">Sign UP</a>
                             </p>
 

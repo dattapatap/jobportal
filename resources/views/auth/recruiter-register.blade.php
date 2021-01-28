@@ -26,15 +26,16 @@
                             </div>
                         @endif
                         <hr class="divider">
-                        <form method="POST" action="{{ route('register') }}"  class="card-body" tabindex="500">    
+                        <form method="POST" action="{{ route('recr-register') }}"  class="card-body" tabindex="500">    
                             @csrf
 
                             <input type="hidden" name="registerType" id="registerType" value="RECRUITER" />
+ 
                             <div class="name">
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
                                             name="name" value="{{ old('name') }}" required autocomplete="name"
                                             autofocus>
-                                <label>Name</label>
+                                <label>Company Name</label>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -88,7 +89,7 @@
                             <div class="submit">
                                 <button class="btn btn-primary btn-block" type="submit" >Register</button>
                             </div>
-                            <p class="text-dark mb-0">Already have an account?<a href="{{ route('login') }}"
+                            <p class="text-dark mb-0">Already have an account?<a href="{{ route('recr-login') }}"
                                     class="text-primary ml-1">Sign In</a></p>
                         </form>
                     </div>
@@ -97,8 +98,6 @@
         </div>
     </div>
 </section>
-
-
 @endsection
 
 

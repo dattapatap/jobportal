@@ -3,41 +3,22 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
+use App\Models\Recruiter;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    // protected $redirectTo = RouteServiceProvider::HOME;
     protected $redirectTo;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         // $this->middleware('guest');
@@ -94,8 +75,79 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function recruiterView(){
-        return view('Auth.recruiter');
+
+    
+
+    protected function employeeRegister(Request $request){
+        // dd('saaa');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'mobile' => 'required|numeric|max:9999999999|unique:users',
+            'password' => 'required|string|min:8|confirmed',            
+            'password_confirmation' => 'required',
+        ]);
+        try{
+            $user = User::create([
+                        'name' => $request->name,
+                        'role_id' => 3,
+                        'email' => $request->email,
+                        'mobile' => $request->mobile,
+                        'password' => Hash::make($request->password),
+                    ]);       
+
+            Employee::create([
+                'first_name' => $request->name,
+                'user_id' => $user->id
+            ]);
+            Auth::login($user);
+            return redirect()->to('employee/dashboard');
+        }catch(Exception $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == 1062)
+                session()->flash('error',"Duplicate Entry of Email/Mobile");
+            else
+                session()->flash('error',"Invalid details, Please try again");
+            return redirect()->back()->withInput();
+        }
     }
+
+    public function recruiterRegisetrShow(){
+        return view('Auth.recruiter-register');
+    }
+    public function recruiterRegister(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'mobile' => 'required|numeric|max:9999999999|unique:users',
+            'password' => 'required|string|min:8|confirmed',            
+            'password_confirmation' => 'required',
+        ]);
+
+        try{            
+            $user = User::create([
+                        'name' => $request->name,
+                        'role_id' => 2,
+                        'email' => $request->email,
+                        'mobile' => $request->mobile,
+                        'password' => Hash::make($request->password),
+                    ]);       
+
+            Recruiter::create([
+                'company_name' => $request->name,
+                'user_id' => $user->id
+            ]);
+            Auth::login($user);
+            return redirect()->to('recruiter/dashboard');
+        }catch(Exception $e){
+             $errorCode = $e->errorInfo[1];
+            if($errorCode == 1062)
+                session()->flash('error',"Duplicate Entry of Email/Mobile");
+            else
+                session()->flash('error',"Invalid details, Please try again");
+            return redirect()->back()->withInput();
+        }
+    }
+
 
 }

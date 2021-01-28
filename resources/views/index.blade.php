@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-            </div><!-- /header-text -->
+            </div>
         </div>
     </div>
 </section>
@@ -162,7 +162,7 @@
 <!--section-->
 <!--/section-->
 <!--Featured Jobs-->
-<section class="sptb bg-dark" style=" background: url({{ asset('assets/images/banners/2.jpg') }} );background-attachment: fixed;">
+<section class="sptb bg-dark" style=" background: url({{ asset('assets/images/banners/2.jpg') }});background-attachment: fixed;">
     <div class="container" id="containe">
         <div class="section-title center-block text-center">
             <h1 style="color:white;">Latest Jobs</h1>

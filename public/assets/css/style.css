@@ -1869,7 +1869,7 @@ select.form-control:focus::-ms-value {
 	height: calc(2.6875rem + 2px);
 }
 .form-group {
-	margin-bottom: 1rem;
+	margin-bottom: 5px;
 }
 .form-text {
 	display: block;
@@ -5987,14 +5987,14 @@ button.close {
 }
 @media (min-width:576px) {
 	.modal-dialog {
-		width: 800px;
+		min-width: 500px;
 		margin: 1.75rem auto;
 	}
 	.modal-dialog-centered {
 		min-height: calc(100% - (1.75rem * 2));
 	}
 	.modal-sm {
-		max-width: 300px;
+		max-width: 400px;
 	}
 }
 @media (max-width:568px) {

@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="MobileOptimized" content="320">
     <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
@@ -51,10 +52,10 @@
 </head>
 
 <body class="main-body">
-    <!--Loader-->
-    <!-- <div id="global-loader">
+    <!-- Loader -->
+     <div id="global-loader">
         <img src="{{ asset('assets/images/loader.svg') }}" class="loader-img" alt="">
-    </div> -->
+    </div>
 
     <!-- Popup Intro-->
 
@@ -77,7 +78,7 @@
 											<p style="font-size:16px;">
 											<span style="font-size:18px;color:red;">Are you Looking for a Job? </span><br> Take a Test and get
 											registered. Start applying for thousands of Job Interviews & Recruitment drives</p>
-											<a href="register.html" class="btn btn-primary  mb-3">Register</a>
+											<a href="{{url('register')}}" class="btn btn-primary  mb-3">Register</a>
 										</div>
 									</div>
 								</div>
@@ -90,7 +91,7 @@
 											<h3>Join With Us</h3>
 											<p style="font-size:16px;">
 											<span style="font-size:18px;color:red;">Are You Looking For a Candidate ?</span> <br>Now, search candidates online with ease. Connect with largest pool of right candidates in lesser time.</p>
-											<a href="register.html" class="btn btn-primary  mb-3">Join</a>
+											<a href="{{ url('recregister')}}" class="btn btn-primary  mb-3">Join</a>
 										</div>
 									</div>
 								</div>
@@ -102,7 +103,7 @@
 											<img src="{{ asset('PNG_3.png') }}" class="w-55 h-100 mb-5 mx-auto text-center" alt="image">
 											<h3>Need Help</h3>
 											<p>For any queries you can reach our customer care executives from Monday to Saturday between 10:00 am and 7:00 pm.</p>
-											<a href="#!" class="btn btn-primary  mb-3">Contact Us</a>
+											<a href="#" class="btn btn-primary  mb-3">Contact Us</a>
 										</div>
 									</div>
 								</div>
@@ -111,9 +112,7 @@
 					</div>
 				</div>
 			</div>
-		
-		
-		</div> -->
+    </div> -->
 
     <!-- End Popup Intro-->
 
@@ -147,27 +146,24 @@
                     <div class="col-xl-5 col-lg-5 col-sm-8 col-5">
                         <div class="top-bar-right">
                             <ul class="custom">
-
                                 @guest
                                     @if(Route::has('login'))
                                         <li>
                                             <a href="{{ route('login') }}" class=""><i
                                                     class="fa fa-sign-in mr-1"></i>
-                                                <span>{{ __('Login') }}</span></a>
+                                                <span>{{ __('For Employee') }}</span></a>
                                         </li>
                                     @endif
-
-                                    @if(Route::has('register'))
+                                    <!-- @if(Route::has('register'))
                                         <li>
                                             <a href="{{ route('register') }}" class=""><i
                                                     class="fa fa-user mr-1"></i>
                                                 <span>{{ __('Register') }}</span></a>
                                         </li>
-                                    @endif
-
-                                    @if(Route::has('recregister'))
+                                    @endif -->
+                                    @if(Route::has('rec-regisetr'))
                                         <li>
-                                            <a href="{{ route('recregister') }}" class=""><i
+                                            <a href="{{ route('recr-login') }}" class=""><i
                                                     class="fa fa-black-tie mr-1"></i>
                                                 <span>{{ __('For Employer') }}</span></a>
                                         </li>
@@ -198,7 +194,6 @@
                                         </div>
                                     </li>
                                 @endguest
-
                             </ul>
                         </div>
                     </div>
@@ -212,7 +207,7 @@
                 <div class="container">
                     <a id="horizontal-navtoggle" class="animated-arrow"><span></span></a>
                     <span class="smllogo"><img src="{{ asset('logo.jpg') }}" alt="img" /></span>
-                    <a href="index.html" class="callusbtn bg-light"><i class="fa fa-bell text-body"
+                    <a href="{{url('index')}}" class="callusbtn bg-light"><i class="fa fa-bell text-body"
                             aria-hidden="true"></i></a></div>
             </div>
         </div>
@@ -224,25 +219,23 @@
     <div class="horizontal-main clearfix">
         <div class="horizontal-mainwrapper container clearfix">
             <div class="desktoplogo">
-                <a href="index.html"><img src="{{ asset('logo.jpg') }}" alt=""></a>
+                <a href="{{url('index')}}"><img src="{{ asset('logo.jpg') }}" alt=""></a>
             </div>
             <div class="desktoplogo-1">
-                <a href="index.html"><img src="{{ asset('logo.jpg') }}" alt=""></a>
+                <a href="{{url('index')}}"><img src="{{ asset('logo.jpg') }}" alt=""></a>
             </div>
             <!--Nav-->
             <nav class="horizontalMenu clearfix d-md-flex">
                 <ul class="horizontalMenu-list">
-                    <li><a href="index.html">Home </a>
+                    <li><a href="{{url('index')}}">Home </a>
 
                     </li>
                     <li><a href="#">About Us </a></li>
-                    <li><a href="jobs.html">Jobs </a></li>
+                    <li><a href="{{url('jobs')}}">Jobs </a></li>
 
-                    <li><a href="recruiters.html">Recruiter </a></li>
+                    <li><a href="{{ url('recruiters')}}">Recruiter </a></li>
+
                     <li><a href="#">Testimonials </a></li>
-
-
-
                     <li><a href="#"> Contact Us <span class="horizontal-arrow"></span></a></li>
                     <li class="d-lg-none pt-5 pb-2 mt-lg-0">
                         <span><a class="btn btn-secondary ad-post mt-1" href="#"><i class="fa fa-briefcase"></i> Submit
@@ -301,7 +294,7 @@
     <!--/Header Main-->
 
 
-    @yield('content');
+    @yield('content')
 
 
     <!--Footer Section-->

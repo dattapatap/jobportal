@@ -8,17 +8,10 @@
             <div class="single-page">
                 <div class="col-lg-5 col-xl-4 col-md-7 d-block mx-auto">
                     <div class="wrapper wrapper2">
-                        <div class="p-4 mb-5">
-                            <h4 class="text-left font-weight-semibold fs-16">Login With</h4>
-                            <div class="btn-list d-sm-flex">
-                                <a href="{{ url('/loginEmp/google') }}" class="btn btn-secondary mb-sm-0"><i
-                                        class="fa fa-google fa-1x mr-2"></i> Google</a>
-
-                                <a href="{{ url('/loginEmp/facebook') }}" class="btn btn-info mb-0"><i
-                                        class="fa fa-facebook fa-1x mr-2"></i> Facebook</a>
-                            </div>
+                        <div class="p-4 mb-2">
+                            <h4 class="text-left font-weight-semibold fs-16" style="margin-bottom:0px;">Admin Login</h4>
                         </div>
-                        <hr class="divider">
+                        <!-- <hr class="divider"> -->
                         @if (\Session::has('error'))
                             <div class="alert alert-danger">
                                 <ul>
@@ -26,7 +19,8 @@
                                 </ul>
                             </div>
                         @endif
-                        <form method="POST" id="login" class="card-body" tabindex="500" action="{{ route('login-employee') }}" >
+                        <!-- <hr class="divider"> -->
+                        <form method="POST" id="login" class="card-body" tabindex="500" action="{{ route('admin-login') }}" >
                         @csrf
 
                             <div class="mail">
@@ -61,10 +55,7 @@
                             @if(Route::has('password.request'))
                                    <p class="mb-2"><a href="{{ route('password.request') }}">Forgot Password</a></p>
                             @endif
-                            <p class="text-dark mb-0">Don't have account?<a href="{{ route('register') }}"
-                                    class="text-primary ml-1">Sign UP</a>
-                            </p>
-
+                        
                         </form>
                     </div>
                 </div>

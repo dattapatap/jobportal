@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
+use App\Models\Recruiter;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Exception;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use \Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {    
@@ -30,6 +32,66 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
+    public function empLogin(Request $request){
+        $validator = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
+            ]);
+            if (Auth::attempt($validator)) {
+            if(Auth::user()->role_id == 3){
+                return redirect()->route('employee.dashboard');
+            }else{
+                $this->guard()->logout();
+                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials');   
+            }
+            }else{
+              return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials');   
+            }
+    }
+
+    public function recruiterLoginShow(){
+        return view('auth.recruiter-login');
+    }
+    public function recruiterLogin(Request $request){        
+        $validator = $request->validate([
+                        'email' => 'required|string',
+                        'password' => 'required|string'
+        ]);
+        if (Auth::attempt($validator)) {
+            if(Auth::user()->role_id == 2){
+                return redirect()->route('recruiter.dashboard');
+            }else{
+                $this->guard()->logout();
+                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials');   
+            }
+        }else{
+           return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials');   
+        }
+    }
+    public function adminLoginshow(){
+        return view('auth.adminlogin');
+    }
+    public function adminLogin(Request $request){        
+        $validator = $request->validate([
+                        'email' => 'required|string',
+                        'password' => 'required|string'
+        ]);
+        if (Auth::attempt($validator)) {
+            if(Auth::user()->role_id == 1){
+                    return redirect()->route('admin.dashboard');
+            }else{
+                $this->guard()->logout();
+                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials'); 
+            }
+        }else{
+           return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials');   
+        }
+    }
+
+
+
+    //Social Logins
     public function SocialRedirectEmployer($provider)
     {
         session()->put('role_id', "2");
@@ -41,50 +103,66 @@ class LoginController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-
     public function SocialCallback($provider){
         $userSocial =   Socialite::driver($provider)->stateless()->user();
         $users = User::where(["social->{$provider}->id" => $userSocial->id, ])->first();
-
         if (!$users) 
             $users = User::where(['email' => $userSocial->email,])->first();
  
         $role = session()->get('role_id');
-      
         if($users){
-            Auth::login($users);
-            if(Auth::check() && Auth::user()->role_id == 2 ){
-                return redirect()->to('recruiter/dashboard');
-            } else if(Auth::check() && Auth::user()->role_id == 3 ){
-                return redirect()->to('employee/dashboard');
-            }
-
+            if($users->role_id == $role){
+                Auth::login($users);
+                if(Auth::check() && Auth::user()->role_id == 2 ){
+                    return redirect()->to('recruiter/dashboard');
+                } else if(Auth::check() && Auth::user()->role_id == 3 ){
+                    return redirect()->to('employee/dashboard');
+                }
+            }else{
+                if($role == 2)
+                    return redirect()->Route('recr-login')->with('error', 'Dont have permission of authenticate, Duplicate User');                    
+                else
+                    return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, Duplicate User');                    
+            }   
         }else{
-
             try {
-                $user = new User;
-                $user->name = $userSocial->name;
-                $user->email = $userSocial->email;
-                $user->role_id = $role;
-                $user->social =  json_encode([$provider => ['id' => $userSocial->id,]]);
-
-                // Check support verify or not
-                if ($user instanceof MustVerifyEmail) 
-                        $user->markEmailAsVerified();
-
-                $user->save();
+                DB::beginTransaction();  
+                if($role == 3){
+                        $user = new User();
+                        $user->name = $userSocial->name;
+                        $user->email = $userSocial->email;
+                        $user->role_id = $role;
+                        $user->social =  json_encode([$provider => ['id' => $userSocial->id,]]);
+                        $user->save();
+                        DB::table('employee')->insert(['first_name'=> $user->name, 'user_id'=> $user->id]);
                         
-                Auth::login($user);            
+                }else if($role == 2){
+                        $user = new User();
+                        $user->name = $userSocial->name;
+                        $user->email = $userSocial->email;
+                        $user->role_id = $role;
+                        $user->social =  json_encode([$provider => ['id' => $userSocial->id,]]);
+                        $user->save();
+                        DB::table('recruiters')->insert(['company_name'=> $user->name, 'user_id'=> $user->id]);
+                }else{
+                    return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, Duplicate User');                    
+                }
+                DB::commit();
+                Auth::login($user);
                 if(Auth::check() && Auth::user()->role_id == 2 )
                     return redirect()->to('recruiter/dashboard');
                 else if(Auth::check() && Auth::user()->role_id == 3 )
                     return redirect()->to('employee/dashboard');
 
-            }catch (Exception $e) {
-                return redirect('login')->withErrors(['authentication_deny' => 'Login with '.ucfirst($provider).' failed. Please try again.']);
+            }catch (\Exception $e) {
+                DB::rollback();
+                if($role == 3)
+                    return redirect()->Route('auth.login')->with('error','Invalid Authenticate with duplicate user');
+                else
+                    return redirect()->Route('auth.recruiter-login')->with('error','Invalid Authenticate with duplicate user');
             }
         }
-
-
     }
+
+
 }
