@@ -23,6 +23,7 @@ class CreateExperiencesTable extends Migration
             $table->string('from_date');
             $table->string('to_date');
             $table->string('location');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

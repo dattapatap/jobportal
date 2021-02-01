@@ -23,6 +23,7 @@ class CreateEducationsTable extends Migration
             $table->string('to_date');
             $table->string('university');
             $table->decimal('percent', 5,2);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -6,6 +6,94 @@ $(document).ready(function() {
         }
     });
 
+    $('.editPersonal').click(function(e){
+        e.preventDefault();
+        var profileId = $(this).attr('id');
+        $.ajax({
+            url: '/employee/profile/editprofile/'+profileId,
+            type: "GET",
+            success: function(response) {
+                console.log(response);
+                if(response) {
+                    $('#first_name').val(response.first_name);
+                    $('#last_name').val(response.last_name);
+                    $('#dob').val(response.dob);
+                    $('#gender option[value="' + response.gender + '"]').prop('selected', true);
+                    $('#email').val(response.email);
+                    $('#mobile').val(response.mobile);
+                    $('#address').val(response.address);
+                    $("#emp_id").val(response.id);    
+                    $(".btn-saveprofile").val('Update');
+                    $('#personalDetails').modal('show'); 
+                }
+            },
+            error:function(error){
+                console.log(error);
+            }
+        });
+
+
+
+        
+    });
+    $('.frmProfile').submit(function(e){
+        e.preventDefault();        
+        var thisform = $(this);
+        $('.alert-message', thisform).remove().text();
+        $.ajax({
+                url: "/employee/profile/updateprofile",
+                type:'POST',
+                data: $('.frmProfile').serialize(),
+                success: function(data) {
+                    console.log(data);
+                    if(data.code == 200) {               
+                        $('.frmProfile')[0].reset();
+                        toastr.success(data.message);
+                        $('#personalDetails').modal('hide');
+                        location.reload();
+                    }else{
+                        if(data.code ==203){
+                            toastr.warning(data.message);
+                        }else{
+                            toastr.warning(data.message);
+                        }
+                    }
+                },
+                error:function(error){
+                    console.log(error);
+                    $('#first_nameError').text(error.responseJSON.errors.first_name);
+                    $('#last_nameError').text(error.responseJSON.errors.last_name);
+                    $('#dobError').text(error.responseJSON.errors.dob);
+                    $('#genderError').text(error.responseJSON.errors.gender);
+                    $('#emailError').text(error.responseJSON.errors.email);
+                    $('#mobileError').text(error.responseJSON.errors.mobile);
+                    $('#addressError').text(error.responseJSON.errors.address);
+                }
+        });
+
+    })
+
+
+    $('.btn-addCareer').click(function(){
+        $('#careerDetails').modal('show');
+    });
+    $('.btn-addEducation').click(function(){
+        $('#educationDetails').modal('show');
+    });
+    $('.btn-addExperience').click(function(){
+        $('#expDetails').modal('show');
+    });
+    $('.btn-addSkills').click(function(){
+        $('#skillDetails').modal('show');
+    });
+    $('.btn-addResume').click(function(){
+        $('#resume').modal('show');
+    });
+    $('.btn-addProfile').click(function(){
+        $('#profilepic').modal('show');
+    });
+    
+
 
     let Education_row_number = 0;
     let Experiance_row_number = 0;
@@ -84,86 +172,86 @@ $(document).ready(function() {
     $('.frmProfile').submit(function(e){
         e.preventDefault();
 
-        var employee = {};
-        employee["emp_id"] = $("#emp_id").val();
-        employee["first_name"] = $("#txtfirstname").val();
-        employee["proffesion"] = $("#txtproffession").val();
-        employee["email"] = $("#txnemail").val();
-        employee["currentctc"] = $("#txtcurrentctc").val();
-        employee["locationPref"] = $("#txtlocationprefered").val();
-        employee["last_name"] = $("#txtlastname").val();
-        employee["expYear"] = $("#expYear").val();
-        employee["expMonth"] = $("#expMonth").val();
-        employee["phone"] = $("#txtphone").val();
-        employee["expectedctc"] = $("#txtexpectedctc").val();
-        employee["noticeperiod"] = $("#txtnoticeperiod").val();
+        // var employee = {};
+        // employee["emp_id"] = $("#emp_id").val();
+        // employee["first_name"] = $("#txtfirstname").val();
+        // employee["proffesion"] = $("#txtproffession").val();
+        // employee["email"] = $("#txnemail").val();
+        // employee["currentctc"] = $("#txtcurrentctc").val();
+        // employee["locationPref"] = $("#txtlocationprefered").val();
+        // employee["last_name"] = $("#txtlastname").val();
+        // employee["expYear"] = $("#expYear").val();
+        // employee["expMonth"] = $("#expMonth").val();
+        // employee["phone"] = $("#txtphone").val();
+        // employee["expectedctc"] = $("#txtexpectedctc").val();
+        // employee["noticeperiod"] = $("#txtnoticeperiod").val();
 
-        education_array = [];
-        var educations = 0;
-        $(".educations tbody tr").each(function(val=0) {
-            education = {};
-            education["education_id"] = $(this).closest('tr').attr('educatiuonId');
-            education["institude"] = $(this).find('#txtInstitude_'+educations).val();
-            education["qualification"] = $(this).find('#txtQualification_'+educations).val();
-            education["from"] = $(this).find('#txtFrom_'+educations).val();
-            education["to"] = $(this).find('#txtTo_'+educations).val();
-            education["university"] = $(this).find('#board_'+educations).val();
-            education["percent"] = $(this).find('#percent_'+educations).val();
-            education_array.push(education);            
-            educations++;
-        });
+        // education_array = [];
+        // var educations = 0;
+        // $(".educations tbody tr").each(function(val=0) {
+        //     education = {};
+        //     education["education_id"] = $(this).closest('tr').attr('educatiuonId');
+        //     education["institude"] = $(this).find('#txtInstitude_'+educations).val();
+        //     education["qualification"] = $(this).find('#txtQualification_'+educations).val();
+        //     education["from"] = $(this).find('#txtFrom_'+educations).val();
+        //     education["to"] = $(this).find('#txtTo_'+educations).val();
+        //     education["university"] = $(this).find('#board_'+educations).val();
+        //     education["percent"] = $(this).find('#percent_'+educations).val();
+        //     education_array.push(education);            
+        //     educations++;
+        // });
 
-        workExp_array = [];
-        var experienceCount = 0;
-        $(".profile-experience tbody tr").each(function() {
-            experience = {};
-            experience["experience_id"] = $(this).closest('tr').attr('experiance');
-            experience["company"] = $(this).find('#txtCompanyName_'+experienceCount).val();
-            experience["position"] = $(this).find('#txtPositionName_'+experienceCount).val();
-            experience["is_cuttent"] = $(this).find('#isCurrent_'+experienceCount).is(':checked')
+        // workExp_array = [];
+        // var experienceCount = 0;
+        // $(".profile-experience tbody tr").each(function() {
+        //     experience = {};
+        //     experience["experience_id"] = $(this).closest('tr').attr('experiance');
+        //     experience["company"] = $(this).find('#txtCompanyName_'+experienceCount).val();
+        //     experience["position"] = $(this).find('#txtPositionName_'+experienceCount).val();
+        //     experience["is_cuttent"] = $(this).find('#isCurrent_'+experienceCount).is(':checked')
 
-            experience["from"] = $(this).find('#txtExpFrom_'+experienceCount).val();
-            experience["to"] = $(this).find('#txtExpTo_'+experienceCount).val();
-            experience["expLocation"] = $(this).find('#txtExpLocation_'+experienceCount).val();
+        //     experience["from"] = $(this).find('#txtExpFrom_'+experienceCount).val();
+        //     experience["to"] = $(this).find('#txtExpTo_'+experienceCount).val();
+        //     experience["expLocation"] = $(this).find('#txtExpLocation_'+experienceCount).val();
 
-            workExp_array.push(experience);            
-            experienceCount++;
-        });
+        //     workExp_array.push(experience);            
+        //     experienceCount++;
+        // });
 
 
-        var selectedVal = $('#skills').val();
-        if (selectedVal.length > 0) {
-            employee['skills'] = selectedVal;
-            // console.log(selectedVal);
-        }else{
-            console.log('Skills Not Selected');
-        }
+        // var selectedVal = $('#skills').val();
+        // if (selectedVal.length > 0) {
+        //     employee['skills'] = selectedVal;
+        //     // console.log(selectedVal);
+        // }else{
+        //     console.log('Skills Not Selected');
+        // }
 
-        employee['educations'] = education_array;
-        employee['experience'] = workExp_array;
-        var emp = JSON.stringify(employee);
-        console.log(emp);
-        var fm =new FormData();
-        fm.append('profile', emp);
-        fm.append('avtar', $('#avatar').prop('files')[0]);
-        fm.append('resume', $('#file-upload').prop('files')[0]);
-        console.log(fm);
+        // employee['educations'] = education_array;
+        // employee['experience'] = workExp_array;
+        // var emp = JSON.stringify(employee);
+        // console.log(emp);
+        // var fm =new FormData();
+        // fm.append('profile', emp);
+        // fm.append('avtar', $('#avatar').prop('files')[0]);
+        // fm.append('resume', $('#file-upload').prop('files')[0]);
+        // console.log(fm);
 
-        $.ajax({
-                url: '/employee/profile/updateProfile',
-                type: 'POST',         
-                data: fm,
-                cache:false,
-                contentType: false,
-                processData: false,
-                dataType: 'json',         
-                success: (data) => {
-                    console.log(data);            
-                },
-                error: function(err) {                    
-                    console.log(err.responseText);                
-                },
-        });
+        // $.ajax({
+        //         url: '/employee/profile/updateProfile',
+        //         type: 'POST',         
+        //         data: fm,
+        //         cache:false,
+        //         contentType: false,
+        //         processData: false,
+        //         dataType: 'json',         
+        //         success: (data) => {
+        //             console.log(data);            
+        //         },
+        //         error: function(err) {                    
+        //             console.log(err.responseText);                
+        //         },
+        // });
 
 
     });

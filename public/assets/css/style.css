@@ -4735,7 +4735,7 @@ ul {
 	background-color: transparent !important;
 }
 .breadcrumb-item a {
-	color: rgba(255, 255, 255, .8);
+	color: rgb(0 123 255);
 }
 .breadcrumb-item a:hover {
 	color: #fff;
@@ -5987,7 +5987,7 @@ button.close {
 }
 @media (min-width:576px) {
 	.modal-dialog {
-		min-width: 500px;
+		min-width: 600px;
 		margin: 1.75rem auto;
 	}
 	.modal-dialog-centered {
@@ -21185,7 +21185,7 @@ footer.cover-image:before{
 	   color: #1650e2;
 } 
 .side-menu__item.active .side-menu__icon{
-	   color: #fff;
+	   color: #007bff;
 } 
 .card-image1 .item-card-text h4 , .card-image2 .item-card-text h4 , .card-image3 .item-card-text h4{
 	margin-top:-8px !important;
@@ -21749,5 +21749,6 @@ margin-top:10px;
 }
 .iconbox2:hover .iconbox2-bg { opacity: 1; }
 
-
-.
+.app-content .page-header{
+	padding: 20px !important;
+}

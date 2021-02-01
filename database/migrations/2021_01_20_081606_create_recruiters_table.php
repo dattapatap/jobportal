@@ -21,6 +21,12 @@ class CreateRecruitersTable extends Migration
             $table->string('contact_person')->nullable();
             $table->string('proffession')->nullable();
             $table->string('location')->nullable();
+            $table->string('twiter')->nullable();
+            $table->string('linkedin')->nullable();
+            $table->string('website')->nullable();
+            $table->text('about')->nullable();
+            $table->integer('status')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

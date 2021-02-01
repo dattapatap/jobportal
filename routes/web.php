@@ -12,21 +12,14 @@ Route::get('/jobs', function(){  return view('jobs');});
 Route::get('/recruiters', function(){  return view('recruiters'); });
 
 Auth::routes();
-
-
 Route::post('/emp/login', [App\Http\Controllers\Auth\LoginController::class, 'empLogin'])->name('login-employee');
 Route::post('/emp/register', [App\Http\Controllers\Auth\RegisterController::class, 'employeeRegister'])->name('emp-register');
-
-
 Route::get('/recr/register', [App\Http\Controllers\Auth\RegisterController::class, 'recruiterRegisetrShow'])->name('rec-regisetr');
 Route::post('/recr/register', [App\Http\Controllers\Auth\RegisterController::class, 'recruiterRegister'])->name('recr-register');
-
 Route::get('/recr/login', [App\Http\Controllers\Auth\LoginController::class, 'recruiterLoginShow'])->name('recr-login');
 Route::post('/recr/login', [App\Http\Controllers\Auth\LoginController::class, 'recruiterLogin'])->name('login-recruiter');
-
 Route::get('/admin/login', [App\Http\Controllers\Auth\LoginController::class, 'adminLoginshow']);
 Route::post('/admin/login', [App\Http\Controllers\Auth\LoginController::class, 'adminLogin'])->name('admin-login');
-
 Route::get('loginEmployer/{provider}', [App\Http\Controllers\Auth\LoginController::class, 'SocialRedirectEmployer']);
 Route::get('loginEmp/{provider}', [App\Http\Controllers\Auth\LoginController::class, 'SocialRedirectEmp']);
 Route::get('login/{provider}/callback',[App\Http\Controllers\Auth\LoginController::class, 'SocialCallback']);
@@ -35,12 +28,16 @@ Route::get('login/{provider}/callback',[App\Http\Controllers\Auth\LoginControlle
 
 Route::group(['as'=>'admin.', 'prefix' => 'admin', 'namespace'=>'Admin', 'middleware' => ['auth', 'admin']], function(){
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('employee', [App\Http\Controllers\Admin\AdminEmployee::class, 'index'])->name('employee');
+    Route::get('recruiter', [App\Http\Controllers\Admin\AdminRecruiter::class, 'index'])->name('recruiter');
 
 });
 
 
 Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruiter', 'middleware' => ['auth', 'recruiter']], function(){
     Route::get('dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('profile', [App\Http\Controllers\Recruiter\ProfileController::class, 'index'])->name('profile');
+    Route::post('profile/upload', [App\Http\Controllers\Recruiter\ProfileController::class, 'uploadProfile'])->name('profile.upload');
 });
 
 
@@ -49,10 +46,10 @@ Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruit
 Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee', 'middleware' => ['auth', 'employee']], function(){
     Route::get('dashboard',[App\Http\Controllers\Employee\DashboardController::class, 'index'])->name('dashboard');
     Route::get('profile/profile', [App\Http\Controllers\Employee\ProfileController::class, 'index'])->name('profile');
-    Route::get('profile/editprofile', [App\Http\Controllers\Employee\ProfileController::class, 'editprofile'])->name('editprofile');
-    Route::post('profile/updateProfile', [App\Http\Controllers\Employee\ProfileController::class, 'updateProfile'])->name('updateProfile');
 
-
+    Route::post('profile/updateprofile', [App\Http\Controllers\Employee\ProfileController::class, 'updateProfile'])->name('profile-update');
+    Route::get('profile/editprofile/{id}', [App\Http\Controllers\Employee\ProfileController::class, 'editprofile'])->name('editprofile');    
+   
 
 });
 

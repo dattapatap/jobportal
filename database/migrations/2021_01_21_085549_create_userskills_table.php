@@ -19,6 +19,7 @@ class CreateUserskillsTable extends Migration
             $table->foreign('emp_id')->references('id')->on('employee');
             $table->unsignedBigInteger('skill_id');
             $table->foreign('skill_id')->references('id')->on('skills');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

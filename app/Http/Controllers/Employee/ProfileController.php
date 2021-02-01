@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Models\Educations;
+use App\Models\EmpCareer;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employee;
@@ -25,44 +26,57 @@ class ProfileController extends Controller
         $skills = Skills::all();
         $user = Auth::user();
         $employee = Auth::user()->employee;
+        $educations = (Auth::user()->employee)?Auth::user()->employee->careers:'';
         $educations = (Auth::user()->employee)?Auth::user()->employee->educations:'';
         $experience = (Auth::user()->employee)?Auth::user()->employee->experience:'';
         $userskills = (Auth::user()->employee)?Auth::user()->employee->userskills->toArray():'';
         return view('employee.profile.profile')->with(compact('skills', 'user', 'employee', 'educations', 'experience', 'userskills'));
     }
 
-    public function editprofile(){
-        $skills = Skills::all();
-        $user = Auth::user();
-        $employee = Auth::user()->employee;
-        $educations = (Auth::user()->employee)?Auth::user()->employee->educations:'';
-        $experience = (Auth::user()->employee)?Auth::user()->employee->experience:'';
-        $userskills = (Auth::user()->employee)?Auth::user()->employee->userskills->toArray():'';
-        return view('employee.profile.editprofile')->with(compact('skills', 'user', 'employee', 'educations', 'experience', 'userskills'));
-
+    public function editprofile($id){
+        $employee = DB::table('employee')
+                    ->select('employee.id','employee.first_name','employee.last_name', 'employee.gender', 'employee.dob'
+                    ,'employee.address', 'users.email', 'users.mobile')
+                    ->join('users','users.id','=','employee.user_id')
+                    ->where(['employee.id' => $id])
+                    ->first();
+        return response()->json($employee);
     }
 
-    public function create()
-    {
-        //
+    public function updateProfile(Request $request){
+        $validValues = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'dob' => 'required|date',
+            'gender' => 'required|string',
+            'address' => 'required|string' 
+        ]);
+        try{           
+         DB::beginTransaction();
+         $employee = Employee::where('id', $request->emp_id)
+                    ->update(['first_name'=> $request->first_name,'last_name'=> $request->last_name, 'dob'=> $request->dob, 'gender'=> $request->gender, 'address'=>$request->address ]);
+
+                    $userid = Auth::user()->id;
+                    User::where('id',$userid)
+                          ->update(['mobile'=>$request->mobile, 'email'=>$request->email ]);
+
+                    DB::commit();
+                    return response()->json(['code'=>200, 'message'=>'Profile updated successfully','data' => $employee], 200);        
+        }catch(\Illuminate\Database\QueryException $e){
+            DB::rollBack();
+            $errorCode = $e->errorInfo[1];
+            if($errorCode == '1062' )
+                return response()->json(['code'=>203, 'message'=>'Duplicate Mobile/Email'], 203);
+            else
+                return response()->json(['code'=>202, 'message'=>'Profile not updated, please try again'], 202);    
+        }catch(Exception $e){
+            DB::rollBack();
+            return response()->json(['code'=>202, 'message'=>'Profile not updated, please try again','data' => $employee], 202);
+        }
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
 
-    public function show()
-    {
-        //
-    }
-
-    public function edit()
-    {
-        //
-    }
-
-    public function updateProfile(Request $request)
+    public function updatedProfile(Request $request)
     {
         $formContent = $request->all();
         $profiles = json_decode($formContent['profile'], true); 

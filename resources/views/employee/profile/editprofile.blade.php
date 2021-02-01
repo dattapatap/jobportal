@@ -203,7 +203,7 @@
                                                                 class="form-control custom-select select2-show-search"
                                                                 data-placeholder="Choose one (with searchbox)" id="expMonth">
                                                                 <option  value="-1">Month</option>
-                                                                <optionvalue="0">0</optionvalue=>
+                                                                <option value="0">0</option>
                                                                 <option value="1">1</option>
                                                                 <option value="2">2</option>
                                                             </select>

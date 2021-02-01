@@ -27,6 +27,7 @@
 		<!-- Dashboard Css -->
 		<link href="{{ asset('assets/css/style.css')}}" rel="stylesheet" />
 		<link href="{{ asset('assets/css/admin-custom.css')}}" rel="stylesheet" />
+		<link href="{{ asset('assets/plugins/fileuploads/css/dropify.css')}}" rel="stylesheet" />
 		<!-- JQVMap -->
 		<link href="{{ asset('assets/plugins/jqvmap/jqvmap.min.css')}}" rel="stylesheet"/>
 		<!-- Morris.js Charts Plugin -->
@@ -35,6 +36,7 @@
 		<link href="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.css')}}" rel="stylesheet" />
 		<!---Font icons-->
 		<link href="{{ asset('assets/css/icons.css')}}" rel="stylesheet"/>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 		<!-- Color-Skins -->
 		<link id="theme" rel="stylesheet" type="text/css')}}" media="all" href="{{ asset('assets/color-skins/color-skins/color10.css')}}" />
 
@@ -49,16 +51,11 @@
 				<div class="app-header1 header py-1 d-flex">
 					<div class="container-fluid">
 						<div class="d-flex">
-							<a class="header-brand" href="{{ url('admin/dashboard')}}">
+							<a class="header-brand" href="{{ url('recruiter/dashboard')}}">
 							    LOGO
 								<!-- <img src="{{ asset('assets/images/brand/logo2.png')}}" class="header-brand-img" alt="Jobslist logo"> -->
 							</a>
 							<a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-toggle="sidebar" href="#"></a>
-							<!-- <div class="header-navicon">
-								<a href="#" data-toggle="search" class="nav-link d-lg-none navsearch-icon">
-									<i class="fa fa-search"></i>
-								</a>
-							</div> -->
 							<div class="d-flex order-lg-2 ml-auto">
 								<div class="dropdown d-none d-md-flex">
 									<a class="nav-link icon" data-toggle="dropdown">
@@ -110,10 +107,14 @@
 								</div>
 								<div class="dropdown ">
 									<a href="#" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
-										<img src="{{ asset('assets/images/users/male/25.jpg')}}" alt="profile-img" class="avatar avatar-md brround">
+										@if($user->avatar)
+											<img  src="{{ asset('storage/images/profiles/'.$user->avatar) }}" alt="profile-img" class="avatar avatar-md brround" alt="img">
+										@else
+											<img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="profile-img" class="avatar avatar-md brround" alt="img"> 
+										@endif
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
-										<a class="dropdown-item" href="profile.html">
+										<a class="dropdown-item" href="{{ route('recruiter.profile') }}">
 											<i class="dropdown-icon icon icon-user"></i> My Profile
 										</a>
 										<a class="dropdown-item" href="editprofile.html">
@@ -139,10 +140,17 @@
 					<div class="app-sidebar__user clearfix">
 						<div class="dropdown user-pro-body">
 							<div>
-								<img src="{{ asset('assets/images/users/male/25.jpg')}}" alt="user-img" class="avatar avatar-lg brround">
+
+								@if($user->avatar)
+									<img class="card-profile-img" src="{{ asset('storage/images/profiles/'.$user->avatar) }}"  alt="user-img" class="avatar avatar-lg brround">
+								@else
+									<img  alt="user-img" class="avatar avatar-lg brround" src="{{ asset('assets/images/users/male/25.jpg')}}"> 
+								@endif
+
 								<a href="#" class="profile-img">
 									<span class="fa fa-pencil" aria-hidden="true"></span>
 								</a>
+								
 							</div>
 							<div class="user-info">
 								<h2>{{  Auth::user()->name  }}</h2>
@@ -159,18 +167,6 @@
 								<li><a class="slide-item" href="admin-pricing.html">Admin Pricing</a></li>
 								<li><a class="slide-item" href="Ads.html">Ads List</a></li>
 								<li><a class="slide-item" href="comments.html">Comments</a></li>
-								<li><a class="slide-item" href="email-users.html">Email-Users</a></li>
-								<li><a class="slide-item" href="media-gallery.html">Media Gallery</a></li>
-								<li><a class="slide-item" href="newad.html">New Ad</a></li>
-								<li><a class="slide-item" href="newuser.html">New User</a></li>
-								<li><a class="slide-item" href="favourite-ads.html">Favourite-Ads</a></li>
-								<li><a class="slide-item" href="payment-orders.html">Payment Orders</a></li>
-								<li><a class="slide-item" href="payments-adpacks.html">Payment Adpacks</a></li>
-								<li><a class="slide-item" href="payment-settings.html">Payment Settings</a></li>
-								<li><a class="slide-item" href="payments-membership.html">Payment Membership</a></li>
-								<li><a class="slide-item" href="profile-admin.html">Profile Admin</a></li>
-								<li><a class="slide-item" href="settings.html">Settings</a></li>
-								<li><a class="slide-item" href="users-all.html">All Users</a></li>
 							</ul>
 						</li>
 						<li class="slide">
@@ -252,6 +248,12 @@
 		<!-- Custom Js-->
 		<script src="{{ asset('assets/js/admin-custom.js')}}"></script>
 		<script src="{{ asset('assets/js/index3.js')}}"></script>
+		<!-- file uploads js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+		<script src="{{ asset('assets/plugins/fileuploads/js/dropify.js')}}"></script>
+		<script src="{{ asset('assets/plugins/fileuploads/js/dropfy-custom.js')}}"></script>
+
+		@yield('scripts')
 
 	</body>
 </html>

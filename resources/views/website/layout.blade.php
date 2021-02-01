@@ -46,9 +46,8 @@
     <link id="theme" rel="stylesheet" type="text/css" media="all"
         href="{{ asset('assets/color-skins/color-skins/color10.css') }}" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Goldman&family=Montserrat:wght@400;600&family=PT+Sans&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Goldman&family=Montserrat:wght@400;600&family=PT+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body class="main-body">
@@ -464,11 +463,10 @@
     <script src="{{ asset('assets/js/swipe.js') }}"></script>
 
     <!-- Scripts Js-->
-    <script src="{{ asset('assets/js/scripts2.js') }}"></script>
-
+    <script src="{{ asset('assets/js/scripts2.js') }}"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <!-- Custom Js-->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
-
     @yield('scripts')
 
 </body>

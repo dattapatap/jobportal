@@ -179,7 +179,7 @@
         </div>
 
         <div class="row ">
-            <div class="col-xl-4 col-lg-12">
+            <div class="col-xl-6 col-lg-12 ">
                 <div class="card ">
                     <div class="card-header">
                         <div class="card-title">Dailywise Placement Feedback</div>
@@ -189,87 +189,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-lg-6 col-xl-4">
+            <div class="col-xl-4 col-lg-6 col-xl-6">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">Employers analytics</div>
                     </div>
                     <div class="card-body overflow-hidden">
                         <div id="placeholder4" class="chartsh"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12 col-lg-6 col-xl-4">
-                <div class="card">
-                    <div class="card-header border-bottom">
-                        <h5 class="card-title">Placement Summary</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="clearfix row mb-4">
-                            <div class="col">
-                                <div class="float-left">
-                                    <h5 class="mb-0"><strong>Total Jobs</strong></h5>
-                                    <small class="text-muted">weekly Applied</small>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="float-right">
-                                    <h4 class="font-weight-bold mb-0 mt-2 text-primary">$15300</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix row mb-4">
-                            <div class="col">
-                                <div class="float-left">
-                                    <h5 class="mb-0"><strong>Total vacancies</strong></h5>
-                                    <small class="text-muted">weekly Interwied</small>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="float-right">
-                                    <h4 class="font-weight-bold mt-2 mb-0 text-success">$1625</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix row mb-4">
-                            <div class="col">
-                                <div class="float-left">
-                                    <h5 class="mb-0"><strong>Total Placements</strong></h5>
-                                    <small class="text-muted">weekly Shortlisted</small>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="float-right">
-                                    <h4 class="font-weight-bold mt-2 mb-0 text-warning">70%</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix row mb-4">
-                            <div class="col">
-                                <div class="float-left">
-                                    <h5 class="mb-0"><strong>Total Placements</strong></h5>
-                                    <small class="text-muted">weekly shortlisted</small>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="float-right">
-                                    <h4 class="font-weight-bold mt-2 mb-0 text-danger">50%</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="clearfix row mb-0">
-                            <div class="col">
-                                <div class="float-left">
-                                    <h5 class="mb-0"><strong>Total Leads</strong></h5>
-                                    <small class="text-muted">weekly selected</small>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="float-right">
-                                    <h4 class="font-weight-bold mt-2 mb-0 text-secondary">30%</h4>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
