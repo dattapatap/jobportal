@@ -11,9 +11,8 @@ class Experience extends Model
     protected $fillable = ['emp_id'];
 
 
-    public function employee()
-    {
-        return $this->belongsTo(Employee::class, 'emp_id');
+    public function recruiter(){
+        return $this->belongsTo(Recruiter::class, 'rec_id');
     }
 
 }

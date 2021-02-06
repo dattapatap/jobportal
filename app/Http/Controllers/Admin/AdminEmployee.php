@@ -13,21 +13,26 @@ class AdminEmployee extends Controller
     public function index(Request $request){
         if ($request->ajax()) {
              $data = DB::table('employee')
-                    ->select('users.email', 'users.mobile','employee.id','employee.first_name','employee.last_name', 'employee.dob', 
-                    'employee.address', 'employee.gender', 'employee.status')
+                    ->select('users.email', 'users.mobile','employee.id', 'users.id AS u_id', 'employee.first_name','employee.last_name', 'employee.dob', 
+                    'employee.address', 'employee.gender', 'users.status', 'users.created_at', 'employee.status AS emp_status')
                     ->join('users','users.id','=','employee.user_id')
-                    // ->where(['employee.status' => 'false'])
+                    ->orderBy('employee.id','desc')
                     ->get();
+                    
             return Datatables::of($data)
                    ->addIndexColumn()
-                   ->addColumn('action', function($row){
-                        $btn = '<a href="javascript:void(0)" class="edit btn btn-info btn-sm"><i class="fa fa-edit"></i></a>
-                        <a href="javascript:void(0)" class="edit btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>' ;
-                        return $btn;
-                   })
-                   ->rawColumns(['action'])
+                   ->addColumn('action', function($data){
+                            $buttons =  '<a href="employee/view/'.$data->id .'"class="edit btn btn-info btn-sm"><i class="fa fa-eye"></i></a>';
+                            $checkedStatus = ($data->status == "Active") ? 'checked':'';
+                            $buttons .= '<div class="bt-switch ml-2" data-toggle="tooltip" data-placement="bottom" title="User Status" ><input type="checkbox" '.$checkedStatus.' id="'.$data->u_id.'" data-on-color="warning" data-off-color="danger" data-on-text="A" data-off-text="IA" class="user_status"></div>';
+                            return $buttons;
+                    })
+                   ->addColumn('status', function ($data) {
+                        return ($data->emp_status=='0')?'<span class="text-danger"> UnPlaced </span>':'<span class="text-warning"> Registered </span>';
+                    })
+                   ->rawColumns(['action','status'])
                    ->make(true);
         }
-        return view('admin.employee');
+        return view('admin.employee.index');
     }
 }

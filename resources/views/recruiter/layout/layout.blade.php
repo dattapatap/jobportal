@@ -38,7 +38,9 @@
 		<link href="{{ asset('assets/css/icons.css')}}" rel="stylesheet"/>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 		<!-- Color-Skins -->
-		<link id="theme" rel="stylesheet" type="text/css')}}" media="all" href="{{ asset('assets/color-skins/color-skins/color10.css')}}" />
+		<link id="theme" rel="stylesheet" href="{{ asset('assets/color-skins/color-skins/color10.css')}}" />
+		<!-- WYSIWYG Editor css -->
+		<link href="{{ asset('assets/plugins/wysiwyag/richtext.css')}}" rel="stylesheet" />
 
 	</head>
 	<body class="app sidebar-mini">
@@ -107,8 +109,8 @@
 								</div>
 								<div class="dropdown ">
 									<a href="#" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
-										@if($user->avatar)
-											<img  src="{{ asset('storage/images/profiles/'.$user->avatar) }}" alt="profile-img" class="avatar avatar-md brround" alt="img">
+										@if(Auth::user()->avatar)
+											<img  src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="profile-img" class="avatar avatar-md brround" alt="img">
 										@else
 											<img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="profile-img" class="avatar avatar-md brround" alt="img"> 
 										@endif
@@ -117,7 +119,7 @@
 										<a class="dropdown-item" href="{{ route('recruiter.profile') }}">
 											<i class="dropdown-icon icon icon-user"></i> My Profile
 										</a>
-										<a class="dropdown-item" href="editprofile.html">
+										<a class="dropdown-item" href="{{ url('recruiter/changepassword')}}">
 											<i class="dropdown-icon  icon icon-settings"></i> Change Password
 										</a>
 										<a class="dropdown-item" href="{{ route('logout') }}"
@@ -141,8 +143,8 @@
 						<div class="dropdown user-pro-body">
 							<div>
 
-								@if($user->avatar)
-									<img class="card-profile-img" src="{{ asset('storage/images/profiles/'.$user->avatar) }}"  alt="user-img" class="avatar avatar-lg brround">
+								@if(Auth::user()->avatar)
+									<img class="card-profile-img" src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}"  alt="user-img" class="avatar avatar-lg brround">
 								@else
 									<img  alt="user-img" class="avatar avatar-lg brround" src="{{ asset('assets/images/users/male/25.jpg')}}"> 
 								@endif
@@ -158,33 +160,21 @@
 						</div>
 					</div>
 					<ul class="side-menu">
+
 						<li class="active">
 							<a class="side-menu__item" href="{{ url('admin/dashboard')}}"><i class="side-menu__icon fa fa-tachometer"></i><span class="side-menu__label"> Dashboard</span></a>
 						</li>
-						<li class="slide">
-							<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fa fa-cogs"></i><span class="side-menu__label">Admin settings</span><i class="angle fa fa-angle-right"></i></a>
-							<ul class="slide-menu">
-								<li><a class="slide-item" href="admin-pricing.html">Admin Pricing</a></li>
-								<li><a class="slide-item" href="Ads.html">Ads List</a></li>
-								<li><a class="slide-item" href="comments.html">Comments</a></li>
-							</ul>
+						<li>
+							<a class="side-menu__item" href="{{ url('recruiter/profile') }}"><i class="side-menu__icon fa fa-id-card"></i><span class="side-menu__label">Profile</span></a>
 						</li>
-						<li class="slide">
-							<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fa fa-tachometer"></i>
-								<span class="side-menu__label">Others</span><i class="angle fa fa-angle-right"></i>
-							</a>
-							<ul class="slide-menu">
-								<li>
-									<a href="shop.html" class="slide-item">Products</a>
-								</li>
-								<li>
-									<a href="shop-des.html" class="slide-item">Product Details</a>
-								</li>
-								<li>
-									<a href="cart.html" class="slide-item">Shopping Cart</a>
-								</li>
-							</ul>
+						<li>
+							<a class="side-menu__item" href="{{ url('recruiter/postedjobs') }}"><i class="side-menu__icon fa fa-briefcase"></i><span class="side-menu__label">Posted Jobs</span></a>
 						</li>
+						<li>
+							<a class="side-menu__item" href="{{ url('recruiter/packages') }}"><i class="side-menu__icon fa fa-inr"></i><span class="side-menu__label">Packages</span></a>
+						</li>
+
+
 					</ul>
 					
 				</aside>

@@ -23,11 +23,8 @@
     <!-- Font-awesome  Css -->
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" />
     <!--Horizontal Menu-->
-    <link
-        href="{{ asset('assets/plugins/horizontal/horizontal-menu/animation/fade-down.css') }}"
-        rel="stylesheet" />
-    <link href="{{ asset('assets/plugins/horizontal/horizontal-menu/horizontal.css') }}"
-        rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/horizontal/horizontal-menu/animation/fade-down.css') }}"   rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/horizontal/horizontal-menu/horizontal.css') }}"   rel="stylesheet" />
     <!-- Drofify -->
     <link href="{{ asset('assets/plugins/fileuploads/css/dropify.css') }}" rel="stylesheet" />
     <!--Select2 Plugin -->
@@ -405,66 +402,45 @@
 
     <!-- JQuery js-->
     <script src="{{ asset('assets/js/vendors/jquery-3.2.1.min.js') }}"></script>
-
     <!-- Bootstrap js -->
-    <script src="{{ asset('assets/plugins/bootstrap-4.3.1-dist/js/popper.min.js') }}">
-    </script>
-    <script src="{{ asset('assets/plugins/bootstrap-4.3.1-dist/js/bootstrap.min.js') }}">
-    </script>
-
+    <script src="{{ asset('assets/plugins/bootstrap-4.3.1-dist/js/popper.min.js') }}">  </script>
+    <script src="{{ asset('assets/plugins/bootstrap-4.3.1-dist/js/bootstrap.min.js') }}">    </script>
     <!--JQuery Sparkline Js-->
     <script src="{{ asset('assets/js/vendors/jquery.sparkline.min.js') }}"></script>
-
     <!-- Circle Progress Js-->
     <script src="{{ asset('assets/js/vendors/circle-progress.min.js') }}"></script>
-
     <!-- Star Rating Js-->
     <script src="{{ asset('assets/plugins/rating/jquery.rating-stars.js') }}"></script>
-
     <!--Owl Carousel js -->
     <script src="{{ asset('assets/plugins/owl-carousel/owl.carousel.js') }}"></script>
-
     <!--Horizontal Menu-->
-    <script src="{{ asset('assets/plugins/horizontal/horizontal-menu/horizontal.js') }}">
-    </script>
-
+    <script src="{{ asset('assets/plugins/horizontal/horizontal-menu/horizontal.js') }}"> </script>
     <!--JQuery TouchSwipe js-->
     <script src="{{ asset('assets/js/jquery.touchSwipe.min.js') }}"></script>
-
     <!--Select2 js -->
     <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/js/select2.js') }}"></script>
-
     <!-- Cookie js -->
     <!-- <script src="{{ asset('assets/plugins/cookie/jquery.ihavecookies.js') }}"></script>
     <script src="{{ asset('assets/plugins/cookie/cookie.js') }}"></script> -->
-
     <!-- Ion.RangeSlider -->
     <script src="{{ asset('assets/plugins/jquery-uislider/jquery-ui.js') }}"></script>
-
     <!-- sticky Js-->
     <script src="{{ asset('assets/js/sticky.js') }}"></script>
-
     <!-- Custom scroll bar Js-->
-    <script
-        src="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js') }}">
-    </script>
-
+    <script src="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js') }}"> </script>
     <!--Showmore Js-->
     <script src="{{ asset('assets/js/jquery.showmore.js') }}"></script>
     <script src="{{ asset('assets/js/showmore.js') }}"></script>
-
-
     <script src="{{ asset('assets/plugins/fileuploads/js/dropify.js') }}"></script>
     <script src="{{ asset('assets/plugins/fileuploads/js/dropfy-custom.js') }}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <script src="{{ asset('assets/js/upload.js') }}"></script>
     <script src="{{ asset('assets/js/swipe.js') }}"></script>
-
     <!-- Scripts Js-->
     <script src="{{ asset('assets/js/scripts2.js') }}"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    
     <!-- Custom Js-->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     @yield('scripts')

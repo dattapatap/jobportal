@@ -79,7 +79,6 @@ class RegisterController extends Controller
     
 
     protected function employeeRegister(Request $request){
-        // dd('saaa');
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',

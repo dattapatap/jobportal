@@ -17,30 +17,30 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'IndianPharma Jobs') }}</title>
     <link rel="stylesheet" href="{{ asset('assets/fonts/fonts/font-awesome.min.css') }}">
     <link href="{{ asset('assets/plugins/toggle-sidebar/sidemenu.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" rel="stylesheet" />
     <!-- Dashboard Css -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/admin-custom.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/fileuploads/css/dropify.css')}}" rel="stylesheet" />
     <!-- JQVMap -->
     <link href="{{ asset('assets/plugins/jqvmap/jqvmap.min.css') }}" rel="stylesheet" />
     <!-- Datatable -->
     <link href="{{ asset('css/datatable.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/datatable.responsive.min.css') }}" rel="stylesheet" />
     <!-- Morris.js Charts Plugin -->
-    <link href="{{ asset('assets/plugins/morris/morris.css') }}" rel="stylesheet" />
+    {{-- <link href="{{ asset('assets/plugins/morris/morris.css') }}" rel="stylesheet" /> --}}
     <!-- Custom scroll bar css-->
     <link href="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/bootstrap-switch/bootstrap.switch.css')}}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/bootstrap-switch/bootstrap.switch.min.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <!---Font icons-->
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" />
     <!-- Color-Skins -->
     <link id="theme" rel="stylesheet" media="all" href="{{ asset('assets/color-skins/color-skins/color10.css') }}" />
-
-
-
-
 </head>
 
 <body class="app sidebar-mini">
@@ -109,23 +109,26 @@
                             </div>
                             <div class="dropdown ">
                                 <a href="#" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
-                                    <img src="{{ asset('assets/images/users/male/25.jpg') }}"
-                                        alt="profile-img" class="avatar avatar-md brround">
+                                    @if(Auth::user()->avatar)
+                                        <img  src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="profile-img" class="avatar avatar-md brround" alt="img">
+                                    @else
+                                        <img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="profile-img" class="avatar avatar-md brround" alt="img"> 
+                                    @endif
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{ route('admin.profile') }}">
                                         <i class="dropdown-icon icon icon-user"></i> My Profile
                                     </a>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{ url('admin/changepassword')}}">
                                         <i class="dropdown-icon  icon icon-settings"></i> Change Password
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="dropdown-icon icon icon-power"></i> Log out
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="dropdown-icon icon icon-power"></i> Log out
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}"
-                                        method="POST" class="d-none">
-                                        @csrf
+                                            method="POST" class="d-none">
+                                            @csrf
                                     </form>
                                 </div>
                             </div>
@@ -139,11 +142,12 @@
                 <div class="app-sidebar__user clearfix">
                     <div class="dropdown user-pro-body">
                         <div>
-                            <img src="{{ asset('assets/images/users/male/25.jpg') }}"
-                                alt="user-img" class="avatar avatar-lg brround">
-                            <a href="#" class="profile-img">
-                                <span class="fa fa-pencil" aria-hidden="true"></span>
-                            </a>
+                        @if(Auth::user()->avatar)
+                            <img  src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="user-img" class="avatar avatar-lg brround">
+                        @else
+                            <img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="user-img" class="avatar avatar-lg brround"> 
+                        @endif
+                        
                         </div>
                         <div class="user-info">
                             <h2>{{ Auth::user()->name }}</h2>
@@ -165,22 +169,22 @@
                                 class="side-menu__label">Employees</span></a>
                     </li>
                     <li>
-                        <a class="side-menu__item" href="#"><i class="side-menu__icon fa fa-user"></i><span
+                        <a class="side-menu__item" href="{{ url('admin/postedjobs')}}"><i class="side-menu__icon fa fa-user"></i><span
                                 class="side-menu__label">Jobs</span></a>
                     </li>
                     <li class="slide">
                         <a class="side-menu__item" data-toggle="slide" href="#"><i
                                 class="side-menu__icon fa fa-tachometer"></i>
-                            <span class="side-menu__label">Question Paper</span><i class="angle fa fa-angle-right"></i>
+                            <span class="side-menu__label">Assessment Tool</span><i class="angle fa fa-angle-right"></i>
                         </a>
                         <ul class="slide-menu">
                             <li>
-                                <a href="#" class="slide-item">Question Papers List</a>
+                                <a href="{{url('admin/questionCategory')}}" class="slide-item">Question Category</a>
                             </li>
                             <li>
-                                <a href="#" class="slide-item">Question Paper Category</a>
+                                <a href="{{url('admin/questions')}}" class="slide-item">Questions</a>
                             </li>
-                            <li><a href="#" class="slide-item">Roles</a></li>
+                            {{-- <li><a href="#" class="slide-item">Roles</a></li> --}}
                         </ul>
                     </li>
                     <li class="slide">
@@ -324,6 +328,7 @@
     <script src="{{ asset('assets/js/vendors/jquery.tablesorter.min.js') }}"></script>
     <script src="{{ asset('assets/js/vendors/circle-progress.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/rating/jquery.rating-stars.js') }}"></script>
+    
     <!-- Fullside-menu Js-->
     <script src="{{ asset('assets/plugins/toggle-sidebar/sidemenu.js') }}"></script>
     <!-- Input Mask Plugin -->
@@ -333,17 +338,18 @@
     <script src="{{ asset('assets/plugins/jqvmap/maps/jquery.vmap.world.js') }}"></script>
     <script src="{{ asset('assets/plugins/jqvmap/jquery.vmap.sampledata.js') }}"></script>
     <!-- ECharts Plugin -->
-    <script src="{{ asset('assets/plugins/echarts/echarts.js') }}"></script>
+    {{-- <script src="{{ asset('assets/plugins/echarts/echarts.js') }}"></script> --}}
     <!-- jQuery Sparklines -->
-    <script src="{{ asset('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}">
-    </script>
+    {{-- <script src="{{ asset('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}">  </script> --}}
     <!-- Datatable -->
     <script src="{{ asset('js/datatable.min.js') }}"></script>
     <script src="{{ asset('js/datatable.responsive.min.js') }}"></script>
     <!-- Flot Chart -->
-    <script src="{{ asset('assets/plugins/flot/jquery.flot.js') }}"></script>
+    {{-- <script src="{{ asset('assets/plugins/flot/jquery.flot.js') }}"></script>
     <script src="{{ asset('assets/plugins/flot/jquery.flot.fillbetween.js') }}"></script>
-    <script src="{{ asset('assets/plugins/flot/jquery.flot.pie.js') }}"></script>
+    <script src="{{ asset('assets/plugins/flot/jquery.flot.pie.js') }}"></script> --}}
+    {{-- Toaster --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <!--Counters -->
     <script src="{{ asset('assets/plugins/counters/counterup.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/counters/waypoints.min.js') }}"></script>
@@ -351,11 +357,11 @@
     <!-- Custom scroll bar Js-->
     <script src="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <!-- CHARTJS CHART -->
-    <script src="{{ asset('assets/plugins/chart/Chart.bundle.js') }}"></script>
-    <script src="{{ asset('assets/plugins/chart/utils.js') }}"></script>
+    {{-- <script src="{{ asset('assets/plugins/chart/Chart.bundle.js') }}"></script>
+    <script src="{{ asset('assets/plugins/chart/utils.js') }}"></script> --}}
     <!-- Custom Js-->
-    <script src="{{ asset('assets/js/admin-custom.js') }}"></script>
-    <script src="{{ asset('assets/js/index3.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/admin-custom.js') }}"></script> --}}
+    {{-- <script src="{{ asset('assets/js/index3.js') }}"></script> --}}
     @yield('scripts')
 
 </body>
