@@ -14,5 +14,10 @@ class Questions extends Model
     public function category(){
         return $this->belongsTo(QuestionCategory::class, 'qc_id');
     }
+   
+
+    public function options(){
+        return $this->hasMany(Question::class, 'q_id');
+    }
 
 }

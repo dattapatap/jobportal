@@ -25,6 +25,8 @@
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/admin-custom.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/fileuploads/css/dropify.css')}}" rel="stylesheet" />
+    <!--Select2 Plugin -->
+    <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
     <!-- JQVMap -->
     <link href="{{ asset('assets/plugins/jqvmap/jqvmap.min.css') }}" rel="stylesheet" />
     <!-- Datatable -->
@@ -350,6 +352,7 @@
     <script src="{{ asset('assets/plugins/flot/jquery.flot.pie.js') }}"></script> --}}
     {{-- Toaster --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
     <!--Counters -->
     <script src="{{ asset('assets/plugins/counters/counterup.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/counters/waypoints.min.js') }}"></script>

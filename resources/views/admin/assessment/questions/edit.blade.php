@@ -12,19 +12,19 @@
 <div class="app-content">
     <div class="side-app">
         <div class="page-header">
-            <h4 class="page-title">Add Question Category</h4>
+            <h4 class="page-title">Add Questions</h4>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('admin/questionCategory')}}">Question Category</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Add Category</li>
+                <li class="breadcrumb-item"><a href="{{ url('admin/questions')}}">Questions</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Questions</li>
             </ol>
         </div>       
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-6 offset-3">                    
+                <div class="col-md-8 offset-2">                    
                     <form class="card" action="{{ route('admin.questionCategory.process')}}" method="POST">
                         @csrf
                         <div class="card-header">
-                            <h3 class="card-title">Question Category</h3>
+                            <h3 class="card-title">Add Question</h3>
                         </div>
                         @if (\Session::has('error'))
                             <div class="alert alert-danger">
@@ -44,16 +44,50 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label">Category Name</label>
-                                        <input type="text" class="form-control" value="{{ $qc_name, old('old_name') }}" name="name"  placeholder="Category Name">
+                                        <label class="form-label">Question Category</label>
+                                        <select class="form-control select2" name="question_category" id="question_category"  placeholder="select category">
+                                            <option value=""> Select Category </option>
+                                            @forelse ($category as $cat)
+                                                <option value="{{ $cat->id }}"> {{ $cat->name }} </option>                                                
+                                            @empty
+                                                <option value=""> No Category Found</option>
+                                            @endforelse
+                                        </select>
+                                        @error('question_category')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>  
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Question</label>
+                                        <textarea type="textarea" class="form-control" name="question"  placeholder="Question Detail" rows="3">{{ $result["qc_name"], old('old_name') }}</textarea>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-                                </div>    
-                                <input type="hidden" value="{{$id}}" name="id" >                 
+                                </div>  
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Question</label>
+                                        <textarea type="textarea" class="form-control" name="question"  placeholder="Question Detail" rows="3">{{ $result["qc_name"], old('old_name') }}</textarea>
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>  
+
+
+
+
+                                <input type="hidden" value="{{ $result['id'] }}" name="id" >                 
                             </div>
                         </div>
                         <div class="card-footer text-right">
@@ -67,6 +101,10 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+    $('#question_category').select2();
 
-
+</script>   
 @endsection

@@ -1,9 +1,5 @@
 <?php
-
-use GuzzleHttp\Middleware;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
 Route::get('/', function () { return view('index'); });
