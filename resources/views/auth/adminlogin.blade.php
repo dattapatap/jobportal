@@ -13,7 +13,7 @@
                         </div>
                         <!-- <hr class="divider"> -->
                         @if (\Session::has('error'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-warning">
                                 <ul>
                                     <li>{!! \Session::get('error') !!}</li>
                                 </ul>

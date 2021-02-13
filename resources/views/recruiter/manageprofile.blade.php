@@ -96,8 +96,8 @@
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Industry</label>
-                                    <input type="text" name="industry" value="{{ old('industry',$user->recruiter->industry) }}" class="form-control" placeholder="Industry" >
-                                    @error('industry')
+                                    <input type="text" name="proffession" value="{{ old('proffession',$user->recruiter->proffession) }}" class="form-control" placeholder="Industry" >
+                                    @error('proffession')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

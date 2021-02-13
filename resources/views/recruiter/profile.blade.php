@@ -5,7 +5,20 @@
         <div class="page-header">
             <h4 class="page-title">Profile</h4>
         </div>
-
+        @if (\Session::has('error'))
+            <div class="alert alert-danger">
+                <ul>
+                    <li>{!! \Session::get('error') !!}</li>
+                </ul>
+            </div>                        
+        @endif
+        @if (\Session::has('success'))
+            <div class="alert alert-success">
+                <ul>
+                    <li>{!! \Session::get('success') !!}</li>
+                </ul>
+            </div>                        
+        @endif
         <div class="row">
             <div class="col-lg-5 col-xl-4">
                 <div class="card card-profile cover-image "  data-image-src="{{ asset('assets/images/photos/gradient3.jpg')}}">
@@ -93,7 +106,7 @@
                                                 <td><strong>Location :</strong> {{ $user->recruiter->location }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Industry :</strong> {{ $user->recruiter->industry }}</td>
+                                                <td><strong>Industry :</strong> {{ $user->recruiter->proffession }}</td>
                                             </tr>
                                         </tbody>
                                         <tbody class="col-lg-12 col-xl-6 p-2">

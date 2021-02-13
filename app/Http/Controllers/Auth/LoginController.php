@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use \Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {    
@@ -39,14 +40,14 @@ class LoginController extends Controller
             'password' => 'required|string'
             ]);
             if (Auth::attempt($validator)) {
-            if(Auth::user()->role_id == 3){
-                return redirect()->route('employee.dashboard');
+                if(Auth::user()->role_id == 3){
+                    return redirect()->route('employee.dashboard');
+                }else{
+                    $this->guard()->logout();
+                    return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
+                }
             }else{
-                $this->guard()->logout();
-                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials');   
-            }
-            }else{
-              return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials');   
+              return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
             }
     }
 
@@ -55,18 +56,18 @@ class LoginController extends Controller
     }
     public function recruiterLogin(Request $request){        
         $validator = $request->validate([
-                        'email' => 'required|string',
-                        'password' => 'required|string'
+            'email' => 'required|string',
+            'password' => 'required|string'
         ]);
         if (Auth::attempt($validator)) {
             if(Auth::user()->role_id == 2){
                 return redirect()->route('recruiter.dashboard');
             }else{
                 $this->guard()->logout();
-                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials');   
+                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
             }
         }else{
-           return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials');   
+           return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
         }
     }
     public function adminLoginshow(){
@@ -82,10 +83,10 @@ class LoginController extends Controller
                     return redirect()->route('admin.dashboard');
             }else{
                 $this->guard()->logout();
-                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials'); 
+                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput(); 
             }
         }else{
-           return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials');   
+           return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
         }
     }
 
@@ -120,32 +121,25 @@ class LoginController extends Controller
                 }
             }else{
                 if($role == 2)
-                    return redirect()->Route('recr-login')->with('error', 'Dont have permission of authenticate, Duplicate User');                    
+                    return redirect()->Route('recr-login')->with('error', 'Dont have permission of authenticate, Duplicate user');                    
                 else
-                    return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, Duplicate User');                    
+                    return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, Duplicate user');                    
             }   
         }else{
             try {
                 DB::beginTransaction();  
+                $user = new User();
+                $user->name = $userSocial->name;
+                $user->email = $userSocial->email;
+                $user->role_id = $role;
+                $user->social =  json_encode([$provider => ['id' => $userSocial->id,]]);
+                $user->save();
                 if($role == 3){
-                        $user = new User();
-                        $user->name = $userSocial->name;
-                        $user->email = $userSocial->email;
-                        $user->role_id = $role;
-                        $user->social =  json_encode([$provider => ['id' => $userSocial->id,]]);
-                        $user->save();
-                        DB::table('employee')->insert(['first_name'=> $user->name, 'user_id'=> $user->id]);
-                        
+                    DB::table('employee')->insert(['first_name'=> $user->name, 'user_id'=> $user->id]);
                 }else if($role == 2){
-                        $user = new User();
-                        $user->name = $userSocial->name;
-                        $user->email = $userSocial->email;
-                        $user->role_id = $role;
-                        $user->social =  json_encode([$provider => ['id' => $userSocial->id,]]);
-                        $user->save();
-                        DB::table('recruiters')->insert(['company_name'=> $user->name, 'user_id'=> $user->id]);
+                  DB::table('recruiters')->insert(['company_name'=> $user->name, 'user_id'=> $user->id]);
                 }else{
-                    return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, Duplicate User');                    
+                    return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, duplicate user');                    
                 }
                 DB::commit();
                 Auth::login($user);
@@ -157,9 +151,9 @@ class LoginController extends Controller
             }catch (\Exception $e) {
                 DB::rollback();
                 if($role == 3)
-                    return redirect()->Route('auth.login')->with('error','Invalid Authenticate with duplicate user');
+                    return redirect()->Route('login')->with('error','Invalid Authenticate with duplicate user');
                 else
-                    return redirect()->Route('auth.recruiter-login')->with('error','Invalid Authenticate with duplicate user');
+                    return redirect()->Route('recr-login')->with('error','Invalid Authenticate with duplicate user');
             }
         }
     }

@@ -34,9 +34,9 @@ class QuestionCategoryController extends Controller
     public function manageCategory(Request $request, $id='')
     {   
         if($id > 0){
-            $arr = QuestionCategory::where(['id' => $id])->get();
-            $result['qc_name'] =$arr['0']->name;
-            $result['id'] =$arr['0']->id;
+            $arr = QuestionCategory::where(['id' => $id])->firstOrFail();
+            $result['qc_name'] =$arr->name;
+            $result['id'] =$arr->id;
         }else{
 
             $result['qc_name'] = '';
@@ -48,12 +48,19 @@ class QuestionCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $rules = array(
-            'name'       => 'required|string|max:255|unique:question_categories,name,'. $request->post('id'),
-        );
+        if($request->post('id') < 0){
+            $rules = array(
+                'name'=>"required|string|max:255|unique:question_categories,name,NULL,id,deleted_at,NULL",
+            );
+        }else{
+            $rules = array(
+                'name'=>"required|string|max:255|unique:question_categories,name,".$request->post('id').",id,deleted_at,NULL",
+            );
+        }
+
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator);
+            return redirect()->back()->withErrors($validator)->withInput();
         }else{
 
             if($request->post('id')>0){
@@ -64,8 +71,9 @@ class QuestionCategoryController extends Controller
                 $msg = "Categery Saved Successfully";
             }
             $qc->name = $request->name;
-            $qc->save();
-            return back()->with(['success'=> $msg]);            
+            $qc->save();  
+            $request->session()->flash('success',$msg);   
+            return redirect('/admin/questionCategory');         
         }
     }
 

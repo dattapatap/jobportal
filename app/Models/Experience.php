@@ -15,4 +15,8 @@ class Experience extends Model
         return $this->belongsTo(Recruiter::class, 'rec_id');
     }
 
+    public function loations(){
+        return $this->belongsTo(City::class, 'location');
+    }
+
 }

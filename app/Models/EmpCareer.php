@@ -16,6 +16,17 @@ class EmpCareer extends Model
         return $this->belongsTo('App\Employee');
     }
 
+    public function industries(){
+        return $this->belongsTo(Industries::class, 'industry');
+    }
+
+    public function positions(){
+        return $this->belongsTo(JobPositions::class, 'position');
+    }
+    public function locations(){
+        return $this->belongsTo(City::class, 'location_prefered');
+    }
+
 
 
 }

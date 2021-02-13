@@ -23,7 +23,7 @@
                             </div>                        
                         @endif
                         <div class="p-2 pull-right">
-                            <a href="{{url('admin/questions/manage ')}}" class="btn btn-sm btn-primary"><i class="side-menu__icon fa fa-arrow-down" style="color:white"></i> Add Question </a>
+                            <a href="{{url('admin/questions/create ')}}" class="btn btn-sm btn-primary"><i class="side-menu__icon fa fa-arrow-down" style="color:white"></i> Add Question </a>
                         </div>                      
                         <div>
                             <table id="questions" class="responsive display nowrap" cellspacing="0" width="100%">
@@ -33,7 +33,6 @@
                                         <th>Action</th>
                                         <th>Question</th>
                                         <th>Tot Options</th>
-                                        <th>Marks</th>
                                         <th>Q Category</th>
                                         <th>Created Date</th>
                                     </tr>
@@ -68,11 +67,10 @@
             }
         }, 
         columns: [
-            {data: 'id', name: '#'},
+            {data: 'DT_RowIndex', name: '#'},
             {data: 'action', name: 'Action', orderable: false, searchable: false},
             {data: 'name', name: 'Questions'},
             {data: 'tot_options', name: 'Tot Options'},
-            {data: 'marks', name: 'Marks'},
             {data: 'category', name: 'Q Category'},
             {data: 'created_at', name: 'Created Date'},
         ],

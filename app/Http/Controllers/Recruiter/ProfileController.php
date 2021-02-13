@@ -57,7 +57,7 @@ class ProfileController extends Controller
                 'email' => 'required|string|email|max:255|unique:users,email,'.Auth::user()->id,
                 'mobile' => 'required|digits:10|unique:users,mobile,'.Auth::user()->id,
                 'location' => 'required|string', 
-                'industry' => 'required|string', 
+                'proffession' => 'required|string', 
                 'website' => 'required|string', 
                 'twiter' => 'required|string', 
                 'linkedin' => 'required|string', 
@@ -70,7 +70,7 @@ class ProfileController extends Controller
                 DB ::beginTransaction();
                 $recruiter = Recruiter::where('user_id', $userid )
                             ->update(['company_name'=> $request->comp_name, 'contact_person'=> $request->contact_person,
-                             'location'=> $request->location, 'industry'=>$request->industry,
+                             'location'=> $request->location, 'proffession'=>$request->proffession,
                              'twiter'=> $request->twiter, 'linkedin'=> $request->linkedin, 'website'=>$request->website,
                              'about'=> $request->about
                               ]);
@@ -80,12 +80,13 @@ class ProfileController extends Controller
 
                 DB::commit();
                 session()->flash('success',"Profile Updated Successfully"); 
-                return redirect()->back();
+                return redirect('/recruiter/profile');  
 
             }catch(Exception $e){
                 DB::rollBack();
-                session()->flash('error',"Profile Not Updated, please try again"); 
-                return redirect()->back();
+                echo $e->getMessage();
+                session()->flash('error',"Profile Not Updated, please try again");
+                return redirect()->back()->withInput();
             } 
 
    }

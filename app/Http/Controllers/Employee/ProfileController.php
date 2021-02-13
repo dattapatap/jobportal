@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\Education;
 use App\Models\Educations;
 use App\Models\EmpCareer;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employee;
 use App\Models\Experience;
+use App\Models\Industries;
+use App\Models\JobPositions;
 use App\Models\Skills;
 use App\Models\Userskills;
 use Carbon\Carbon;
@@ -18,19 +22,32 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        $skills = Skills::all();
-        $user = Auth::user();
-        $employee = Auth::user()->employee;
-        $educations = (Auth::user()->employee)?Auth::user()->employee->careers:'';
-        $educations = (Auth::user()->employee)?Auth::user()->employee->educations:'';
-        $experience = (Auth::user()->employee)?Auth::user()->employee->experience:'';
-        $userskills = (Auth::user()->employee)?Auth::user()->employee->userskills->toArray():'';
-        return view('employee.profile.profile')->with(compact('skills', 'user', 'employee', 'educations', 'experience', 'userskills'));
+        $skills = Skills::where('deleted_at',null)->get();
+        $industry = Industries::where('deleted_at',null)->get();
+        $positions = JobPositions::where('deleted_at',null)->get();
+        $city = City::where('deleted_at',null)->get();
+        $education = Education::where('deleted_at',null)->get();
+       
+        $user = User::where('id' , Auth::user()->id)
+                          ->with('employee')
+                          ->first();
+        $emp =  Employee::where('id', $user->employee->id)
+                         ->with('careers.industries','careers.locations', 'careers.positions')
+                         ->with('educations.educ','educations.cour', 'educations.spec' )
+                         ->with('experience.loations')
+                         ->with('userskills.userskills')
+                         ->first();  
+
+
+        return view('employee.profile.profile')->with(compact('skills','industry', 'positions','city', 'user', 'emp', 'education'));
+
+        
     }
 
     public function editprofile($id){
@@ -42,33 +59,29 @@ class ProfileController extends Controller
                     ->first();
         return response()->json($employee);
     }
-
     public function updateProfile(Request $request){
+
         $validValues = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'dob' => 'required|date',
+            'dob' => 'required|date|before:-18 years',
+            'email' => 'required|email|unique:users,email,'.Auth::user()->id,
+            'mobile' => 'required|min:10|numeric|unique:users,mobile,'.Auth::user()->id,
             'gender' => 'required|string',
             'address' => 'required|string' 
         ]);
+
         try{           
          DB::beginTransaction();
          $employee = Employee::where('id', $request->emp_id)
                     ->update(['first_name'=> $request->first_name,'last_name'=> $request->last_name, 'dob'=> $request->dob, 'gender'=> $request->gender, 'address'=>$request->address ]);
-
                     $userid = Auth::user()->id;
                     User::where('id',$userid)
                           ->update(['mobile'=>$request->mobile, 'email'=>$request->email ]);
 
                     DB::commit();
+                    $request->session()->flash('success',"Profile updated successfully");   
                     return response()->json(['code'=>200, 'message'=>'Profile updated successfully','data' => $employee], 200);        
-        }catch(\Illuminate\Database\QueryException $e){
-            DB::rollBack();
-            $errorCode = $e->errorInfo[1];
-            if($errorCode == '1062' )
-                return response()->json(['code'=>203, 'message'=>'Duplicate Mobile/Email'], 203);
-            else
-                return response()->json(['code'=>202, 'message'=>'Profile not updated, please try again'], 202);    
         }catch(Exception $e){
             DB::rollBack();
             return response()->json(['code'=>202, 'message'=>'Profile not updated, please try again','data' => $employee], 202);
@@ -76,144 +89,219 @@ class ProfileController extends Controller
     }
 
 
-    public function updatedProfile(Request $request)
-    {
-        $formContent = $request->all();
-        $profiles = json_decode($formContent['profile'], true); 
-        $emp_id = -1;
-        $array_eductions = $profiles['educations'];
-        $array_exp = $profiles['experience'];
-        $array_skills = $profiles['skills'];
-
-        $user_id = Auth::user()->id;
-        if($emp_id == -1){
-            DB::beginTransaction();
-            try{
-                $employee = $this->createEmployee($profiles, $user_id);
-                $this->createEducations($array_eductions, $employee->id);
-                $this->createExperience($array_exp, $employee->id);
-                $this->createSkills($array_skills, $employee->id);
-                $this->updateUser($profiles, $user_id);
-                $this->addResumeWithProfile( $request,$formContent, $user_id);
-                DB::commit();
-            }catch(Exception $e){
-                DB::rollback();
-                throw $e;
-            }
-            return response()->json("Profile Created");
-
-        }else{
-            //Update Profile
-            DB::beginTransaction();
-            try{
-                $employee = $this->updateEmployee($profiles);
-                $this->updateEducations($array_eductions, $employee->id);
-                $this->updateExperience($array_exp, $employee->id);
-                $this->updateSkills($array_skills, $employee->id);
-                $this->updateUser($profiles, $user_id);
-                // $this->addResumeWithProfile($formContent, $user_id);
-
-                DB::commit();
-            }catch(Exception $e){
-                DB::rollback();
-                echo $e->getLine();
-                throw $e;
-            }
-
-
-        }
-        // return response()->json("Profile Controller");
-        // dd($request->all());
-    }
-
-    public function createEmployee($profiles, $user){
-        $first_name =  $profiles['first_name'];       
-        $email =  $profiles['email'];
-        $proffession =  $profiles['proffesion'];
-        $currentctc =  $profiles['currentctc'];
-        $location =  $profiles['locationPref'];
-        $last_name =  $profiles['last_name'];
-        $expYear =  $profiles['expYear'];
-        $expMonth =  $profiles['expMonth'];
-        $phone =  $profiles['phone'];
-        $expectedCtc =  $profiles['expectedctc'];
-        $noticeperiod =  $profiles['noticeperiod'];
-
-        $user = Employee::create([
-            'first_name' => $first_name,'last_name' => $last_name,'user_id' => $user,'proffession' => $proffession,'experience_year' => $expYear,
-            'experience_month' => $expMonth,'current_ctc' => $currentctc,'expected_ctc' => $expectedCtc,'location_prefered' => $location,
-            'notice_period' => $noticeperiod
+    public function addCareear(Request $request){
+        $validValues = $request->validate([
+            'industry' => 'required|numeric',
+            'position' => 'required|numeric',
+            'jobtype' => 'required|string',
+            'year' => 'required|numeric',
+            'month' => 'required|numeric',
+            'currctc' => 'required|numeric|between:0,99.99',
+            'expctc' => 'required|numeric|between:0,99.99',
+            'location' => 'required|numeric' 
         ]);
-        return $user;
-    }
-    public function createEducations($array_eductions, $empid){
-        for($ctr=0; $ctr < count($array_eductions); $ctr++){
-                $single_edu = $array_eductions[$ctr];
+        try{     
+            
+         if($request->post('career_id') == -1){
+            $empCareear = new EmpCareer;
+            $msg ='Career Detail added successfully';
+         }else{
+            $empCareear = EmpCareer::find($request->post('career_id'));
+            $msg ='Career Detail Updated successfully';
+         }                   
+         $empCareear->emp_id = Auth::user()->employee->id;
+         $empCareear->industry = $request->industry;
+         $empCareear->position = $request->position;
+         $empCareear->job_type = $request->jobtype;
+         $empCareear->experience_year = $request->year;
+         $empCareear->experience_month = $request->month;
+         $empCareear->current_ctc = $request->currctc;
+         $empCareear->expected_ctc = $request->expctc;
+         $empCareear->location_prefered = $request->location;
+         $empCareear->save();
 
-                $education = new Educations();
-                $education->emp_id = $empid;
-                $education->institude_name = $single_edu['institude'];
-                $education->qualification = $single_edu['qualification'];
-                $education->frm_date = $single_edu['from'];
-                $education->to_date = $single_edu['to'];
-                $education->university = $single_edu['university'];
-                $education->percent = $single_edu['percent'];
-                $education->save();
+         $request->session()->flash('success', $msg);  
+         return response()->json(['code'=>200, 'message'=> $msg ,'data' => $empCareear], 200);        
+        }catch(Exception $e){
+            return response()->json(['code'=>202, 'message'=>'Career not updated, please try again','data' => $empCareear], 202);
         }
     }
-    public function createExperience($array_exp, $empid){
-        for($ctr=0; $ctr < count($array_exp); $ctr++){
-            $single_exp = $array_exp[$ctr]; 
-            $exp =new Experience();
-            $exp->emp_id = $empid;
-            $exp->company_name = $single_exp['company'];
-            $exp->position = $single_exp['position'];
-            $exp->is_current = $single_exp['is_cuttent'];
-            $exp->from_date = (new Carbon('01-'.$single_exp['from']))->format('Y-m-d');
-            $exp->to_date = (new Carbon('01-'.$single_exp['to']))->format('Y-m-d');
-            $exp->location = $single_exp['expLocation'];
-            $exp->save();
-        }
+    public function editcareer($id){
+        $empCareer = EmpCareer::where('id', $id)->first();
+        return response()->json(['status'=>true, 'data' => $empCareer]);
     }
-    public function createSkills($array_skills, $empid){
-        for($ctr=0; $ctr < count($array_skills); $ctr++){
-            Userskills::create([
-                    'emp_id' => $empid,
-                    'skill_id' =>1    //$array_skills[$ctr]
-            ]);
-        }
-    }
-    public function updateUser($profiles, $user_id){
-        User::where('id', $user_id)
-             ->update(['name' => $profiles['first_name'].' '.$profiles['last_name'],'email'=> $profiles['email'], 'mobile' => $profiles['phone'] ]);
-    }
-    public function addResumeWithProfile($request,$formContent, $user_id){
 
-        if($request->hasFile('avtar') && $request->hasFile('resume')){
+
+    public function addEducations(Request $request){
+        $validValues = $request->validate([
+            'education' => 'required|numeric',
+            'qualification' => 'required|numeric',
+            'specification' => 'required|numeric',
+            'institude' => 'required|string',
+            'courseType' => 'required|string',
+            'passingyear' => 'required|digits:4|integer|min:1900|max:'.(date('Y')+1),
+            'percent' => 'required|numeric|between:0,99.99',
+        ]);
+        try{ 
+
+         if($request->post('edu_id') == -1){
+            $edu = Educations::where('education', $request->post('education'))
+                                ->where('emp_id', Auth::user()->employee->id)
+                                ->get();
+
+            foreach ($edu as $eduItems) {
+                if($request->post('education') == $eduItems->education){
+                    return response()->json(['code'=>202, 'message'=>'Education alredy exist, Please update perticuler education'], 202);
+                }
+            }
+            $empeducation = new Educations;
+            $msg ='Education Detail added successfully';
+         }else{
+            $empeducation = Educations::find($request->post('edu_id'));
+            $msg ='Education Detail Updated successfully';
+         }                   
+         $empeducation->emp_id = Auth::user()->employee->id;
+         $empeducation->education = $request->post('education');
+         $empeducation->qualification = $request->post('qualification');
+         $empeducation->specification = $request->post('specification');
+         $empeducation->institude = $request->post('institude');
+         $empeducation->coursetype = $request->post('courseType');
+         $empeducation->passingyear = $request->post('passingyear');
+         $empeducation->percent = $request->post('percent');
+         $empeducation->save();
+
+         $request->session()->flash('success', $msg);  
+         return response()->json(['code'=>200, 'message'=> $msg ,'data' => $empeducation], 200);        
+        }catch(Exception $e){
+            return response()->json(['code'=>202, 'message'=>'Education not updated, please try again','data' => $empeducation], 202);
+        }
+    }
+    public function editeducation($id){
+        $empEducation = Educations::where('id', $id)->first();
+        return response()->json(['status'=>true, 'data' => $empEducation]);
+    }
+
+    public function addExperience(Request $request){
+        if($request->has('iscutrrent')){
+            $val ='nullable';                  
+            $to = 'Present';
+        }else{
+            $to = $request->post('to');
+            $val ='required|date|before:today|after:from';
+        }
+
+       $validValues = $request->validate([
+            'company' => 'required|string',
+            'expposition' => 'required|string',
+            'from' => 'required|date',
+            'to' => $val,
+            'explocation' => 'required|numeric'
+        ]);
+        try{ 
+
+         if($request->post('exp_id') == -1){
+            $empExop = new Experience;
+            $msg ='Education Detail added successfully';
+         }else{
+            $empExop = Experience::find($request->post('exp_id'));
+            $msg ='Experience Detail Updated successfully';
+         }                   
+            $empExop->emp_id = Auth::user()->employee->id;
+            $empExop->company_name = $request->post('company');
+            $empExop->position = $request->post('expposition');
+            $empExop->is_current = $request->has('iscutrrent');
+            $empExop->from_date = $request->post('from');
+            $empExop->to_date = $to;
+            $empExop->location = $request->post('explocation');
+            $empExop->save();
+
+            $request->session()->flash('success', $msg);  
+            return response()->json(['code'=>200, 'message'=> $msg ,'data' => $empExop], 200);        
+        }catch(Exception $e){
+            echo $e->getMessage();
+            return response()->json(['code'=>202, 'message'=>'Experience not updated, please try again','data' => $empExop], 202);
+        }
+    }
+    public function editexperience($id){
+        $empExp = Experience::where('id', $id)->first();
+        return response()->json(['status'=>true, 'data' => $empExp]);
+    }
+
+// Skills
+    public function addSkills(Request $request){
+        $skills = $request->post('skills');
+        if(!$skills){
+            return response()->json(['code'=>202, 'message'=>'Skills not updated, please try again'], 202);
+        }
                
-            $avtar = $request->avtar->getClientOriginalName();
-            $resume = $request->resume->getClientOriginalName();
-            if(Auth::user()->avatar){
-                Storage::delete('/public/images/profiles/'.Auth::user()->avatar);
+            foreach ($skills as $skill) {
+                        $ifExist = Userskills::where('skill_id', $skill['value'])
+                                            ->where('emp_id', Auth::user()->employee->id)
+                                            ->first();
+                        if(!$ifExist){
+                            $empSkills = new Userskills;
+                            $empSkills->emp_id = Auth::user()->employee->id;
+                            $empSkills->skill_id = $skill['value'];
+                            $empSkills->save();
+                        }
+                        
             }
+  
+            $request->session()->flash('success', "Skills Added");  
+            return response()->json(['code'=>200, 'message'=> "Skills Added"] , 200);        
+        } 
+  
+    public function deleteSkills(Request $request){
+           $skill = $request->post('skillid');
 
-            if(Auth::user()->employee->resume){
-                Storage::delete('/public/files/resumes/'.Auth::user()->employee->resume);
-            }
-            $request->avtar->storeAs('images/profiles', Auth::user()->id.'_'.$avtar, 'public');
-            $user = Auth::user();
-            $user->avatar = $user_id.'_'. $avtar ;
-            $user->save();
-
-            $request->avtar->storeAs('files/resumes', Auth::user()->id.'_'.$resume, 'public');
-            $emp = Auth::user()->employee;
-            $emp->resume = $user_id.'_'. $resume ;
-            $emp->save();
-
-        }
-
-
+           $empExp = Userskills::find($skill)->delete();
+           return response()->json(['status'=>true, 'message' => "Skill Removed"]);
     }
 
+//Upload Resume
+    public function uploadResume(Request $request){
+        $validation = $request->validate([
+            'empresume'=> 'required|mimes:pdf,doc,docs|max:1048',
+        ]);
+        if($request->hasFile('empresume')){              
+            
+            $resume = $request->empresume->getClientOriginalName();
+            if(Auth::user()->employee->careers->resume){
+                Storage::delete('/public/files/resumes/'.Auth::user()->employee->careers->resume);
+            }
+            $request->empresume->storeAs('files/resumes', Auth::user()->employee->id.'_resume_'.$resume, 'public');
+            $emp = Auth::user()->employee->careers;
+            $emp->resume = Auth::user()->employee->id.'_resume_'.$resume ;
+            $emp->save();
+            $request->session()->flash('success','Resume Uploaded');
+            return response()->json(['code'=>200, 'message'=> "Resume Uploaded"], 200);
+        }
+    }
+// Upload Profil pic
+    public function uploadProfile(Request $request ){
+        
+        if ($request->hasFile('profile_pic')) {
+            if ($request->file('profile_pic')->isValid()) {
+                    
+                $validated = $request->validate([
+                    'profile_pic' => 'mimes:jpeg,png|max:1024',
+                ]);                      
+                $file = $request->file('profile_pic');
+                $filename = $file->getClientOriginalName();
+                $image_resize = Image::make($file->getRealPath());              
+                $image_resize->resize(300, 300);
+                if(Auth::user()->avatar){
+                    Storage::delete('/public/images/profiles/'.Auth::user()->avatar);
+                }
+                $image_resize->save(public_path().'/storage/images/profiles/' .Auth::user()->id.'_'.$filename);
+                $user = Auth::user();
+                $user->avatar = Auth::user()->id.'_'.$filename;
+                $user->save();
+                return response()->json(['success' => 'Your profile has been successfully Upload']);
+            }
+            return response()->json(['error' => 'Your profile not Uploaded']);
+        }
+
+    }
 
 }

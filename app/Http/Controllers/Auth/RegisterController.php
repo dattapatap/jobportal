@@ -144,6 +144,7 @@ class RegisterController extends Controller
                 session()->flash('error',"Duplicate Entry of Email/Mobile");
             else
                 session()->flash('error',"Invalid details, Please try again");
+                
             return redirect()->back()->withInput();
         }
     }

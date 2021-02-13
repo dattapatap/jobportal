@@ -31,5 +31,13 @@ class SkillsSeeder extends Seeder
             'id'=>'3',
             'description' => 'Bootstrap'
         ]);
+
+
+        DB::table('countries')->insert([
+            'id'=>'1',
+            'name' => 'India'
+        ]);
+
+
     }
 }

@@ -19,6 +19,7 @@ class CreateQuestionOptionsTable extends Migration
             $table->foreign('q_id')->references('id')->on('questions');
             $table->string('options');
             $table->integer('marks');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

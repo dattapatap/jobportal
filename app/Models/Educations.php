@@ -14,7 +14,18 @@ class Educations extends Model
 
     public function employee()
     {
-        return $this->belongsTo('App\Employee');
+        return $this->belongsTo(Employee::class);
+    }
+
+    public function educ(){
+        return $this->belongsTo(Education::class, 'education');
+    }
+
+    public function cour(){
+        return $this->belongsTo(Courses::class, 'qualification');
+    }
+    public function spec(){
+        return $this->belongsTo(CourseSpecifications::class, 'specification');
     }
 
 }

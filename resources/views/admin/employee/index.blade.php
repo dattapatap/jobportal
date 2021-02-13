@@ -70,7 +70,7 @@
             }
         }, 
         columns: [
-            {data: 'id', name: '#'},
+            {data: 'DT_RowIndex', name: '#'},
             {data: 'action', name: 'Action', orderable: false, searchable: false},
             {data: 'first_name', name: 'First Name'},
             {data: 'last_name', name: 'Last Name'},

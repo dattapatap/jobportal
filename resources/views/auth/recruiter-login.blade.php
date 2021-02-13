@@ -11,18 +11,18 @@
                         <div class="p-4 mb-5">
                             <h4 class="text-left font-weight-semibold fs-16">Login With</h4>
                             <div class="btn-list d-sm-flex">
-                                <a href="{{ url('/loginEmployer/google') }}" class="btn btn-secondary mb-sm-0"><i
+                                <a href="{{ url('/loginEmployer/google/rec') }}" class="btn btn-secondary mb-sm-0"><i
                                         class="fa fa-google fa-1x mr-2"></i> Google</a>
 
-                                <a href="{{ url('/loginEmployer/facebook') }}" class="btn btn-info mb-0"><i
+                                <a href="{{ url('/loginEmployer/facebook/rec') }}" class="btn btn-info mb-0"><i
                                         class="fa fa-facebook fa-1x mr-2"></i> Facebook</a>
                             </div>
                         </div>
                         <hr class="divider">
                         @if (\Session::has('error'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-warning">
                                 <ul>
-                                    <li>{!! \Session::get('error') !!}</li>
+                                    <li style="font-size: 12px;">{!! \Session::get('error') !!}</li>
                                 </ul>
                             </div>
                         @endif

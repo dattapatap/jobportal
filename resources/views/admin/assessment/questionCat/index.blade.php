@@ -65,7 +65,7 @@
             }
         }, 
         columns: [
-            {data: 'id', name: '#'},
+            {data: 'DT_RowIndex', name: '#'},
             {data: 'action', name: 'Action', orderable: false, searchable: false},
             {data: 'name', name: 'Category'},
             {data: 'created_at', name: 'Created Date'},

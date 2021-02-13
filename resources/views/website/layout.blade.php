@@ -49,9 +49,9 @@
 
 <body class="main-body">
     <!-- Loader -->
-     <div id="global-loader">
+     {{-- <div id="global-loader">
         <img src="{{ asset('assets/images/loader.svg') }}" class="loader-img" alt="">
-    </div>
+    </div> --}}
 
     <!-- Popup Intro-->
 

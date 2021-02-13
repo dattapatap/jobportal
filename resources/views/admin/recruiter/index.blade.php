@@ -70,7 +70,7 @@
                }
             }, 
             columns: [
-                {data: 'id', name: 'Sl No'},
+                {data: 'DT_RowIndex', name: 'Sl No'},
                 {data: 'action', name: 'Action', orderable: false, searchable: false},
                 {data: 'name', name: 'Company'},
                 {data: 'contact_person', name: 'Contact Person'},

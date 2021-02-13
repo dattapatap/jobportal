@@ -21,4 +21,9 @@ class Userskills extends Model
         return $this->belongsTo(Employee::class, 'emp_id');
     }
 
+   public function userskills(){
+       return $this->belongsTo(Skills::class, 'skill_id');
+   }
+
+
 }

@@ -17,11 +17,12 @@ class CreateEducationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('emp_id');
             $table->foreign('emp_id')->references('id')->on('employee');
-            $table->string('institude_name');
-            $table->string('qualification');
-            $table->string('frm_date');
-            $table->string('to_date');
-            $table->string('university');
+            $table->integer('education');
+            $table->integer('qualification');
+            $table->integer('specification');            
+            $table->string('institude');
+            $table->string('coursetype');
+            $table->year('passingyear');
             $table->decimal('percent', 5,2);
             $table->softDeletes();
             $table->timestamps();
