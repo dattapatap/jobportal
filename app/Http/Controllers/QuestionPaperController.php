@@ -80,12 +80,12 @@ class QuestionPaperController extends Controller
                 $qp_ques->save();
             }
             DB::commit();
-            return back()->with(['success'=>"Question Paper Created Successfully"]);   
-
+            $request->session()->flash('success',"Question Paper created Successfully");   
+            return redirect('/admin/qp');
         }catch(\Exception $ex){
             DB::rollBack();
-            // dump($ex->getMessage());
-            return redirect()->back()->withInput()->with(['error'=>'QuestionPaper not updated, please try again']);
+            // echo $ex->getMessage();
+            return redirect()->back()->withInput()->with(['error'=>'QuestionPaper not created, please try again']);
         }                 
     }
 
@@ -142,8 +142,10 @@ class QuestionPaperController extends Controller
     }
 
     public function delete($id){
-       $questions = Questions::find($id)->delete();
+       $questions = QuestionPaper::find($id)->delete();
        return back()->with('success', 'Question Paper deleted successfully!');
     }
 
+
+    
 }

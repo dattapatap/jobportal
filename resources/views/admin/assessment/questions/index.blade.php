@@ -34,6 +34,7 @@
                                         <th>Question</th>
                                         <th>Tot Options</th>
                                         <th>Q Category</th>
+                                        <th>Q Type</th>
                                         <th>Created Date</th>
                                     </tr>
                                 </thead>
@@ -72,6 +73,7 @@
             {data: 'name', name: 'Questions'},
             {data: 'tot_options', name: 'Tot Options'},
             {data: 'category', name: 'Q Category'},
+            {data: 'q_type', name: 'Q Type'},
             {data: 'created_at', name: 'Created Date'},
         ],
     });

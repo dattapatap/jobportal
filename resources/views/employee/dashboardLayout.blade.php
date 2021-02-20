@@ -30,16 +30,22 @@
             <a href="{{ route('employee.profile') }}" class=" d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Jobs
             </a>
+            <a href="{{ url('employee/assessment') }}" class=" d-flex border-bottom">
+                <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Take Assessment
+            </a>
+
             <a href="{{ route('logout') }}"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="d-flex">
                 <span class="icon1 mr-2"><i class="typcn typcn-power-outline fs-20"></i></span> Logout
             </a>
+
+
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
             </form>
         </div>
     </div>
-    <div class="card my-select">
+    {{-- <div class="card my-select">
         <div class="card-header">
             <h3 class="card-title">Search Sutaible Jobs</h3>
         </div>
@@ -68,5 +74,5 @@
                 <a href="#" class="btn btn-block btn-primary">Search</a>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>

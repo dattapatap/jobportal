@@ -4,36 +4,39 @@
     <style>
        .select2-results__option[aria-selected=true] {
         display: none;
-    }
+        }
+        .table td {
+            padding: 0px;
+        }
+        .ms-choice{
+            width: 0px !important;
+            height: 0px !important;
+        }
+        .ms-drop ul>li.multiple {
+            display: block;
+            float: left;
+            width: 50% !important;
+        }
+        .alert-message {
+            color: red;
+        }
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            margin-top: .25rem;
+            font-size: 87.5%;
+            color: #ff382b;
+        }
+
+
 
     </style>
+ 
     <div class="container">
         <div class="row ">          
             @include('employee.dashboardLayout')
             <style>
-                .table td {
-                    padding: 0px;
-                }
-                .ms-choice{
-                    width: 0px !important;
-                    height: 0px !important;
-                }
-                .ms-drop ul>li.multiple {
-                    display: block;
-                    float: left;
-                    width: 50% !important;
-                }
-                .alert-message {
-                    color: red;
-                }
-                .invalid-feedback {
-                    display: block;
-                    width: 100%;
-                    margin-top: .25rem;
-                    font-size: 87.5%;
-                    color: #ff382b;
-                }
-
+              
 
             </style>
             <div class="col-lg-9 col-md-12 col-md-12">
@@ -69,7 +72,7 @@
                                         @else
                                             <img class="card-profile-img" src="{{ asset('assets/images/users/male/25.jpg')}}" alt="img" style="max-width: 9rem;"> 
                                         @endif
-                                        <a href="#" class="btn btn-success btn-sm mt-2 btnProfilePic"><i class="fa fa-pencil" aria-hidden="true"></i> Edit profile</a>
+                                        <a href="#" class="btn btn-primary btn-sm mt-2 btnProfilePic"><i class="fa fa-pencil" aria-hidden="true"></i> Edit profile</a>
                                     </div>
                                     <div class="col-lg-9">
                                         @if($user->employee)
@@ -314,16 +317,16 @@
                         <div class="card-header ">
                             <h3 class="card-title"> Resume </h3>
                             <div class="card-options">
-                                @if(!$emp->careers->resume)
+                                @if(!isset($emp->careers->resume))
                                    <a class="btn btn-light btn-sm btn-addResume"><i class="fa fa-plus"></i> Add </a>
                                 @else                                  
-                                   <a class="btn btn-light btn-sm btn-addSkills" ><i class="fa fa-plus"></i> Add New</a>
+                                   <a class="btn btn-light btn-sm btn-addResume" ><i class="fa fa-plus"></i> Add New</a>
                                 @endif
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="form-group resume-upload">
-                                @if($emp->careers->resume)
+                                @if(isset($emp->careers->resume))
                                    <a class="fa fa-user"> {{ "Resume"}}</a>
                                    <a href="{{URL::to('storage/files/resumes/'.$emp->careers->resume)}}" target="_blank" class="float-right" >
                                         <button class="btn"><i class="fa fa-download"></i> Download Resume</button>
@@ -816,7 +819,7 @@
     <div class="modal-dialog" role="document" style="min-width: 650px !important;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="example-Modal3">Skills</h5>
+                <h5 class="modal-title" id="example-Modal3">Upload Resume</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

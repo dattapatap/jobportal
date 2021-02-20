@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Questions extends Model
 {
-    use SoftDeletes;
     use HasFactory;
+    use SoftDeletes;
+
 
     public function category(){
         return $this->belongsTo(QuestionCategory::class, 'qc_id');

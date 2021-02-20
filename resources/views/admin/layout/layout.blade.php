@@ -189,6 +189,9 @@
                                 <a href="{{url('admin/questions')}}" class="slide-item">Questions</a>
                             </li>
                             <li>
+                                <a href="{{url('admin/testslots')}}" class="slide-item">Test Slots</a>
+                            </li>
+                            <li>
                                 <a href="{{url('admin/qpcategory')}}" class="slide-item">QP Category</a>
                             </li>
                             <li>

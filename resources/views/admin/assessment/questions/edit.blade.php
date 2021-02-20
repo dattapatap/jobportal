@@ -46,7 +46,7 @@
                         @endif
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Question Category</label>
                                         <select class="form-control select2" name="question_category" id="question_category"  placeholder="select category">
@@ -59,6 +59,23 @@
                                         </select>
                                     </div>
                                 </div>  
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Question Type</label>
+                                        <select class="form-control select2" name="question_type" id="question_type"  placeholder="select exp">
+                                            <option value=""> Select question type </option>
+                                            @foreach ($type as $item)
+                                                <option value=" {{ $item->id }} "  @if($ques->q_type == $item->id ) selected @endif > {{ $item->description }} </option>                                                    
+                                            @endforeach
+                                        </select>
+                                        @error('question_type')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>  
+
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <strong>Question</strong>

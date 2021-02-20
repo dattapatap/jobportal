@@ -21,7 +21,7 @@ class QuestionsController extends Controller
                    ->with('category')
                    ->orderBy('questions.id','desc')
                    ->get();
-                  
+
            return Datatables::of($data)
                   ->addIndexColumn()
                   ->addColumn('action', function($data){
@@ -35,6 +35,10 @@ class QuestionsController extends Controller
                    ->editColumn('category', function ($data) {
                       return $data->category->name;
                    })
+                   ->editColumn('q_type', function ($data) {
+                    $types = DB::table('question_types')->where('id' , $data->q_type)->first();
+                    return $types->description;
+                   })
                   ->rawColumns(['action'])
                   ->make(true);
        }
@@ -45,7 +49,8 @@ class QuestionsController extends Controller
     public function create()
     {  
          $category = QuestionCategory::where('deleted_at', null)->get();
-        return view('admin.assessment.questions.create', compact('category'));
+         $type = DB::table('question_types')->get();
+        return view('admin.assessment.questions.create', compact('category', 'type'));
     }
 
 
@@ -56,6 +61,7 @@ class QuestionsController extends Controller
 
             $question  = new Questions();
             $question->qc_id = $request->question_category;
+            $question->q_type = $request->question_type;
             $question->name = $request->question;
             $question->tot_options = count($request->opt);
 
@@ -84,8 +90,9 @@ class QuestionsController extends Controller
 
     public function edit($id){
             $category = QuestionCategory::where('deleted_at', null)->get();            
+            $type = DB::table('question_types')->get();            
             $ques = Questions::where(['id' => $id])->with('options')->firstOrFail();
-            return view('admin.assessment.questions.edit', compact('category', 'ques'));
+            return view('admin.assessment.questions.edit', compact('category', 'type', 'ques'));
     }
 
     public function update(Request $request){
@@ -93,6 +100,7 @@ class QuestionsController extends Controller
             DB::beginTransaction();
             $question = Questions::where(['id'=>$request->post('question_id')])->first();
             $question->qc_id = $request->post('question_category');
+            $question->q_type = $request->post('question_type');
             $question->name = $request->post('question');
             $question->tot_options = count($request->post('opt'));
             $question->save();

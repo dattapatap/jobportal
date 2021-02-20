@@ -17,6 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('qc_id');
             $table->foreign('qc_id')->references('id')->on('question_categories');
+            $table->integer('type');
             $table->text('name');
             $table->integer('tot_options');
             $table->softDeletes();

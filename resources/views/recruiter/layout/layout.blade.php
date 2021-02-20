@@ -142,17 +142,11 @@
 					<div class="app-sidebar__user clearfix">
 						<div class="dropdown user-pro-body">
 							<div>
-
 								@if(Auth::user()->avatar)
 									<img class="card-profile-img" src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}"  alt="user-img" class="avatar avatar-lg brround">
 								@else
 									<img  alt="user-img" class="avatar avatar-lg brround" src="{{ asset('assets/images/users/male/25.jpg')}}"> 
 								@endif
-
-								<a href="#" class="profile-img">
-									<span class="fa fa-pencil" aria-hidden="true"></span>
-								</a>
-								
 							</div>
 							<div class="user-info">
 								<h2>{{  Auth::user()->name  }}</h2>
@@ -160,30 +154,28 @@
 						</div>
 					</div>
 					<ul class="side-menu">
-
 						<li class="active">
 							<a class="side-menu__item" href="{{ url('admin/dashboard')}}"><i class="side-menu__icon fa fa-tachometer"></i><span class="side-menu__label"> Dashboard</span></a>
 						</li>
 						<li>
 							<a class="side-menu__item" href="{{ url('recruiter/profile') }}"><i class="side-menu__icon fa fa-id-card"></i><span class="side-menu__label">Profile</span></a>
 						</li>
-						<li>
-							<a class="side-menu__item" href="{{ url('recruiter/postedjobs') }}"><i class="side-menu__icon fa fa-briefcase"></i><span class="side-menu__label">Posted Jobs</span></a>
-						</li>
-						<li>
-							<a class="side-menu__item" href="{{ url('recruiter/packages') }}"><i class="side-menu__icon fa fa-inr"></i><span class="side-menu__label">Packages</span></a>
-						</li>
-
-
-					</ul>
-					
+						@if(Auth::user()->recruiter->status==1)
+							<li>
+								<a class="side-menu__item" href="{{ url('recruiter/postedjobs') }}"><i class="side-menu__icon fa fa-briefcase"></i><span class="side-menu__label">Jobs List</span></a>
+							</li>
+							<li>
+								<a class="side-menu__item" href="{{ url('recruiter/packages') }}"><i class="side-menu__icon fa fa-inr"></i><span class="side-menu__label">Packages</span></a>
+							</li>
+							<li>
+								<a class="side-menu__item" href="{{ url('recruiter/viewdcandidate') }}"><i class="side-menu__icon fa fa-inr"></i><span class="side-menu__label">Viewd Candidates</span></a>
+							</li>
+						@endif
+					</ul>					
 				</aside>
-
 
 				<!-- Applications Content Body -->
 				@yield('content');
-
-				<!-- End Main Content -->
 			</div>
 			<!--footer-->
 			<footer class="footer">

@@ -21,7 +21,6 @@ class CreateQuestionPapersTable extends Migration
             $table->integer('no_questions');
             $table->time('max_time');
             $table->integer('max_marks');
-            $table->integer('qual_marks');
             $table->softDeletes();
             $table->timestamps();
         });

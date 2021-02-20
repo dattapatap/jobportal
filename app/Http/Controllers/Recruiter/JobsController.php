@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Recruiter;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\Industries;
+use App\Models\JobPositions;
 use App\Models\Jobs;
 use App\Models\Recruiter;
 use App\Models\User;
@@ -23,14 +26,19 @@ class JobsController extends Controller
    }
 
    public function viewjobs(Jobs $jobs){
-        return view('recruiter.viewjobs', compact('jobs'));
+
+       return view('recruiter.viewjobs', compact('jobs'));
    }
 
 
 
    
    public function viewnewjobform(){
-        return view('recruiter.managejob');
+        $industry = Industries::where('deleted_at',null)->get();
+        $positions = JobPositions::where('deleted_at',null)->get();
+        $city = City::where('deleted_at',null)->get();
+
+        return view('recruiter.managejob', compact('industry','positions', 'city'));
    }
    public function create(Request $request){
             $request->validate([

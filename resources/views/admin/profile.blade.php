@@ -1,5 +1,6 @@
 @extends('admin.layout.layout')
 @section('content')
+
 <div class="app-content">
     <div class="side-app">
         <div class="page-header">

@@ -56,11 +56,11 @@
                                   <div class="col-sm-6 col-md-4">
                                       <div class="form-group">
                                           <label class="form-label">Job Role</label>
-                                          <select name="job_role" value="{{ old('job_role') }}" class="form-control select2" style="width: 100%">
+                                          <select name="job_role" class="form-control select2" style="width: 100%">
                                                 <option value="" selected> select  </option>
-                                                <option value="1"> Software Developer  </option>
-                                                <option value="2"> System Admin  </option>
-                                                <option value="3"> Human Resource </option>
+                                                @foreach ($positions as $item)
+                                                    <option value="{{ $item->id }}" @if(old('job_role')==$item->id) selected @endif >  {{ $item->name }} </option>    
+                                                @endforeach                                                
                                         </select>
                                           @error('job_role')
                                               <span class="invalid-feedback" role="alert">
@@ -72,7 +72,12 @@
                                   <div class="col-sm-6 col-md-4">
                                       <div class="form-group">
                                           <label class="form-label">Industry</label>
-                                          <input type="text" name="job_industry" value="{{ old('job_industry') }}" class="form-control" placeholder="Industry" >
+                                          <select name="job_industry" class="form-control select2" style="width: 100%">
+                                                <option value="" selected> select  </option>
+                                                @foreach ($industry as $item)
+                                                    <option value="{{ $item->id }}" @if(old('job_industry')==$item->id) selected @endif >  {{ $item->name }} </option>    
+                                                @endforeach                                                
+                                          </select>
                                           @error('job_industry')
                                               <span class="invalid-feedback" role="alert">
                                                   <strong>{{ $message }}</strong>
@@ -85,7 +90,7 @@
                                           <label class="form-label">Job Type</label>
                                           <select name="job_type" id="job_type" class="form-control">
                                                 <option value="" selected> select  </option>
-                                                <option value="Full Time" {{ old('job_type') == 'Fill Time' ? 'selected' : '' }}> Full Time  </option>
+                                                <option value="Full Time" {{ old('job_type') == 'Full Time' ? 'selected' : '' }}> Full Time  </option>
                                                 <option value="Part Time" {{ old('job_type') == 'Part Time' ? 'selected' : '' }}> Part Time  </option>
                                                 <option value="Freelancer" {{ old('job_type') == 'Freelancer' ? 'selected' : '' }}> Freelancer </option>
                                           </select>
@@ -194,7 +199,12 @@
                                   <div class="col-md-4">
                                       <div class="form-group">
                                           <label class="form-label">Location</label>
-                                          <input type="text" name="job_location" value="{{ old('job_location') }}" class="form-control" placeholder="Locations" >
+                                          <select name="job_location" class="form-control select2" style="width: 100%">
+                                                <option value="" selected> select  </option>
+                                                @foreach ($city as $item)
+                                                    <option value="{{ $item->id }}" @if(old('job_location')==$item->id) selected @endif >  {{ $item->name }} </option>    
+                                                @endforeach                                                
+                                          </select>
                                           @error('job_location')
                                               <span class="invalid-feedback" role="alert">
                                                   <strong>{{ $message }}</strong>

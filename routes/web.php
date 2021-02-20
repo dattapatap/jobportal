@@ -104,8 +104,8 @@ Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'adm
     Route::post('course/specifications', [App\Http\Controllers\CourseSpecificationsController::class, 'store'])->name('specification.process');
     Route::get('courses/specifications/delete/{jobpositions}', [App\Http\Controllers\CourseSpecificationsController::class, 'delete']);
 
-
-
+    Route::get('testslots/status/{id}', [App\Http\Controllers\TestSlotsController::class, 'status']);
+    Route::resource('testslots', App\Http\Controllers\TestSlotsController::class);
 
 
     Route::get('profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile');
@@ -155,13 +155,23 @@ Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee'
     Route::post('profile/uploadResume', [App\Http\Controllers\Employee\ProfileController::class, 'uploadResume']);  
 
     Route::post('profile/profilpicupload', [App\Http\Controllers\Employee\ProfileController::class, 'uploadProfile']);  
-
-
     Route::get('profile/getAllCoursesByEducation', [App\Http\Controllers\CoursesController::class, 'getAllByEducation']);
     Route::get('profile/getAllSpecByCourses', [App\Http\Controllers\CourseSpecificationsController::class, 'getAllBySpecifications']);
+    
+    
+    //Assessment
+    Route::get('assessment', [App\Http\Controllers\Employee\Assessment::class, 'index']);
+    Route::post('assessment/schedule', [App\Http\Controllers\Employee\Assessment::class, 'scheduleTest']);
+    Route::post('assessment/updateTestStatus', [App\Http\Controllers\Employee\Assessment::class, 'updateTestStatus']);
+    
+    Route::get('assessment/startpage', [App\Http\Controllers\Employee\Assessment::class, 'testStartPage']);
+    Route::get('assessment/start', [App\Http\Controllers\Employee\Assessment::class, 'startTest']);
+    Route::post('assessment/updateRemaningTime', [App\Http\Controllers\Employee\TestFactoryController::class, 'updateRemainingTime']);
+    Route::post('assessment/nextQuestion', [App\Http\Controllers\Employee\TestFactoryController::class, 'getNextQuestions'])->name('assessment.nextQuestion');
+  
+    Route::get('assessment/testpage', function(){ return view('employee.assessment.testpage'); });
+    Route::get('assessment/testTaken', function(){ return view('employee.assessment.testTaken');  });
+
    
 
 });
-
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

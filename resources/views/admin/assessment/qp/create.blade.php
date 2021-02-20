@@ -121,7 +121,7 @@ div.scroll {
                                     <div class="col-md-12">
                                         <div class="form-group mb-4">
                                             <label class="form-label"> Max Test Time</label></label>
-                                            <input type="text" name="test_time" id="test_time" value="{{ old('test_time') }}"  class="form-control" placeholder="HH:MM:SS" onkeypress="formatTime(this)" MaxLength="5" >
+                                            <input type="text" name="test_time" id="test_time" value="{{ old('test_time') }}"  class="form-control" placeholder="HH:MM:SS" onkeypress="formatTime(this)" MaxLength="8" >
                                             @error('test_time')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

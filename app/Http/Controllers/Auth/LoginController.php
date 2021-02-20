@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\Recruiter;
 use App\Models\User;
+use App\Notifications\UserRegistration;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -13,6 +15,7 @@ use \Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {    
@@ -64,7 +67,7 @@ class LoginController extends Controller
                 return redirect()->route('recruiter.dashboard');
             }else{
                 $this->guard()->logout();
-                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
+                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput()->withPassword();   
             }
         }else{
            return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
@@ -92,15 +95,20 @@ class LoginController extends Controller
 
 
 
+
+
+
+
+
     //Social Logins
     public function SocialRedirectEmployer($provider)
     {
-        session()->put('role_id', "2");
+        cache()->add('role', '2', 200);
         return Socialite::driver($provider)->redirect();
     }
     public function SocialRedirectEmp($provider)
-    {
-        session()->put('role_id', "3");
+    {       
+        cache()->add('role', '3', 200);
         return Socialite::driver($provider)->redirect();
     }
 
@@ -108,9 +116,9 @@ class LoginController extends Controller
         $userSocial =   Socialite::driver($provider)->stateless()->user();
         $users = User::where(["social->{$provider}->id" => $userSocial->id, ])->first();
         if (!$users) 
-            $users = User::where(['email' => $userSocial->email,])->first();
- 
-        $role = session()->get('role_id');
+            $users = User::where(['email' => $userSocial->email,])->first(); 
+
+        $role = Cache::get('role');
         if($users){
             if($users->role_id == $role){
                 Auth::login($users);
@@ -126,30 +134,40 @@ class LoginController extends Controller
                     return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, Duplicate user');                    
             }   
         }else{
+            if (!$userSocial->email) {
+                if($role == 3)
+                    return redirect()->Route('login')->with('error','email not not registered email not social');
+                else
+                    return redirect()->Route('recr-login')->with('error','email not not registered email not social');
+            }
             try {
                 DB::beginTransaction();  
+
                 $user = new User();
                 $user->name = $userSocial->name;
                 $user->email = $userSocial->email;
                 $user->role_id = $role;
                 $user->social =  json_encode([$provider => ['id' => $userSocial->id,]]);
                 $user->save();
-                if($role == 3){
-                    DB::table('employee')->insert(['first_name'=> $user->name, 'user_id'=> $user->id]);
-                }else if($role == 2){
-                  DB::table('recruiters')->insert(['company_name'=> $user->name, 'user_id'=> $user->id]);
+
+                if($user->role_id == 3){
+                    DB::table('employee')->insert(['first_name'=> $user->name, 'user_id'=> $user->id, 'registerd_date'=> Carbon::now()]);
+                }else if($user->role_id == 2){
+                    DB::table('recruiters')->insert(['company_name'=> $user->name, 'user_id'=> $user->id]);
                 }else{
                     return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, duplicate user');                    
                 }
                 DB::commit();
+
+                $user->notify(new UserRegistration($user));
                 Auth::login($user);
                 if(Auth::check() && Auth::user()->role_id == 2 )
                     return redirect()->to('recruiter/dashboard');
                 else if(Auth::check() && Auth::user()->role_id == 3 )
                     return redirect()->to('employee/dashboard');
-
-            }catch (\Exception $e) {
+            }catch (Exception $e) {
                 DB::rollback();
+                echo $e->getMessage();
                 if($role == 3)
                     return redirect()->Route('login')->with('error','Invalid Authenticate with duplicate user');
                 else

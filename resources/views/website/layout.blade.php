@@ -436,8 +436,8 @@
     <script src="{{ asset('assets/plugins/fileuploads/js/dropfy-custom.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
-    <script src="{{ asset('assets/js/upload.js') }}"></script>
-    <script src="{{ asset('assets/js/swipe.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/upload.js') }}"></script> --}}
+    {{-- <script src="{{ asset('assets/js/swipe.js') }}"></script> --}}
     <!-- Scripts Js-->
     <script src="{{ asset('assets/js/scripts2.js') }}"></script>    
     

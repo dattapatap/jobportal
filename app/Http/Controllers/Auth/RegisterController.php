@@ -7,12 +7,15 @@ use App\Models\Employee;
 use App\Models\Recruiter;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Notifications\UserRegistration;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class RegisterController extends Controller
@@ -21,8 +24,6 @@ class RegisterController extends Controller
     protected $redirectTo;
     public function __construct()
     {
-        // $this->middleware('guest');
-
         if(Auth::check() && Auth::user()->role_id == 1 ){
             $this->redirectTo = route('admin.dashboard');
         } else if(Auth::check() && Auth::user()->role_id == 2 ){
@@ -32,8 +33,7 @@ class RegisterController extends Controller
         }else{
             $this->redirectTo = route('login');
         }
-        $this->middleware('guest')->except('logout');
-        
+        $this->middleware('guest')->except('logout');        
     }
 
     /**
@@ -74,34 +74,36 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
-
-
-    
-
     protected function employeeRegister(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|numeric|max:9999999999|unique:users',
+            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10|unique:users',
             'password' => 'required|string|min:8|confirmed',            
             'password_confirmation' => 'required',
         ]);
+
+        DB::beginTransaction();
         try{
             $user = User::create([
-                        'name' => $request->name,
-                        'role_id' => 3,
-                        'email' => $request->email,
-                        'mobile' => $request->mobile,
-                        'password' => Hash::make($request->password),
-                    ]);       
+                'name' => $request->name,
+                'role_id' => 3,
+                'email' => $request->email,
+                'mobile' => $request->mobile,
+                'password' => Hash::make($request->password),
+            ]);       
 
-            Employee::create([
+            $employee = Employee::create([
                 'first_name' => $request->name,
-                'user_id' => $user->id
+                'user_id' => $user->id,
+                'registerd_date' => Carbon::now(),
             ]);
+            $user->notify(new UserRegistration($user));
+            DB::commit();
             Auth::login($user);
             return redirect()->to('employee/dashboard');
-        }catch(Exception $e){
+        }catch(\Exception $e){
+            DB::rollBack();
             $errorCode = $e->errorInfo[1];
             if($errorCode == 1062)
                 session()->flash('error',"Duplicate Entry of Email/Mobile");
@@ -118,11 +120,11 @@ class RegisterController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'mobile' => 'required|numeric|max:9999999999|unique:users',
+            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10|unique:users',
             'password' => 'required|string|min:8|confirmed',            
             'password_confirmation' => 'required',
         ]);
-
+        DB::beginTransaction();
         try{            
             $user = User::create([
                         'name' => $request->name,
@@ -132,19 +134,23 @@ class RegisterController extends Controller
                         'password' => Hash::make($request->password),
                     ]);       
 
-            Recruiter::create([
-                'company_name' => $request->name,
-                'user_id' => $user->id
-            ]);
+            $recruiter = Recruiter::create([
+                            'company_name' => $request->name,
+                            'user_id' => $user->id
+                         ]);
+            DB::commit();
+
+            $user->notify(new UserRegistration($user));
+
             Auth::login($user);
             return redirect()->to('recruiter/dashboard');
         }catch(Exception $e){
+             DB::rollBack();
              $errorCode = $e->errorInfo[1];
             if($errorCode == 1062)
                 session()->flash('error',"Duplicate Entry of Email/Mobile");
             else
-                session()->flash('error',"Invalid details, Please try again");
-                
+                session()->flash('error',"Invalid details, Please try again");                
             return redirect()->back()->withInput();
         }
     }
