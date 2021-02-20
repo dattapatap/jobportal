@@ -1,7 +1,109 @@
 @extends('recruiter.layout.layout')
 @section('content')
+<style>
+    .dropdown-menu {
+		border-radius: 0;
+	}
+	.multiselect-native-select {
+		position: relative;
+		select {
+			border: 0 !important;
+			clip: rect(0 0 0 0) !important;
+			height: 1px !important;
+			margin: -1px -1px -1px -3px !important;
+			overflow: hidden !important;
+			padding: 0 !important;
+			position: absolute !important;
+			width: 1px !important;
+			left: 50%;
+			top: 30px;
+		}
+	}
+	.multiselect-container {
+		position: absolute;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		.input-group {
+			margin: 5px;
+		}
+		li {
+			padding: 0;
+			.multiselect-all {
+				label {
+					font-weight: 700;
+				}
+			}
+			a {
+				padding: 0;
+				label {
+					margin: 0;
+					height: 100%;
+					cursor: pointer;
+					font-weight: 400;
+					padding: 3px 20px 3px 40px;
+					input[type=checkbox] {
+						margin-bottom: 5px;
+					}
+				}
+				label.radio {
+					margin: 0;
+				}
+				label.checkbox {
+					margin: 0;
+				}
+			}
+		}
+		li.multiselect-group {
+			label {
+				margin: 0;
+				padding: 3px 20px 3px 20px;
+				height: 100%;
+				font-weight: 700;
+			}
+		}
+		li.multiselect-group-clickable {
+			label {
+				cursor: pointer;
+			}
+		}
+	}
+	.btn-group {
+		.btn-group {
+				.multiselect.btn {
+					border-top-left-radius: 4px;
+					border-bottom-left-radius: 4px;
+				}
+		}
+	}
+	.form-inline {
+		.multiselect-container {
+			label.checkbox {
+				padding: 3px 20px 3px 40px;
+			}
+			label.radio {
+				padding: 3px 20px 3px 40px;
+			}
+			li {
+				a {
+					label.checkbox {
+						input[type=checkbox] {
+							margin-left: -20px;
+							margin-right: 0;
+						}
+					}
+					label.radio {
+						input[type=radio] {
+							margin-left: -20px;
+							margin-right: 0;
+						}
+					}
+				}
+			}
+		}
+	}
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css" />
+</style>
 <div class="app-content">
     <div class="side-app">
         <div class="page-header">
@@ -45,7 +147,7 @@
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="form-label">Skills</label>
-                                                    <select class="form-control select2"  id="skills" name="skills" multiple style="width: 100%">
+                                                    <select class="form-control"  id="skills" name="skills" multiple style="width: 100%">
                                                         @foreach ($skills as $item)
                                                                 <option value="{{$item->id}}"> {{ $item->description}} </option>
                                                         @endforeach
@@ -147,8 +249,15 @@
 <script>
     $(document).ready(function(){
         $('.select2').select2();
+
+        $('#skills').multiselect({
+            buttonWidth : '160px',
+            includeSelectAllOption : true,
+            nonSelectedText: 'Select an Option'
+        });
+
     })
-    $('#framework').multiselect();
+
 
 </script>
 @endsection
