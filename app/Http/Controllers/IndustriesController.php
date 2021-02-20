@@ -26,13 +26,13 @@ class IndustriesController extends Controller
                    })
                   ->rawColumns(['action'])
                   ->make(true);
-       }    
+       }
        return view('admin.others.industry.index');
     }
 
 
     public function manageIndustries (Request $request, $id='')
-    {   
+    {
         if($id > 0){
             $arr = Industries::where(['id' => $id])->get();
             $result['qc_name'] =$arr['0']->name;
@@ -71,15 +71,15 @@ class IndustriesController extends Controller
                 $msg = "Industry Saved Successfully";
             }
             $qc->name = $request->name;
-            $qc->save();  
-            $request->session()->flash('success',$msg);   
-            return redirect('/admin/industries');         
+            $qc->save();
+            $request->session()->flash('success',$msg);
+            return redirect('/admin/industries');
         }
     }
 
     public function delete(Industries $industries)
     {
        $industries->delete();
-       return back()->with(['success'=>"Industry Deleted Successfully"]);   
+       return back()->with(['success'=>"Industry Deleted Successfully"]);
     }
 }

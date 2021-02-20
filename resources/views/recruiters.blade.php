@@ -27,8 +27,8 @@
 										<div class="">
 											<div class="p-5 bg-white item2-gl-nav d-flex">
 												<h6 class="mb-0 mt-3">Showing <b>1 to 10</b> of 30 Entries</h6>
-												
-												
+
+
 											</div>
 										</div>
 									</div>
@@ -58,7 +58,7 @@
 															<div class="card-body table-responsive border-top">
 																<h4>Skills/Roles I hire for :</h4>
 
-bpo, Call Centre, fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
+                                                    po, Call Centre, fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
 																<div class="mt-3">
 																	<a href="#" class="btn btn-danger icons mt-1 mb-1" data-toggle="modal" data-target="#report">Follow Now</a>
 																	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#contact"> Send Message</a>
@@ -92,7 +92,7 @@ bpo, Call Centre, fresher, international call centre, Customer Support, Customer
 															<div class="card-body table-responsive border-top">
 																<h4>Skills/Roles I hire for :</h4>
 
-bpo, Call Centre, fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
+                                                 international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
 																<div class="mt-3">
 																	<a href="#" class="btn btn-danger icons mt-1 mb-1" data-toggle="modal" data-target="#report">Follow Now</a>
 																	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#contact"> Send Message</a>
@@ -124,7 +124,7 @@ bpo, Call Centre, fresher, international call centre, Customer Support, Customer
 															<div class="card-body table-responsive border-top">
 																<h4>Skills/Roles I hire for :</h4>
 
-bpo, Call Centre, fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
+                                                                        Call Centre, fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
 																<div class="mt-3">
 																	<a href="#" class="btn btn-danger icons mt-1 mb-1" data-toggle="modal" data-target="#report">Follow Now</a>
 																	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#contact"> Send Message</a>
@@ -156,7 +156,7 @@ bpo, Call Centre, fresher, international call centre, Customer Support, Customer
 															<div class="card-body table-responsive border-top">
 																<h4>Skills/Roles I hire for :</h4>
 
-bpo, Call Centre, fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
+                                                             Call Centre, fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
 																<div class="mt-3">
 																	<a href="#" class="btn btn-danger icons mt-1 mb-1" data-toggle="modal" data-target="#report">Follow Now</a>
 																	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#contact"> Send Message</a>
@@ -188,7 +188,7 @@ bpo, Call Centre, fresher, international call centre, Customer Support, Customer
 															<div class="card-body table-responsive border-top">
 																<h4>Skills/Roles I hire for :</h4>
 
-bpo, Call Centre, fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
+                                                entre, fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
 																<div class="mt-3">
 																	<a href="#" class="btn btn-danger icons mt-1 mb-1" data-toggle="modal" data-target="#report">Follow Now</a>
 																	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#contact"> Send Message</a>
@@ -220,7 +220,7 @@ bpo, Call Centre, fresher, international call centre, Customer Support, Customer
 															<div class="card-body table-responsive border-top">
 																<h4>Skills/Roles I hire for :</h4>
 
-bpo, Call Centre, fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
+                                            fresher, international call centre, Customer Support, Customer Care, Customer Executive, Customer Service, international voice support, voice
 																<div class="mt-3">
 																	<a href="#" class="btn btn-danger icons mt-1 mb-1" data-toggle="modal" data-target="#report">Follow Now</a>
 																	<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#contact"> Send Message</a>
@@ -234,11 +234,11 @@ bpo, Call Centre, fresher, international call centre, Customer Support, Customer
 
 
 
-												
+
 											</div>
 										</div>
-										
-														
+
+
 												</div>
 											</div>
 										</div>

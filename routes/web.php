@@ -47,9 +47,9 @@ Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'adm
 
     Route::get('questions', [App\Http\Controllers\QuestionsController::class, 'index']);
     Route::get('questions/create/', [App\Http\Controllers\QuestionsController::class, 'create']);
-    Route::post('questions/create', [App\Http\Controllers\QuestionsController::class, 'store'])->name('questions.create');   
+    Route::post('questions/create', [App\Http\Controllers\QuestionsController::class, 'store'])->name('questions.create');
     Route::get('questions/edit/{id}', [App\Http\Controllers\QuestionsController::class, 'edit']);
-    Route::post('questions/update', [App\Http\Controllers\QuestionsController::class, 'update'])->name('questions.update');   
+    Route::post('questions/update', [App\Http\Controllers\QuestionsController::class, 'update'])->name('questions.update');
     Route::get('questions/delete/{id}', [App\Http\Controllers\QuestionsController::class, 'delete']);
 
     Route::get('qpcategory', [App\Http\Controllers\QPaperCategoryController::class, 'index']);
@@ -61,12 +61,12 @@ Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'adm
 
     Route::get('qp', [App\Http\Controllers\QuestionPaperController::class, 'index']);
     Route::get('qp/create/', [App\Http\Controllers\QuestionPaperController::class, 'create']);
-    Route::post('qp/create', [App\Http\Controllers\QuestionPaperController::class, 'store'])->name('qp.create');   
+    Route::post('qp/create', [App\Http\Controllers\QuestionPaperController::class, 'store'])->name('qp.create');
     Route::get('qp/edit/{id}', [App\Http\Controllers\QuestionPaperController::class, 'edit']);
-    Route::post('qp/update', [App\Http\Controllers\QuestionPaperController::class, 'update'])->name('qp.update');   
+    Route::post('qp/update', [App\Http\Controllers\QuestionPaperController::class, 'update'])->name('qp.update');
     Route::get('qp/delete/{id}', [App\Http\Controllers\QuestionPaperController::class, 'delete']);
 
-    
+
     Route::get('industries', [App\Http\Controllers\IndustriesController::class, 'index']);
     Route::get('industries/manage/', [App\Http\Controllers\IndustriesController::class, 'manageIndustries']);
     Route::get('industries/manage/{id}', [App\Http\Controllers\IndustriesController::class, 'manageIndustries']);
@@ -127,13 +127,15 @@ Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruit
     Route::post('profile/changepassword', [App\Http\Controllers\Recruiter\ProfileController::class, 'updatePassword'])->name('change.password');
 
     Route::get('packages', [App\Http\Controllers\Recruiter\PackageController::class, 'index']);
+    Route::get('viewdcandidate', [App\Http\Controllers\Recruiter\CandidatesController::class, 'index']);
+
+
     Route::get('postedjobs', [App\Http\Controllers\Recruiter\JobsController::class, 'index']);
     Route::get('jobs/add-newjob', [App\Http\Controllers\Recruiter\JobsController::class, 'viewnewjobform']);
-
-
-    
-    Route::get('postedjobs/view/{jobs}', [App\Http\Controllers\Recruiter\JobsController::class, 'viewjobs']);
     Route::post('jobs/new/create', [App\Http\Controllers\Recruiter\JobsController::class, 'create'])->name('createjob');
+    Route::get('postedjobs/view/{jobs}', [App\Http\Controllers\Recruiter\JobsController::class, 'viewjobs']);
+    Route::get('postedjobs/delete/{jobs}', [App\Http\Controllers\Recruiter\JobsController::class, 'delete']);
+    Route::get('postedjobs/status/{jobs}', [App\Http\Controllers\Recruiter\JobsController::class, 'changeStatus']);
 
 
 });
@@ -148,30 +150,30 @@ Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee'
     Route::get('profile/editEducations/{id}', [App\Http\Controllers\Employee\ProfileController::class, 'editeducation']);
     Route::get('profile/editExperince/{id}', [App\Http\Controllers\Employee\ProfileController::class, 'editexperience']);
     Route::post('profile/addCareer', [App\Http\Controllers\Employee\ProfileController::class, 'addCareear']);
-    Route::post('profile/addEducations', [App\Http\Controllers\Employee\ProfileController::class, 'addEducations']);  
-    Route::post('profile/addExperience', [App\Http\Controllers\Employee\ProfileController::class, 'addExperience']);  
-    Route::post('profile/addSkills', [App\Http\Controllers\Employee\ProfileController::class, 'addSkills']);  
-    Route::post('profile/deleteSkill', [App\Http\Controllers\Employee\ProfileController::class, 'deleteSkills']);  
-    Route::post('profile/uploadResume', [App\Http\Controllers\Employee\ProfileController::class, 'uploadResume']);  
+    Route::post('profile/addEducations', [App\Http\Controllers\Employee\ProfileController::class, 'addEducations']);
+    Route::post('profile/addExperience', [App\Http\Controllers\Employee\ProfileController::class, 'addExperience']);
+    Route::post('profile/addSkills', [App\Http\Controllers\Employee\ProfileController::class, 'addSkills']);
+    Route::post('profile/deleteSkill', [App\Http\Controllers\Employee\ProfileController::class, 'deleteSkills']);
+    Route::post('profile/uploadResume', [App\Http\Controllers\Employee\ProfileController::class, 'uploadResume']);
 
-    Route::post('profile/profilpicupload', [App\Http\Controllers\Employee\ProfileController::class, 'uploadProfile']);  
+    Route::post('profile/profilpicupload', [App\Http\Controllers\Employee\ProfileController::class, 'uploadProfile']);
     Route::get('profile/getAllCoursesByEducation', [App\Http\Controllers\CoursesController::class, 'getAllByEducation']);
     Route::get('profile/getAllSpecByCourses', [App\Http\Controllers\CourseSpecificationsController::class, 'getAllBySpecifications']);
-    
-    
+
+
     //Assessment
     Route::get('assessment', [App\Http\Controllers\Employee\Assessment::class, 'index']);
     Route::post('assessment/schedule', [App\Http\Controllers\Employee\Assessment::class, 'scheduleTest']);
     Route::post('assessment/updateTestStatus', [App\Http\Controllers\Employee\Assessment::class, 'updateTestStatus']);
-    
+
     Route::get('assessment/startpage', [App\Http\Controllers\Employee\Assessment::class, 'testStartPage']);
     Route::get('assessment/start', [App\Http\Controllers\Employee\Assessment::class, 'startTest']);
     Route::post('assessment/updateRemaningTime', [App\Http\Controllers\Employee\TestFactoryController::class, 'updateRemainingTime']);
     Route::post('assessment/nextQuestion', [App\Http\Controllers\Employee\TestFactoryController::class, 'getNextQuestions'])->name('assessment.nextQuestion');
-  
+
     Route::get('assessment/testpage', function(){ return view('employee.assessment.testpage'); });
     Route::get('assessment/testTaken', function(){ return view('employee.assessment.testTaken');  });
 
-   
+
 
 });

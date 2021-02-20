@@ -68,12 +68,6 @@
                     <div class="card-header">
                         <h3 class="card-title">Posted Jobs List</h3>
                     </div>
-
-                    @php 
-                    
-                        var_dump($postedJobs);
-
-                    @endphp
                     <div class="card-body">
                         <div class="table-responsive border-top userprof-tab">
                             <table class="table table-bordered table-hover mb-0 text-nowrap">
@@ -90,116 +84,36 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @forelse ($postedJobs as $item)
+                                        <tr @if($loop->even) style="background-color:blue;" @endif>
+                                            <td>
+
+                                            </td>
+                                            <td>Web Developer</td>
+                                            <td> Oct-23-2018 , 9:18</td>
+                                            <td>
+                                                <a href="#" class="badge badge-warning">IT</a>
+                                            </td>
+                                            <td>05</td>
+                                            <td >36</td>
+                                            <td>
+                                                <a href="#" class="badge badge-warning">Completed</a>
+                                            </td>
+                                            <td>
+                                                {{-- <a class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                                                <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
+                                                <a class="btn btn-info btn-sm text-white" data-toggle="tooltip" data-original-title="Save to Wishlist"><i class="fa fa-heart-o"></i></a> --}}
+                                                <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                    @empty
                                     <tr>
-                                        <td>
-                                            <div class="media mt-0 mb-0">
-                                                <div class="media-body">
-                                                    1
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Web Developer</td>
-                                        <td> Oct-23-2018 , 9:18</td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">IT</a>
-                                        </td>
-                                        <td>05</td>
-                                        <td >36</td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">Completed</a>
-                                        </td>
-                                        <td>
-                                            {{-- <a class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
-                                            <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
-                                            <a class="btn btn-info btn-sm text-white" data-toggle="tooltip" data-original-title="Save to Wishlist"><i class="fa fa-heart-o"></i></a> --}}
-                                            <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
+                                        <td colspan="8" style="text-align: center;">
+                                            No Jobs found
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                                    1
-                                        </td>
-                                        <td>Web Developer</td>
-                                        <td> Oct-23-2018 , 9:18</td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">IT</a>
-                                        </td>
-                                        <td>05</td>
-                                        <td >36</td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">Completed</a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="media mt-0 mb-0">
-                                                <div class="media-body">
-                                                    1
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Web Developer</td>
-                                        <td class="font-weight-semibold fs-16">Oct-23-2018 , 9:18</td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">IT</a>
-                                        </td>
-                                        <td>05</td>
-                                        <td >36</td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">Completed</a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="media mt-0 mb-0">
-                                                <div class="media-body">
-                                                    1
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Web Developer</td>
-                                        <td class="font-weight-semibold fs-16">Oct-23-2018 , 9:18</td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">IT</a>
-                                        </td>
-                                        <td>05</td>
-                                        <td >36</td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">Completed</a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="media mt-0 mb-0">
-                                                <div class="media-body">
-                                                    1
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>Web Developer</td>
-                                        <td class="font-weight-semibold fs-16">Oct-23-2018 , 9:18</td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">IT</a>
-                                        </td>
-                                        <td>05</td>
-                                        <td >36</td>
-                                        <td>
-                                            <a href="#" class="badge badge-warning">Completed</a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
-                                        </td>
-                                    </tr>
-                              
+
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

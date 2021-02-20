@@ -19,7 +19,7 @@
         </div>
         <div class="row ">
             <div class="row row-cards">
-                <div class="col-md-12 ">                    
+                <div class="col-md-12 ">
                     <form class="card" action="{{ route('recruiter.createjob')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                           <div class="card-header">
@@ -30,16 +30,16 @@
                                   <ul>
                                       <li>{!! \Session::get('error') !!}</li>
                                   </ul>
-                              </div>                        
+                              </div>
                           @endif
                           @if (\Session::has('success'))
                               <div class="alert alert-success">
                                   <ul>
                                       <li>{!! \Session::get('success') !!}</li>
                                   </ul>
-                              </div>                        
+                              </div>
                           @endif
-      
+
                           <div class="card-body">
                               <div class="row">
                                   <div class="col-md-12">
@@ -59,8 +59,8 @@
                                           <select name="job_role" class="form-control select2" style="width: 100%">
                                                 <option value="" selected> select  </option>
                                                 @foreach ($positions as $item)
-                                                    <option value="{{ $item->id }}" @if(old('job_role')==$item->id) selected @endif >  {{ $item->name }} </option>    
-                                                @endforeach                                                
+                                                    <option value="{{ $item->id }}" @if(old('job_role')==$item->id) selected @endif >  {{ $item->name }} </option>
+                                                @endforeach
                                         </select>
                                           @error('job_role')
                                               <span class="invalid-feedback" role="alert">
@@ -75,8 +75,8 @@
                                           <select name="job_industry" class="form-control select2" style="width: 100%">
                                                 <option value="" selected> select  </option>
                                                 @foreach ($industry as $item)
-                                                    <option value="{{ $item->id }}" @if(old('job_industry')==$item->id) selected @endif >  {{ $item->name }} </option>    
-                                                @endforeach                                                
+                                                    <option value="{{ $item->id }}" @if(old('job_industry')==$item->id) selected @endif >  {{ $item->name }} </option>
+                                                @endforeach
                                           </select>
                                           @error('job_industry')
                                               <span class="invalid-feedback" role="alert">
@@ -119,7 +119,7 @@
                                                         </span>
                                                     @enderror
                                                 </div>
-                                                
+
                                             </div>
                                             <div class="col-6">
                                                 <div class="input-group">
@@ -139,7 +139,7 @@
                                         </div>
                                     </div>
                                   </div>
-                                  
+
                                   <div class="col-sm-6 col-md-6">
                                     <div class="form-group">
                                         <label class="form-label text-dark">Experiance Required (Min/Max)</label>
@@ -202,8 +202,8 @@
                                           <select name="job_location" class="form-control select2" style="width: 100%">
                                                 <option value="" selected> select  </option>
                                                 @foreach ($city as $item)
-                                                    <option value="{{ $item->id }}" @if(old('job_location')==$item->id) selected @endif >  {{ $item->name }} </option>    
-                                                @endforeach                                                
+                                                    <option value="{{ $item->id }}" @if(old('job_location')==$item->id) selected @endif >  {{ $item->name }} </option>
+                                                @endforeach
                                           </select>
                                           @error('job_location')
                                               <span class="invalid-feedback" role="alert">
@@ -211,7 +211,7 @@
                                               </span>
                                           @enderror
                                       </div>
-                                  </div>                            
+                                  </div>
                                   <div class="col-md-4">
                                       <div class="form-group">
                                           <label class="form-label">Eligibility</label>
@@ -237,12 +237,12 @@
                                 <div class="col-md-12">
                                     <div class="form-group mb-0">
                                         <label class="form-label">Job Descriptions</label>
-                                        <textarea class="content form-control" value="{{ old('job_desc') }}" name="job_desc" id="job_desc"></textarea>         
+                                        <textarea class="content form-control" value="{{ old('job_desc') }}" name="job_desc" id="job_desc"></textarea>
                                         @error('job_desc')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
-                                        @enderror                              
+                                        @enderror
                                     </div>
                                 </div>
                               </div>

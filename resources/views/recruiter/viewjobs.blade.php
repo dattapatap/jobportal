@@ -1,6 +1,6 @@
 @extends('recruiter.layout.layout')
 @section('content')
-    
+
 
 <div class="app-content">
     <div class="side-app">
@@ -25,8 +25,8 @@
                                             <a href="" class="text-dark"><h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $jobs->job_title }}</h4></a>
                                             <div class="">
                                                 <ul class="mb-2" style="font-size: 15px;">
-                                                    <li class="mr-3 mt-2"><a href="#" class="icons"><i class="si si-briefcase text-muted mr-1"></i> {{ $jobs->job_industry }} </a></li>
-                                                    <li class="mr-3 mt-2"><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i> {{ $jobs->job_location }}</a></li>
+                                                    <li class="mr-3 mt-2"><a href="#" class="icons"><i class="si si-briefcase text-muted mr-1"></i> {{ $jobs->industry->name }} </a></li>
+                                                    <li class="mr-3 mt-2"><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i> {{ $jobs->location->name }}</a></li>
                                                     <li class="mr-4 mt-2"><a href="#" class="icons"><i class="fa fa-inr text-muted mr-3"></i>{{ $jobs->min_salary.' - '.$jobs->max_salary }} </a></li>
                                                     <li class="mr-4 mt-2"><a href="#" class="icons"><i class="fa fa-inr text-muted mr-3"></i>{{ $jobs->job_type }} </a></li>
                                                     <li class="mr-3 mt-2"><a href="#" class="icons"><i class="si si-calendar text-muted mr-1"></i> {{ $jobs->created_at->diffForHumans() }}</a></li>
@@ -53,7 +53,7 @@
                                                 <td class="w-150 px-0"><span class="font-weight-semibold">Job Type</span></td> <td><span>:</span></td> <td><span> {{ $jobs->job_type }}</span></td>
                                             </tr>
                                             <tr>
-                                                <td class="w-150 px-0"><span class="font-weight-semibold">Role</span></td> <td><span>:</span></td> <td><span> {{ $jobs->job_role }}</span></td>
+                                                <td class="w-150 px-0"><span class="font-weight-semibold">Role</span></td> <td><span>:</span></td> <td><span> {{ $jobs->jobrole->name }}</span></td>
                                             </tr>
                                             <tr>
                                                 <td class="w-150 px-0"><span class="font-weight-semibold">Min Salary</span></td> <td><span>:</span></td> <td><span> <i class="fa fa-inr text-muted"></i> {{ $jobs->min_salary }}  </span></td>
@@ -67,7 +67,7 @@
                                         </tbody>
                                         <tbody class="col-lg-12 col-xl-6 p-0">
                                             <tr>
-                                                <td class="w-150 px-0"><span class="font-weight-semibold">Industry</span></td> <td><span>:</span></td> <td><span>{{ $jobs->job_industry }}</span></td>
+                                                <td class="w-150 px-0"><span class="font-weight-semibold">Industry</span></td> <td><span>:</span></td> <td><span>{{ $jobs->industry->name }}</span></td>
                                             </tr>
                                             <tr>
                                                 <td class="w-150 px-0"><span class="font-weight-semibold">Min Exp</span></td> <td><span>:</span></td> <td><span>{{ $jobs->min_exp }} yrs</span></td>
@@ -76,7 +76,7 @@
                                                 <td class="w-150 px-0"><span class="font-weight-semibold">Max Exp</span></td> <td><span>:</span></td> <td><span> {{ $jobs->max_exp }} yrs</span></td>
                                             </tr>
                                             <tr>
-                                                <td class="w-150 px-0"><span class="font-weight-semibold">Locality</span></td> <td><span>:</span></td> <td><span> {{ $jobs->job_location }}</span></td>
+                                                <td class="w-150 px-0"><span class="font-weight-semibold">Locality</span></td> <td><span>:</span></td> <td><span> {{ $jobs->location->name }}</span></td>
                                             </tr>
                                             <tr>
                                                 <td class="w-150 px-0"><span class="font-weight-semibold">Eligibility</span></td> <td><span>:</span></td> <td><span> {{ $jobs->job_eligibility }} </span></td>

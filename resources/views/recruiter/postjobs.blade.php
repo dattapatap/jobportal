@@ -12,6 +12,20 @@
                     <div class=" mb-lg-0">
                         <div class="">
                             <div class="item2-gl">
+                                @if (\Session::has('error'))
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            <li>{!! \Session::get('error') !!}</li>
+                                        </ul>
+                                    </div>
+                                @endif
+                                @if (\Session::has('success'))
+                                    <div class="alert alert-success">
+                                        <ul>
+                                            <li>{!! \Session::get('success') !!}</li>
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class=" mb-0">
                                     <div class="">
                                         <div class="p-2 bg-white item2-gl-nav">
@@ -22,18 +36,23 @@
                                 <div class="tab-content">
                                     @forelse ($jobs as $job)
                                         <div class="card overflow-hidden br-0 overflow-hidden">
-                                            <div class="d-md-flex">                                                
+                                            <div class="d-md-flex">
                                                 <div class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
                                                     <div class="card-body pt-0 pt-md-5">
                                                         <div class="item-card9">
                                                             <a href="{{ url('recruiter/postedjobs/view/'.$job->id)}}" class="text-dark"><h4 class="font-weight-semibold mt-1">{{ $job->job_title}}</h4></a>
+                                                            @if($job->status)
+                                                                <span class="text-success float-right"> Active </span>
+                                                            @else
+                                                               <span class="text-danger float-right"> InActive </span>
+                                                            @endif
                                                             <div class="mt-2 mb-2">
                                                                 <a href="#" class="mr-4"><span><i class="fa fa-calendar text-muted mr-1"></i> {{ $job->created_at}} </span></a>
                                                                 <a href="#" class="mr-4"><span><i class="fa fa fa-inr text-muted mr-1"></i>{{ $job->min_salary .' - '. $job->max_salary}}</span></a>
                                                                 <a href="#" class="mr-4"><span><i class="fa fa-clock-o text-muted mr-1"></i> {{ $job->job_type }}</span></a>
                                                                 <a href="#" class="mr-4"><span><i class="fa fa-briefcase text-muted mr-1"></i> {{ $job->min_exp.' - '.$job->max_exp . ' Years Exp'}}</span></a>
                                                             </div>
-                                                            <p class="mb-0 leading-tight">{!! Str::limit($job->job_desc, 400 ) !!}</p>
+                                                            <p class="mb-0 leading-tight">{!! Str::limit($job->job_desc, 160 ) !!}</p>
                                                         </div>
                                                     </div>
                                                     <div class="card-footer pt-3 pb-3">
@@ -46,7 +65,13 @@
                                                             </div>
                                                             <div class="ml-auto">
                                                                 <a href="#" class="mr-3"><i class="fa fa-user text-muted mr-1"></i>{{ Auth::user()->name }}</a>
-                                                                <a href="{{ url('recruiter/postedjobs/view/'.$job->id)}}" class="btn btn-primary mt-3 mt-sm-0"> View </a>
+                                                                <a href="{{ url('recruiter/postedjobs/view/'.$job->id)}}" class="btn btn-primary btn-md text-white"> <i class="fa fa-eye"></i> </a>
+                                                                <a href="{{ url('recruiter/postedjobs/delete/'.$job->id)}}" class="btn btn-danger btn-md text-white"> <i class="fa fa-trash-o"></i> </a>
+                                                                @if($job->status)
+                                                                  <a href="{{ url('recruiter/postedjobs/status/'.$job->id)}}" class="btn btn-danger btn-md text-white"> In Active </a>
+                                                                @else
+                                                                  <a href="{{ url('recruiter/postedjobs/status/'.$job->id)}}" class="btn btn-success btn-md text-white"> Active </a>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
@@ -55,7 +80,7 @@
                                         </div>
                                     @empty
                                     <div class="card overflow-hidden br-0 overflow-hidden">
-                                        <div class="d-md-flex">                                                
+                                        <div class="d-md-flex">
                                             <div class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
                                                 <h2 style="padding: 20px;"> No Job Posted Still....</h2>
                                             </div>
@@ -79,5 +104,5 @@
     </div>
 </div>
 
-    
+
 @endsection

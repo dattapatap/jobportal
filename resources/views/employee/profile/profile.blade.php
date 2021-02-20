@@ -31,12 +31,12 @@
 
 
     </style>
- 
+
     <div class="container">
-        <div class="row ">          
+        <div class="row ">
             @include('employee.dashboardLayout')
             <style>
-              
+
 
             </style>
             <div class="col-lg-9 col-md-12 col-md-12">
@@ -45,14 +45,14 @@
                             <ul>
                                 <li>{!! \Session::get('success') !!}</li>
                             </ul>
-                        </div>                        
+                        </div>
                     @endif
                     @if (\Session::has('error'))
                         <div class="alert alert-warning">
                             <ul>
                                 <li>{!! \Session::get('error') !!}</li>
                             </ul>
-                        </div>                        
+                        </div>
                     @endif
                     <!-- Personal Details -->
                     <div class="card dropify-image-avatar">
@@ -66,11 +66,11 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-3 mb-4" style="text-align: center">
-                                       
+
                                         @if(Auth::user()->avatar)
                                         <img class="card-profile-img" src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="img" style="max-width: 9rem;">
                                         @else
-                                            <img class="card-profile-img" src="{{ asset('assets/images/users/male/25.jpg')}}" alt="img" style="max-width: 9rem;"> 
+                                            <img class="card-profile-img" src="{{ asset('assets/images/users/male/25.jpg')}}" alt="img" style="max-width: 9rem;">
                                         @endif
                                         <a href="#" class="btn btn-primary btn-sm mt-2 btnProfilePic"><i class="fa fa-pencil" aria-hidden="true"></i> Edit profile</a>
                                     </div>
@@ -102,7 +102,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label text-dark">Gender</label>
-                                                    <select name="gender" id="gender" disabled class="form-control" tabindex="3" readonly> 
+                                                    <select name="gender" id="gender" disabled class="form-control" tabindex="3" readonly>
                                                         <option selected ="" value="0"> </option>
                                                         <option  @if($user->employee->gender == 'Male') selected @endif>Male</option>
                                                         <option  @if($user->employee->gender == 'Female') selected @endif>Female</option>
@@ -138,7 +138,7 @@
                             <div class="card-options">
                                 @if(!$emp->careers)
 							      <a class="btn btn-light btn-sm btn-addCareer" href="#"><i class="fa fa-plus"></i> Add </a>
-                                @else                                  
+                                @else
                                   <a class="editCareer btn" id="{{$emp->careers->id}}" ><i class="fe fe-edit "></i></a>
                                 @endif
                             </div>
@@ -149,7 +149,7 @@
                                 <div class="fade show active " >
                                     <div class="table-responsive border">
                                         <table class="table row table-borderless w-100 m-0 ">
-                                            <tbody class="col-lg-12 col-xl-6 p-2">                                           
+                                            <tbody class="col-lg-12 col-xl-6 p-2">
                                                 <tr>
                                                     <td><strong>Industry :</strong> {{ $emp->careers->industries->name }}</td>
                                                 </tr>
@@ -177,9 +177,9 @@
                                         </table>
                                     </div>
                                 </div>
-                                
+
                             </div>
-                        </div>                        
+                        </div>
                         @endif
                     </div>
 
@@ -191,7 +191,7 @@
                             <div class="card-options">
                                 @if(!$emp->educations)
                                 <a class="btn btn-light btn-sm btn-addEducation" href="#"><i class="fa fa-plus"></i> Add </a>
-                                @else                                  
+                                @else
                                 <a class="btn btn-light btn-sm btn-addEducation" href="#"><i class="fa fa-plus"></i> Add More</a>
                                 @endif
                             </div>
@@ -206,7 +206,7 @@
                                     <a class="btn btn-light btn-sm btn-editEducation pull-right" id="{{$item->id}}"><i class="fa fa-edit"></i></a>
                                     <div class="table-responsive border">
                                         <table class="table row table-borderless w-100 m-0 ">
-                                            <tbody class="col-lg-12 col-xl-6 p-2">                                           
+                                            <tbody class="col-lg-12 col-xl-6 p-2">
                                                 <tr>
                                                     <td><strong>Education :</strong> {{ $item->educ->name }}</td>
                                                 </tr>
@@ -234,12 +234,12 @@
                                         </table>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                         @endforeach
                     @endif
-                  
+
                     {{-- Experience Details --}}
                     <div class="card" style="margin-bottom:20px;margin-top:30px">
                         <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
@@ -248,7 +248,7 @@
                             <div class="card-options">
                                 @if(!$emp->experience)
                                    <a class="btn btn-light btn-sm btn-addExperience" href="#"><i class="fa fa-plus"></i> Add </a>
-                                @else                                  
+                                @else
                                    <a class="btn btn-light btn-sm btn-addExperience" href="#"><i class="fa fa-plus"></i> Add More</a>
                                 @endif
                             </div>
@@ -262,7 +262,7 @@
                                     <a class="btn btn-light btn-sm btn-editExperience pull-right" id="{{$item->id}}"><i class="fa fa-edit"></i></a>
                                     <div class="table-responsive border">
                                         <table class="table row table-borderless w-100 m-0 ">
-                                            <tbody class="col-lg-12 col-xl-6 p-2">                                           
+                                            <tbody class="col-lg-12 col-xl-6 p-2">
                                                 <tr>
                                                     <td><strong>Company : </strong> {{ $item->company_name }}</td>
                                                 </tr>
@@ -271,7 +271,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td><strong>Working From : </strong> {{ $item->from_date }}</td>
-                                                </tr>                                                
+                                                </tr>
                                             </tbody>
                                             <tbody class="col-lg-12 col-xl-6 p-2">
                                                 <tr>
@@ -284,7 +284,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                        @endforeach
@@ -298,7 +298,7 @@
                             <div class="card-options">
                                 @if(!$emp->skills)
                                    <a class="btn btn-light btn-sm btn-addSkills" href="#"><i class="fa fa-plus"></i> Add </a>
-                                @else                                  
+                                @else
                                    <a class="btn btn-light btn-sm btn-addSkills" href="#"><i class="fa fa-plus"></i> Add More</a>
                                 @endif
                             </div>
@@ -319,7 +319,7 @@
                             <div class="card-options">
                                 @if(!isset($emp->careers->resume))
                                    <a class="btn btn-light btn-sm btn-addResume"><i class="fa fa-plus"></i> Add </a>
-                                @else                                  
+                                @else
                                    <a class="btn btn-light btn-sm btn-addResume" ><i class="fa fa-plus"></i> Add New</a>
                                 @endif
                             </div>
@@ -334,7 +334,7 @@
                                 @endif
                             </div>
                         </div>
-                    </div>                    
+                    </div>
             </div>
         </div>
     </div>
@@ -378,13 +378,13 @@
                         <div class="form-group col-md-6">
                             <div class="form-group">
                                 <label class="form-label" for="dob">Date of Birth</label>
-                                <input type="date" class="form-control" id="dob" name="dob" placeholder="DoB">  
+                                <input type="date" class="form-control" id="dob" name="dob" placeholder="DoB">
                                 <span class="invalid-feedback" role="alert" id="dobError">
                                     <strong></strong>
-                                </span>                    
+                                </span>
                             </div>
                         </div>
-                        
+
                         <div class="form-group col-md-6">
                             <div class="form-group">
                                 <label class="form-label"  for="exampleInputEmail1">Gender</label>
@@ -394,10 +394,10 @@
                                     <option value="Female">Female</option>
                                     <option value="Transgender">Transgender</option>
                                     <option value="Other">Other</option>
-                                </select>    
+                                </select>
                                 <span class="invalid-feedback" role="alert" id="genderError">
                                     <strong></strong>
-                                </span>                
+                                </span>
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -421,7 +421,7 @@
                                 <strong></strong>
                             </span>
                         </div>
-                    </div>			
+                    </div>
                 </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -454,7 +454,7 @@
                                     <option selected value="">select industry</option>
                                     @foreach ($industry as $item)
                                         <option value="{{ $item->id}}"> {{ $item->name }}</option>
-                                    @endforeach                    
+                                    @endforeach
                                 </select>
                                 <span class="invalid-feedback" role="alert" id="industryError">
                                     <strong></strong>
@@ -467,7 +467,7 @@
                                 <select name="position" id="position" class="form-control">
                                     <option selected value="">select position</option>
                                     @foreach ($positions as $item)
-                                            <option value="{{ $item->id }}"> {{ $item->name }}</option>    
+                                            <option value="{{ $item->id }}"> {{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="invalid-feedback" role="alert" id="industryError">
@@ -536,7 +536,7 @@
                             </div>
                         </div>
                         <div class="form-group col-md-6">
-                            <div class="form-group">                           
+                            <div class="form-group">
                                 <label class="form-label" for="currctc">Current CTC</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="currctc" name="currctc" placeholder="Amount">
@@ -567,14 +567,14 @@
                                 </span>
                             </div>
                         </div>
-                        
+
                         <div class="form-group col-md-12">
                             <div class="form-group">
                                 <label class="form-label"  for="location">Prefered Location</label>
                                 <select name="location" id="location" class="form-control">
                                     <option selected value="">select location</option>
                                     @foreach ($city as $item)
-                                            <option value="{{ $item->id }}"> {{ $item->name }}</option>    
+                                            <option value="{{ $item->id }}"> {{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="invalid-feedback" role="alert" id="locationError">
@@ -582,7 +582,7 @@
                                 </span>
                             </div>
                         </div>
-                    </div>			
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -605,14 +605,14 @@
             <form method="POST" class="frmEducation"  >
                 <div class="modal-body">
                     <input type="hidden" id="edu_id" name="edu_id" value="-1">
-                    <div class="form-row">                
+                    <div class="form-row">
                         <div class="form-group col-md-6">
                                 <div class="form-group">
                                     <label class="form-label text-dark">Education</label>
                                     <select name="education" id="education" class="form-control select2">
                                         <option selected value="">select education</option>
                                         @foreach ($education as $item)
-                                                <option value="{{ $item->id }}"> {{ $item->name }}</option>    
+                                                <option value="{{ $item->id }}"> {{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="invalid-feedback" role="alert" id="educationError">
@@ -624,7 +624,7 @@
                                 <div class="form-group">
                                     <label class="form-label text-dark">Course</label>
                                     <select name="qualification" id="qualification" class="form-control select2">
-                                        <option selected value="">select course</option>                                       
+                                        <option selected value="">select course</option>
                                     </select>
                                     <span class="invalid-feedback" role="alert" id="qualificationError">
                                         <strong></strong>
@@ -636,7 +636,7 @@
                                     <label class="form-label text-dark">Specification</label>
                                     <select  name="specification" id="specification" class="form-control select2">
                                         <option selected value="">select specification</option>
-                                       
+
                                     </select>
                                     <span class="invalid-feedback" role="alert" id="specificationError">
                                         <strong></strong>
@@ -674,7 +674,7 @@
                                         <strong></strong>
                                     </span>
                                 </div>
-                        </div>	
+                        </div>
                         <div class="form-group col-6">
                                 <div class="form-group">
                                     <label class="form-label text-dark">Total Percent</label>
@@ -691,7 +691,7 @@
                                         <strong></strong>
                                     </span>
                                 </div>
-                        </div>			
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -714,7 +714,7 @@
             </div>
             <form method="POST" class="frmExp"  >
                 <div class="modal-body">
-                    <div class="form-row"> 
+                    <div class="form-row">
 
                         <input type="hidden" name="exp_id" value="-1" id="exp_id">
                         <div class="form-group col-md-6">
@@ -723,7 +723,7 @@
                                 <input type="text" id="company" name="company" class="form-control" >
                                 <span class="invalid-feedback" role="alert" id="companyError">
                                     <strong></strong>
-                                </span>                                
+                                </span>
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -732,7 +732,7 @@
                                     <input type="text" name="expposition" id="expposition" class="form-control" >
                                     <span class="invalid-feedback" role="alert" id="exppositionError">
                                         <strong></strong>
-                                    </span> 
+                                    </span>
                                 </div>
                         </div>
                         <div class="row">
@@ -748,14 +748,14 @@
                                     <input type="text" name="from" id="from"  class="form-control datepicker">
                                     <span class="invalid-feedback" role="alert" id="fromError">
                                         <strong></strong>
-                                    </span> 
+                                    </span>
                             </div>
                             <div class="form-group col-4">
                                 <label class="form-label text-dark">To</label>
                                 <input type="text" name="to" id="to" class="form-control datepicker">
                                 <span class="invalid-feedback" role="alert" id="toError">
                                     <strong></strong>
-                                </span> 
+                                </span>
                             </div>
                         </div>
                         <div class="form-group col-md-12">
@@ -763,13 +763,13 @@
                                 <select class="form-control select2" id="explocation" name="explocation" aria-required="true">
                                     <option value="" selected>select location </option>
                                     @foreach ($city as $item)
-                                       <option value="{{ $item->id }}"> {{ $item->name }}</option>    
+                                       <option value="{{ $item->id }}"> {{ $item->name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="invalid-feedback" role="alert" id="explocationError">
                                     <strong></strong>
-                                </span> 
-                        </div>                        
+                                </span>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -792,17 +792,17 @@
             </div>
             <form method="POST" id="frmSkills">
                 <div class="modal-body">
-                    <div class="form-row"> 
+                    <div class="form-row">
                         <div class="form-group col-md-12">
                             <div class="form-group">
                                 <label class="form-label text-dark">Top Skills</label>
                                 <select class="form-control select2" id="empskills" name="empskills"  multiple required>
                                     @foreach ($skills as $item)
-                                        <option value="{{ $item->id}}"> {{ $item->description }}</option>    
-                                    @endforeach                                        
+                                        <option value="{{ $item->id}}"> {{ $item->description }}</option>
+                                    @endforeach
                                 </select>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -826,16 +826,16 @@
             </div>
             <form id="frmResume" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <div class="form-row"> 
+                    <div class="form-row">
                         <div class="form-group col-md-12">
                             <div class="form-group">
                                 <label class="form-label text-dark">Resume</label>
                                 <input type="file" name="empresume" id="empresume" class="form-control" required>
                                 <span class="invalid-feedback" role="alert" id="empresumeError">
                                     <strong></strong>
-                                </span> 
+                                </span>
                             </div>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -860,13 +860,13 @@
             <form id="profileupload" method="POST"  enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <div class="form-row"> 
+                    <div class="form-row">
                         <div class="form-group col-md-12">
                             <div class="">
                                 <input type="file" name="profile_pic" id="profile_pic" class="dropify" data-height="180" required />
                                 <span id="image-input-error" style="color: red;font-size:12px;"></span>
-                            </div>    
-                        </div>                        
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -883,7 +883,7 @@
 
 @section('scripts')
 <!-- <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css">  -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/css/datepicker.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/bootstrap-datepicker.min.js"></script>
 <script src="{{ asset('js/employee/profile.js')}}"></script>

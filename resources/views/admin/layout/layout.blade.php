@@ -116,7 +116,7 @@
                                     @if(Auth::user()->avatar)
                                         <img  src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="profile-img" class="avatar avatar-md brround" alt="img">
                                     @else
-                                        <img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="profile-img" class="avatar avatar-md brround" alt="img"> 
+                                        <img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="profile-img" class="avatar avatar-md brround" alt="img">
                                     @endif
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
@@ -149,9 +149,9 @@
                         @if(Auth::user()->avatar)
                             <img  src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="user-img" class="avatar avatar-lg brround">
                         @else
-                            <img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="user-img" class="avatar avatar-lg brround"> 
+                            <img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="user-img" class="avatar avatar-lg brround">
                         @endif
-                        
+
                         </div>
                         <div class="user-info">
                             <h2>{{ Auth::user()->name }}</h2>
@@ -197,7 +197,7 @@
                             <li>
                                 <a href="{{url('admin/qp')}}" class="slide-item">Question Paper</a>
                             </li>
-                            
+
                         </ul>
                     </li>
                     <li class="slide">
@@ -248,7 +248,7 @@
                             </li>
                         </ul>
                     </li>
-                   
+
 
                 </ul>
 
@@ -286,7 +286,7 @@
     <script src="{{ asset('assets/js/vendors/jquery.tablesorter.min.js') }}"></script>
     <script src="{{ asset('assets/js/vendors/circle-progress.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/rating/jquery.rating-stars.js') }}"></script>
-    
+
     <!-- Fullside-menu Js-->
     <script src="{{ asset('assets/plugins/toggle-sidebar/sidemenu.js') }}"></script>
     <!-- Input Mask Plugin -->

@@ -26,14 +26,14 @@
                             <ul>
                                 <li>{!! \Session::get('error') !!}</li>
                             </ul>
-                        </div>                        
+                        </div>
                     @endif
                     @if (\Session::has('success'))
                         <div class="alert alert-success">
                             <ul>
                                 <li>{!! \Session::get('success') !!}</li>
                             </ul>
-                        </div>                        
+                        </div>
                     @endif
 
                     <div class="card-body">
@@ -114,7 +114,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>                            
+                            </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="form-label">Twiter</label>
@@ -126,7 +126,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="form-label">LinkedIn</label>

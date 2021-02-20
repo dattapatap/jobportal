@@ -19,7 +19,7 @@
 		<!-- Title -->
 	    <title>{{ config('app.name', 'Laravel') }}</title>
 
-		<link rel="stylesheet" href="{{ asset('assets/fonts/fonts/font-awesome.min.css')}}">		
+		<link rel="stylesheet" href="{{ asset('assets/fonts/fonts/font-awesome.min.css')}}">
 		<!-- Sidemenu Css -->
 		<link href="{{ asset('assets/plugins/toggle-sidebar/sidemenu.css')}}" rel="stylesheet" />
 		<!-- Bootstrap Css -->
@@ -28,20 +28,18 @@
 		<link href="{{ asset('assets/css/style.css')}}" rel="stylesheet" />
 		<link href="{{ asset('assets/css/admin-custom.css')}}" rel="stylesheet" />
 		<link href="{{ asset('assets/plugins/fileuploads/css/dropify.css')}}" rel="stylesheet" />
-		<!-- JQVMap -->
-		<link href="{{ asset('assets/plugins/jqvmap/jqvmap.min.css')}}" rel="stylesheet"/>
-		<!-- Morris.js Charts Plugin -->
-		<link href="{{ asset('assets/plugins/morris/morris.css')}}" rel="stylesheet" />
 		<!-- Custom scroll bar css-->
 		<link href="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.css')}}" rel="stylesheet" />
 		<!---Font icons-->
+
 		<link href="{{ asset('assets/css/icons.css')}}" rel="stylesheet"/>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <!--Select2 Plugin -->
+        <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
 		<!-- Color-Skins -->
 		<link id="theme" rel="stylesheet" href="{{ asset('assets/color-skins/color-skins/color10.css')}}" />
 		<!-- WYSIWYG Editor css -->
 		<link href="{{ asset('assets/plugins/wysiwyag/richtext.css')}}" rel="stylesheet" />
-
 	</head>
 	<body class="app sidebar-mini">
 		<!--Loader-->
@@ -112,7 +110,7 @@
 										@if(Auth::user()->avatar)
 											<img  src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="profile-img" class="avatar avatar-md brround" alt="img">
 										@else
-											<img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="profile-img" class="avatar avatar-md brround" alt="img"> 
+											<img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="profile-img" class="avatar avatar-md brround" alt="img">
 										@endif
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
@@ -145,7 +143,7 @@
 								@if(Auth::user()->avatar)
 									<img class="card-profile-img" src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}"  alt="user-img" class="avatar avatar-lg brround">
 								@else
-									<img  alt="user-img" class="avatar avatar-lg brround" src="{{ asset('assets/images/users/male/25.jpg')}}"> 
+									<img  alt="user-img" class="avatar avatar-lg brround" src="{{ asset('assets/images/users/male/25.jpg')}}">
 								@endif
 							</div>
 							<div class="user-info">
@@ -160,7 +158,7 @@
 						<li>
 							<a class="side-menu__item" href="{{ url('recruiter/profile') }}"><i class="side-menu__icon fa fa-id-card"></i><span class="side-menu__label">Profile</span></a>
 						</li>
-						@if(Auth::user()->recruiter->status==1)
+						{{-- @if(Auth::user()->recruiter->status==1) --}}
 							<li>
 								<a class="side-menu__item" href="{{ url('recruiter/postedjobs') }}"><i class="side-menu__icon fa fa-briefcase"></i><span class="side-menu__label">Jobs List</span></a>
 							</li>
@@ -168,10 +166,10 @@
 								<a class="side-menu__item" href="{{ url('recruiter/packages') }}"><i class="side-menu__icon fa fa-inr"></i><span class="side-menu__label">Packages</span></a>
 							</li>
 							<li>
-								<a class="side-menu__item" href="{{ url('recruiter/viewdcandidate') }}"><i class="side-menu__icon fa fa-inr"></i><span class="side-menu__label">Viewd Candidates</span></a>
+								<a class="side-menu__item" href="{{ url('recruiter/viewdcandidate') }}"><i class="side-menu__icon fa fa-user"></i><span class="side-menu__label">Candidates</span></a>
 							</li>
-						@endif
-					</ul>					
+						{{-- @endif --}}
+					</ul>
 				</aside>
 
 				<!-- Applications Content Body -->
@@ -205,19 +203,19 @@
 		<!-- Fullside-menu Js-->
 		<script src="{{ asset('assets/plugins/toggle-sidebar/sidemenu.js')}}"></script>
 		<!-- Input Mask Plugin -->
-		<script src="{{ asset('assets/plugins/input-mask/jquery.mask.min.js')}}"></script>
+		{{-- <script src="{{ asset('assets/plugins/input-mask/jquery.mask.min.js')}}"></script> --}}
 		<!-- JQVMap -->
-		<script src="{{ asset('assets/plugins/jqvmap/jquery.vmap.js')}}"></script>
+		{{-- <script src="{{ asset('assets/plugins/jqvmap/jquery.vmap.js')}}"></script>
 		<script src="{{ asset('assets/plugins/jqvmap/maps/jquery.vmap.world.js')}}"></script>
-		<script src="{{ asset('assets/plugins/jqvmap/jquery.vmap.sampledata.js')}}"></script>
+		<script src="{{ asset('assets/plugins/jqvmap/jquery.vmap.sampledata.js')}}"></script> --}}
 		<!-- ECharts Plugin -->
-		<script src="{{ asset('assets/plugins/echarts/echarts.js')}}"></script>
+		{{-- <script src="{{ asset('assets/plugins/echarts/echarts.js')}}"></script> --}}
 		<!-- jQuery Sparklines -->
-		<script src="{{ asset('assets/plugins/jquery-sparkline/jquery.sparkline.min.js')}}"></script>
+		{{-- <script src="{{ asset('assets/plugins/jquery-sparkline/jquery.sparkline.min.js')}}"></script> --}}
 		<!-- Flot Chart -->
-		<script src="{{ asset('assets/plugins/flot/jquery.flot.js')}}"></script>
+		{{-- <script src="{{ asset('assets/plugins/flot/jquery.flot.js')}}"></script>
 		<script src="{{ asset('assets/plugins/flot/jquery.flot.fillbetween.js')}}"></script>
-		<script src="{{ asset('assets/plugins/flot/jquery.flot.pie.js')}}"></script>
+		<script src="{{ asset('assets/plugins/flot/jquery.flot.pie.js')}}"></script> --}}
 		<!--Counters -->
 		<script src="{{ asset('assets/plugins/counters/counterup.min.js')}}"></script>
 		<script src="{{ asset('assets/plugins/counters/waypoints.min.js')}}"></script>
@@ -225,13 +223,13 @@
 		<!-- Custom scroll bar Js-->
 		<script src="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 		<!-- CHARTJS CHART -->
-		<script src="{{ asset('assets/plugins/chart/Chart.bundle.js')}}"></script>
-		<script src="{{ asset('assets/plugins/chart/utils.js')}}"></script>
+		{{-- <script src="{{ asset('assets/plugins/chart/Chart.bundle.js')}}"></script>
+		<script src="{{ asset('assets/plugins/chart/utils.js')}}"></script> --}}
 		<!-- Custom Js-->
 		<script src="{{ asset('assets/js/admin-custom.js')}}"></script>
 		<script src="{{ asset('assets/js/index3.js')}}"></script>
 		<!-- file uploads js -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+		<script src="{{ asset('js/select2.full.min.js')}}"></script>
 		<script src="{{ asset('assets/plugins/fileuploads/js/dropify.js')}}"></script>
 		<script src="{{ asset('assets/plugins/fileuploads/js/dropfy-custom.js')}}"></script>
 
