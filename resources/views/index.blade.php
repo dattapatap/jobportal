@@ -144,14 +144,14 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="header-banner-box register" style="border: 7px solid #fff; box-shadow: 0px 0px 10px #e2e2e2;">
-                    <a href="#" class="btn btn-default btn-primary"><i class="fa fa-user-plus" aria-hidden="true"></i>
+                    <a href="{{ url('/user-register')}}" class="btn btn-default btn-primary"><i class="fa fa-user-plus" aria-hidden="true"></i>
                         Register with us</a>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="header-banner-box post-job" style="border: 7px solid #fff;box-shadow: 0px 0px 10px #e2e2e2;">
                     <!--	<img src="img/verified.png" alt="">-->
-                    <a href="#" class="btn btn-gray btn-primary"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                    <a href="{{ url('/upload-web-resume')}}" class="btn btn-gray btn-primary"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
                         Upload Resume</a>
                 </div>
             </div>
@@ -175,7 +175,7 @@
                     <div class="card-body">
                         <div class="item-card7-desc">
                             <div class="item-card7-text">
-                                <a href="jobs.html" class="text-dark">
+                                <a href="{{ url('jobs')}}" class="text-dark">
                                     <h4 class="font-weight-semibold">Hiring freshers For healthcare domain in Bangalore
                                         location </h4>
                                 </a>
@@ -193,11 +193,11 @@
                         <div class="d-flex align-items-center mt-auto">
                             <img src="{{ asset('assets/images/company.jpg') }}" class="avatar brround avatar-md mr-2" alt="avatar-img">
                             <div>
-                                <a href="jobs.html" class="text-default fs-13">G Technicals Solutions</a>
+                                <a href="{{ url('jobs')}}" class="text-default fs-13">G Technicals Solutions</a>
                                 <small class="d-block text-muted">2 days ago</small>
                             </div>
                             <div class="ml-auto text-muted">
-                                <a href="jobs.html" class="btn btn-sm btn-secondary text-white">See Details</a>
+                                <a href="{{ url('jobs')}}" class="btn btn-sm btn-secondary text-white">See Details</a>
                             </div>
                         </div>
                     </div>
@@ -209,7 +209,7 @@
                     <div class="card-body">
                         <div class="item-card7-desc">
                             <div class="item-card7-text">
-                                <a href="jobs.html" class="text-dark">
+                                <a href="{{ url('jobs')}}" class="text-dark">
                                     <h4 class="font-weight-semibold">Hiring Freshers For Voice Process - MNC Healthcare
                                     </h4>
                                 </a>
@@ -227,11 +227,11 @@
                         <div class="d-flex align-items-center mt-auto">
                             <img src="{{ asset('assets/images/company.jpg') }}" class="avatar brround avatar-md mr-2" alt="avatar-img">
                             <div>
-                                <a href="jobs.html" class="text-default">Rosita Chatmon</a>
+                                <a href="{{ url('jobs')}}" class="text-default">Rosita Chatmon</a>
                                 <small class="d-block text-muted">2 days ago</small>
                             </div>
                             <div class="ml-auto text-muted">
-                                <a href="jobs.html" class="btn  btn-sm btn-secondary text-white">See Details</a>
+                                <a href="{{ url('jobs')}}" class="btn  btn-sm btn-secondary text-white">See Details</a>
                             </div>
                         </div>
                     </div>
@@ -243,7 +243,7 @@
                     <div class="card-body">
                         <div class="item-card7-desc">
                             <div class="item-card7-text">
-                                <a href="jobs.html" class="text-dark">
+                                <a href="{{ url('jobs')}}" class="text-dark">
                                     <h4 class="font-weight-semibold">Excellent Opportunity For Medical Summarization at
                                         chennai</h4>
                                 </a>
@@ -261,11 +261,11 @@
                         <div class="d-flex align-items-center mt-auto">
                             <img src="assets/images/company.jpg" class="avatar brround avatar-md mr-2" alt="avatar-img">
                             <div>
-                                <a href="jobs.html" class="text-default">Zealous Healthcare Services</a>
+                                <a href="{{ url('jobs')}}" class="text-default">Zealous Healthcare Services</a>
                                 <small class="d-block text-muted">5 days ago</small>
                             </div>
                             <div class="ml-auto text-muted">
-                                <a href="jobs.html" class="btn  btn-sm btn-secondary text-white">See Details</a>
+                                <a href="{{ url('jobs')}}" class="btn  btn-sm btn-secondary text-white">See Details</a>
                             </div>
                         </div>
                     </div>
@@ -277,7 +277,7 @@
                     <div class="card-body">
                         <div class="item-card7-desc">
                             <div class="item-card7-text">
-                                <a href="jobs.html" class="text-dark">
+                                <a href="{{ url('jobs')}}" class="text-dark">
                                     <h4 class="font-weight-semibold">Pharmacist Jobs in Canada</h4>
                                 </a>
                             </div>
@@ -294,11 +294,11 @@
                         <div class="d-flex align-items-center mt-auto">
                             <img src="{{ asset('assets/images/company.jpg') }}" class="avatar brround avatar-md mr-2" alt="avatar-img">
                             <div>
-                                <a href="jobs.html" class="text-default">Izago Immigration Advisors Pvt Ltd</a>
+                                <a href="{{ url('jobs')}}" class="text-default">Izago Immigration Advisors Pvt Ltd</a>
                                 <small class="d-block text-muted">4 days ago</small>
                             </div>
                             <div class="ml-auto text-muted">
-                                <a href="jobs.html" class="btn  btn-sm btn-secondary text-white">See Details</a>
+                                <a href="{{ url('jobs')}}" class="btn  btn-sm btn-secondary text-white">See Details</a>
                             </div>
                         </div>
                     </div>
@@ -309,7 +309,7 @@
                     <div class="card-body">
                         <div class="item-card7-desc">
                             <div class="item-card7-text">
-                                <a href="jobs.html" class="text-dark">
+                                <a href="{{ url('jobs')}}" class="text-dark">
                                     <h4 class="font-weight-semibold">Manager Medical Services</h4>
                                 </a>
                             </div>
@@ -326,12 +326,12 @@
                         <div class="d-flex align-items-center mt-auto">
                             <img src="{{ asset('assets/images/company.jpg')}}" class="avatar brround avatar-md mr-2" alt="avatar-img">
                             <div>
-                                <a href="jobs.html" class="text-default">Finejobs Consultant Private Limited
+                                <a href="{{ url('jobs')}}" class="text-default">Finejobs Consultant Private Limited
                                 </a>
                                 <small class="d-block text-muted">2 days ago</small>
                             </div>
                             <div class="ml-auto text-muted">
-                                <a href="jobs.html" class="btn  btn-sm btn-secondary text-white">See Details</a>
+                                <a href="{{ url('jobs')}}" class="btn  btn-sm btn-secondary text-white">See Details</a>
                             </div>
                         </div>
                     </div>
@@ -342,7 +342,7 @@
                     <div class="card-body">
                         <div class="item-card7-desc">
                             <div class="item-card7-text">
-                                <a href="jobs.html" class="text-dark">
+                                <a href="{{ url('jobs')}}" class="text-dark">
                                     <h4 class="font-weight-semibold">Medical Adviser at KK Consulting Services</h4>
                                 </a>
                             </div>
@@ -359,11 +359,11 @@
                         <div class="d-flex align-items-center mt-auto">
                             <img src="{{ asset('assets/images/company.jpg')}}" class="avatar brround avatar-md mr-2" alt="avatar-img">
                             <div>
-                                <a href="jobs.html" class="text-default">KK Consulting Services</a>
+                                <a href="{{ url('jobs')}}" class="text-default">KK Consulting Services</a>
                                 <small class="d-block text-muted">3 days ago</small>
                             </div>
                             <div class="ml-auto text-muted">
-                                <a href="jobs.html" class="btn  btn-sm btn-secondary text-white">See Details</a>
+                                <a href="{{ url('jobs')}}" class="btn  btn-sm btn-secondary text-white">See Details</a>
                             </div>
                         </div>
                     </div>
@@ -371,7 +371,7 @@
             </div>
         </div>
         <div class="text-center">
-            <a href="jobs.html" class="btn  btn-primary "> View More</a>
+            <a href="{{ url('jobs')}}" class="btn  btn-primary "> View More</a>
         </div>
     </div>
 </section>

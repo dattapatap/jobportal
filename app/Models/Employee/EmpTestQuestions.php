@@ -10,7 +10,6 @@ class EmpTestQuestions extends Model
 {
     use HasFactory;
 
-
     public function emptest(){
         return $this->belongsTo(EmpTest::class, 'test_id');
     }

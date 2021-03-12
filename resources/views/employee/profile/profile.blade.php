@@ -137,7 +137,7 @@
                             <h3 class="card-title">Career Details</h3>
                             <div class="card-options">
                                 @if(!$emp->careers)
-							      <a class="btn btn-light btn-sm btn-addCareer" href="#"><i class="fa fa-plus"></i> Add </a>
+							      <a class="btn btn-success btn-sm btn-addCareer"><i class="fa fa-plus"></i> Add </a>
                                 @else
                                   <a class="editCareer btn" id="{{$emp->careers->id}}" ><i class="fe fe-edit "></i></a>
                                 @endif
@@ -190,9 +190,9 @@
                             <h3 class="card-title"> Educations Details </h3>
                             <div class="card-options">
                                 @if(!$emp->educations)
-                                <a class="btn btn-light btn-sm btn-addEducation" href="#"><i class="fa fa-plus"></i> Add </a>
+                                <a class="btn btn-sm btn-success btn-addEducation" ><i class="fa fa-plus"></i> Add </a>
                                 @else
-                                <a class="btn btn-light btn-sm btn-addEducation" href="#"><i class="fa fa-plus"></i> Add More</a>
+                                <a class="btn btn-sm btn-success btn-addEducation" ><i class="fa fa-plus"></i> Add More</a>
                                 @endif
                             </div>
                         </div>
@@ -247,9 +247,9 @@
                             <h3 class="card-title"> Working Experience </h3>
                             <div class="card-options">
                                 @if(!$emp->experience)
-                                   <a class="btn btn-light btn-sm btn-addExperience" href="#"><i class="fa fa-plus"></i> Add </a>
+                                   <a class="btn btn-sm btn-success btn-addExperience"><i class="fa fa-plus"></i> Add </a>
                                 @else
-                                   <a class="btn btn-light btn-sm btn-addExperience" href="#"><i class="fa fa-plus"></i> Add More</a>
+                                   <a class="btn btn-sm btn-success btn-addExperience"><i class="fa fa-plus"></i> Add More</a>
                                 @endif
                             </div>
                         </div>
@@ -297,9 +297,9 @@
                             <h3 class="card-title"> Expertise And Knowledge Details(Skills) </h3>
                             <div class="card-options">
                                 @if(!$emp->skills)
-                                   <a class="btn btn-light btn-sm btn-addSkills" href="#"><i class="fa fa-plus"></i> Add </a>
+                                   <a class="btn btn-sm btn-success btn-addSkills" ><i class="fa fa-plus"></i> Add </a>
                                 @else
-                                   <a class="btn btn-light btn-sm btn-addSkills" href="#"><i class="fa fa-plus"></i> Add More</a>
+                                   <a class="btn btn-sm btn-success btn-addSkills" ><i class="fa fa-plus"></i> Add More</a>
                                 @endif
                             </div>
                         </div>
@@ -318,9 +318,9 @@
                             <h3 class="card-title"> Resume </h3>
                             <div class="card-options">
                                 @if(!isset($emp->careers->resume))
-                                   <a class="btn btn-light btn-sm btn-addResume"><i class="fa fa-plus"></i> Add </a>
+                                   <a class="btn btn-success btn-sm btn-addResume"><i class="fa fa-plus"></i> Add </a>
                                 @else
-                                   <a class="btn btn-light btn-sm btn-addResume" ><i class="fa fa-plus"></i> Add New</a>
+                                   <a class="btn btn-success btn-sm btn-addResume" ><i class="fa fa-plus"></i> Add New</a>
                                 @endif
                             </div>
                         </div>

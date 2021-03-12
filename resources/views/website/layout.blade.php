@@ -176,9 +176,6 @@
                                             <a class="dropdown-item" href="#">
                                                 <i class="dropdown-icon icon icon-bell"></i> Notifications
                                             </a>
-                                            <a href="#" class="dropdown-item">
-                                                <i class="dropdown-icon  icon icon-settings"></i> Account Settings
-                                            </a>
                                             <a class="dropdown-item" href="{{ route('logout') }}"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 <i class="dropdown-icon icon icon-power"></i> Log out
@@ -226,12 +223,9 @@
                     <li><a href="{{url('index')}}">Home </a>
 
                     </li>
-                    <li><a href="#">About Us </a></li>
+                    <li><a href="{{ url('about-us')}}">About Us </a></li>
                     <li><a href="{{url('jobs')}}">Jobs </a></li>
-
-                    <li><a href="{{ url('recruiters')}}">Recruiter </a></li>
-
-                    <li><a href="#">Testimonials </a></li>
+                    <li><a href="{{ url('testimonials')}}">Testimonials </a></li>
                     <li><a href="#"> Contact Us <span class="horizontal-arrow"></span></a></li>
                     <li class="d-lg-none pt-5 pb-2 mt-lg-0">
                         <span><a class="btn btn-secondary ad-post mt-1" href="#"><i class="fa fa-briefcase"></i> Submit
@@ -246,7 +240,7 @@
                     <ul class="mb-0 pr-2">
                         <li class="d-none d-lg-flex">
                             <span><a class="btn btn-secondary ad-post mt-1"
-                                    href="{{ url('recregister') }}"><i
+                                    href="{{ url('job-submit') }}"><i
                                         class="fa fa-briefcase"></i> Submit
                                     a Job</a></span>
                         </li>
@@ -254,7 +248,7 @@
                     <ul class="mb-0 pl-2 create-resume-btn">
                         <li class="d-none d-lg-flex">
                             <span><a class="btn btn-info ad-post mt-1"
-                                    href="{{ url('login') }}"><i
+                                    href="{{ url('emp-resume') }}"><i
                                         class="fa fa-edit"></i> Create
                                     Resume</a></span>
                         </li>
@@ -264,17 +258,17 @@
                         <ul class="mb-0 pr-2">
                             <li class="d-none d-lg-flex">
                                 <span><a class="btn btn-secondary ad-post mt-1"
-                                        href="{{ url('recregister') }}"><i
+                                        href="{{ url('job-submit') }}"><i
                                             class="fa fa-briefcase"></i> Submit
                                         a Job</a></span>
                             </li>
                         </ul>
                     @endif
-                    @if(Auth::user()->role_id == 3 )
+                    @if(!Auth::user()->role_id == 3 && Auth::user() )
                         <ul class="mb-0 pl-2 create-resume-btn">
                             <li class="d-none d-lg-flex">
                                 <span><a class="btn btn-info ad-post mt-1"
-                                        href="{{ route('employee.profile') }}"><i
+                                        href="{{ route('emp-resume') }}"><i
                                             class="fa fa-edit"></i> Create
                                         Resume</a></span>
                             </li>
@@ -439,8 +433,8 @@
     {{-- <script src="{{ asset('assets/js/upload.js') }}"></script> --}}
     {{-- <script src="{{ asset('assets/js/swipe.js') }}"></script> --}}
     <!-- Scripts Js-->
-    <script src="{{ asset('assets/js/scripts2.js') }}"></script>    
-    
+    <script src="{{ asset('assets/js/scripts2.js') }}"></script>
+
     <!-- Custom Js-->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     @yield('scripts')

@@ -10,14 +10,14 @@
                 <ul>
                     <li>{!! \Session::get('error') !!}</li>
                 </ul>
-            </div>                        
+            </div>
         @endif
         @if (\Session::has('success'))
             <div class="alert alert-success">
                 <ul>
                     <li>{!! \Session::get('success') !!}</li>
                 </ul>
-            </div>                        
+            </div>
         @endif
         <div class="row">
             <div class="col-lg-5 col-xl-4">
@@ -26,9 +26,9 @@
                         @if($user->avatar)
                             <img class="card-profile-img" src="{{ asset('storage/images/profiles/'.$user->avatar) }}" alt="img">
                         @else
-                            <img class="card-profile-img" src="{{ asset('assets/images/users/male/25.jpg')}}" alt="img"> 
+                            <img class="card-profile-img" src="{{ asset('assets/images/users/male/25.jpg')}}" alt="img">
                         @endif
-                        <h3 class="mb-1 text-info">{{ $user->name }}</h3>   
+                        <h3 class="mb-1 text-info">{{ $user->name }}</h3>
                         <a href="#" class="btn btn-success btn-sm mt-2 btnProfilePic"><i class="fa fa-pencil" aria-hidden="true"></i> Edit profile</a>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                                 <h6 class="mediafont text-dark">Twitter</h6><a class="d-block" href="#">{{ $user->recruiter->twiter}}</a>
                             </div>
                             <!-- media-body -->
-                        </div>          
+                        </div>
 
                         <!-- media -->
                         <div class="media mt-1 pb-2">
@@ -98,7 +98,7 @@
                                                  <h2 class="text-info mt-2"> {{ $user->name }}</h2>
                                             </div>
                                         </tbody>
-                                        <tbody class="col-lg-12 col-xl-6 p-2">                                           
+                                        <tbody class="col-lg-12 col-xl-6 p-2">
                                             <tr>
                                                 <td><strong>Contact Person :</strong> {{ $user->recruiter->contact_person }}</td>
                                             </tr>
@@ -125,7 +125,7 @@
                                 <div class="row mt-5 profie-img">
                                     <div class="col-md-6">
                                         <div class="media-heading">
-                                             <h5><strong>Package Selected</strong></h5>                                       
+                                             <h5><strong>Package Selected</strong></h5>
                                             <div class="col-md-12 text-center p-5">
                                                <h1><strong class="text-info">Premium</strong></h1>
                                             </div>
@@ -133,38 +133,38 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="media-heading">
-                                            <h5><strong>Available Points</strong></h5>                                       
+                                            <h5><strong>Available Points</strong></h5>
                                             <div class="col-md-12 text-center p-5">
                                                <h1><strong class="text-info">130.00</strong></h1>
                                             </div>
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
 
                                 <div class="row mt-5 profie-img">
                                     <div class="col-md-12">
                                         <div class="media-heading">
-                                            <h5><strong>About Company</strong></h5>                                       
+                                            <h5><strong>About Company</strong></h5>
                                            <p>
                                                {{ $user->recruiter->about }}
                                            </p>
                                        </div>
-                                    </div>                                    
-                                </div>  
+                                    </div>
+                                </div>
 
 
-                               
+
 
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <a class="btn btn-success btn-sm pull-right"  href="{{ url('recruiter/editprofile') }}">Edit Profile</a>
                 </div>
-    
-                
+
+
             </div>
 
         </div>
@@ -182,13 +182,13 @@
             <form id="profileupload" method="POST"  enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <div class="form-row"> 
+                    <div class="form-row">
                         <div class="form-group col-md-12">
                             <div class="">
                                 <input type="file" name="profile_pic" id="profile_pic" class="dropify" data-height="180" required />
                                 <span id="image-input-error" style="color: red;font-size:12px;"></span>
-                            </div>    
-                        </div>                        
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -204,11 +204,10 @@
 @section('scripts')
 <script src="{{asset('js/recruiter/profile.js')}}"> </script>
 <script>
-    
     $(document).ready(function(){
         $('.btnProfilePic').click(function(){
             $('#profilepic').modal('show');
         });
-    });    
-</script>    
+    });
+</script>
 @endsection

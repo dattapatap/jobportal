@@ -32,6 +32,7 @@
     <!-- Datatable -->
     <link href="{{ asset('css/datatable.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/datatable.responsive.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('js/toastr.min.css') }}" rel="stylesheet" />
     <!-- Morris.js Charts Plugin -->
     {{-- <link href="{{ asset('assets/plugins/morris/morris.css') }}" rel="stylesheet" /> --}}
     <!-- Custom scroll bar css-->
@@ -66,51 +67,47 @@
                             <div class="dropdown d-none d-md-flex">
                                 <a class="nav-link icon" data-toggle="dropdown">
                                     <i class="fa fa-bell-o"></i>
-                                    <span class=" nav-unread badge badge-danger  badge-pill">4</span>
+                                    @if($unreadNotf)
+                                        @if($unreadNotf > 9)
+                                            <span class=" nav-unread badge badge-danger badge-pill" style="padding: 0.2rem 0.25rem;" > {{9}}+</span>
+                                        @else
+                                            <span class=" nav-unread badge badge-danger  badge-pill"> {{ $unreadNotf }}</span>
+                                        @endif
+                                    @endif
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a href="#" class="dropdown-item text-center">You have 4 notification</a>
+                                    <a href="#" class="dropdown-item text-center">You have {{$unreadNotf}} notification</a>
                                     <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item d-flex pb-3">
-                                        <div class="notifyimg">
-                                            <i class="fa fa-envelope-o"></i>
-                                        </div>
-                                        <div>
-                                            <strong>2 new Messages</strong>
-                                            <div class="small text-muted">17:50 Pm</div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="dropdown-item d-flex pb-3">
-                                        <div class="notifyimg">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                        <div>
-                                            <strong> 1 Event Soon</strong>
-                                            <div class="small text-muted">19-10-2019</div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="dropdown-item d-flex pb-3">
-                                        <div class="notifyimg">
-                                            <i class="fa fa-comment-o"></i>
-                                        </div>
-                                        <div>
-                                            <strong> 3 new Comments</strong>
-                                            <div class="small text-muted">05:34 Am</div>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="dropdown-item d-flex pb-3">
-                                        <div class="notifyimg">
-                                            <i class="fa fa-exclamation-triangle"></i>
-                                        </div>
-                                        <div>
-                                            <strong> Application Error</strong>
-                                            <div class="small text-muted">13:45 Pm</div>
-                                        </div>
-                                    </a>
+
+                                    @foreach ($notifications as $item)
+                                        @if ( $item->read_at==null)
+                                            <a href="{{ url('admin/notifications') }}" class="dropdown-item d-flex pb-3" data-id="{{ $item->id }}" style="background-color:#164bce26">
+                                                <div class="notifyimg">
+                                                    <i class="fa fa-bell-o"></i>
+                                                </div>
+                                                <div>
+                                                    <strong>{{ $item->data['data']}}</strong>
+                                                    <div class="small text-muted"> {{ $item->created_at }}  </div>
+                                                </div>
+                                            </a>
+                                        @else
+                                            <a href="{{ url('admin/notifications') }}" class="dropdown-item d-flex pb-3">
+                                                <div class="notifyimg">
+                                                    <i class="fa fa-bell-o"></i>
+                                                </div>
+                                                <div>
+                                                    <strong>{{$item->data['data']}}</strong>
+                                                    <div class="small text-muted"> {{ $item->created_at }}  </div>
+                                                </div>
+                                            </a>
+                                        @endif
+                                    @endforeach
                                     <div class="dropdown-divider"></div>
-                                    <a href="#" class="dropdown-item text-center">See all Notification</a>
+                                    <a  href="{{ url('admin/notifications') }}" class="dropdown-item text-center">See all Notification</a>
                                 </div>
                             </div>
+
+
                             <div class="dropdown ">
                                 <a href="#" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
                                     @if(Auth::user()->avatar)
@@ -191,12 +188,12 @@
                             <li>
                                 <a href="{{url('admin/testslots')}}" class="slide-item">Test Slots</a>
                             </li>
-                            <li>
+                             {{--<li>
                                 <a href="{{url('admin/qpcategory')}}" class="slide-item">QP Category</a>
                             </li>
                             <li>
                                 <a href="{{url('admin/qp')}}" class="slide-item">Question Paper</a>
-                            </li>
+                            </li> --}}
 
                         </ul>
                     </li>
@@ -307,7 +304,7 @@
     <script src="{{ asset('assets/plugins/flot/jquery.flot.fillbetween.js') }}"></script>
     <script src="{{ asset('assets/plugins/flot/jquery.flot.pie.js') }}"></script> --}}
     {{-- Toaster --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
     <!--Counters -->
     <script src="{{ asset('assets/plugins/counters/counterup.min.js') }}"></script>
@@ -321,7 +318,20 @@
     <!-- Custom Js-->
     <script src="{{ asset('assets/js/admin-custom.js') }}"></script>
     <script src="{{ asset('assets/js/index3.js') }}"></script>
-    @yield('scripts')
+
+
+    @if(auth()->user())
+        <script>
+            $(document).ready(function() {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+            });
+        </script>
+    @endif
+@yield('scripts')
 
 </body>
 

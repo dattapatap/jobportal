@@ -18,12 +18,12 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
-{    
+{
     use AuthenticatesUsers;
     protected $redirectTo;
-    
+
     public function __construct()
-    {       
+    {
         if(Auth::check() && Auth::user()->role_id == 1 ){
             $this->redirectTo = route('admin.dashboard');
         } else if(Auth::check() && Auth::user()->role_id == 2 ){
@@ -47,17 +47,17 @@ class LoginController extends Controller
                     return redirect()->route('employee.dashboard');
                 }else{
                     $this->guard()->logout();
-                    return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
+                    return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
                 }
             }else{
-              return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
+              return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
             }
     }
 
     public function recruiterLoginShow(){
         return view('auth.recruiter-login');
     }
-    public function recruiterLogin(Request $request){        
+    public function recruiterLogin(Request $request){
         $validator = $request->validate([
             'email' => 'required|string',
             'password' => 'required|string'
@@ -67,16 +67,16 @@ class LoginController extends Controller
                 return redirect()->route('recruiter.dashboard');
             }else{
                 $this->guard()->logout();
-                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput()->withPassword();   
+                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
             }
         }else{
-           return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
+           return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
         }
     }
     public function adminLoginshow(){
         return view('auth.adminlogin');
     }
-    public function adminLogin(Request $request){        
+    public function adminLogin(Request $request){
         $validator = $request->validate([
                         'email' => 'required|string',
                         'password' => 'required|string'
@@ -86,10 +86,10 @@ class LoginController extends Controller
                     return redirect()->route('admin.dashboard');
             }else{
                 $this->guard()->logout();
-                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput(); 
+                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
             }
         }else{
-           return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();   
+           return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
         }
     }
 
@@ -107,7 +107,7 @@ class LoginController extends Controller
         return Socialite::driver($provider)->redirect();
     }
     public function SocialRedirectEmp($provider)
-    {       
+    {
         cache()->add('role', '3', 200);
         return Socialite::driver($provider)->redirect();
     }
@@ -115,8 +115,8 @@ class LoginController extends Controller
     public function SocialCallback($provider){
         $userSocial =   Socialite::driver($provider)->stateless()->user();
         $users = User::where(["social->{$provider}->id" => $userSocial->id, ])->first();
-        if (!$users) 
-            $users = User::where(['email' => $userSocial->email,])->first(); 
+        if (!$users)
+            $users = User::where(['email' => $userSocial->email,])->first();
 
         $role = Cache::get('role');
         if($users){
@@ -129,10 +129,10 @@ class LoginController extends Controller
                 }
             }else{
                 if($role == 2)
-                    return redirect()->Route('recr-login')->with('error', 'Dont have permission of authenticate, Duplicate user');                    
+                    return redirect()->Route('recr-login')->with('error', 'Dont have permission of authenticate, Duplicate user');
                 else
-                    return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, Duplicate user');                    
-            }   
+                    return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, Duplicate user');
+            }
         }else{
             if (!$userSocial->email) {
                 if($role == 3)
@@ -141,7 +141,7 @@ class LoginController extends Controller
                     return redirect()->Route('recr-login')->with('error','email not not registered email not social');
             }
             try {
-                DB::beginTransaction();  
+                DB::beginTransaction();
 
                 $user = new User();
                 $user->name = $userSocial->name;
@@ -155,7 +155,7 @@ class LoginController extends Controller
                 }else if($user->role_id == 2){
                     DB::table('recruiters')->insert(['company_name'=> $user->name, 'user_id'=> $user->id]);
                 }else{
-                    return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, duplicate user');                    
+                    return redirect()->Route('login')->with('error', 'Dont have permission of authenticate, duplicate user');
                 }
                 DB::commit();
 

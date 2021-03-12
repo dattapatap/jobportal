@@ -16,9 +16,9 @@
             pointer-events: none;
             cursor: default;
         }
-    </style> 
+    </style>
     <div class="container">
-        <div class="row ">          
+        <div class="row ">
             @include('employee.dashboardLayout')
             <div class="col-lg-9 col-md-12 col-md-12">
                 @if (\Session::has('error'))
@@ -26,14 +26,14 @@
                             <ul>
                                 <li>{!! \Session::get('error') !!}</li>
                             </ul>
-                        </div>                        
+                        </div>
                     @endif
                     @if (\Session::has('success'))
                         <div class="alert alert-success">
                             <ul>
                                 <li>{!! \Session::get('success') !!}</li>
                             </ul>
-                        </div>                        
+                        </div>
                 @endif
                 <div class="card dropify-image-avatar">
                     <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
@@ -42,22 +42,22 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">          
-                                <div class="col-md-12">    
+                            <div class="col-md-12">
+                                <div class="col-md-12">
                                     <h2 class="text-info">
                                        Your Test Result
                                     </h2>
-                                    <br>                                   
-                                    <div class="row-fluid">    
+                                    <br>
+                                    <div class="row-fluid">
                                      <ol>
                                         @forelse ($testGiven->reverse() as $item)
-                                            <li>                                                
+                                            <li>
                                                 <div class="col-md-12 mb-2 mt-2" style="height: 60px;">
                                                     <div class="row">
                                                         <div class="col-md-2 text-center" style="line-height: 50px;">
                                                             <strong> {{ $loop->index +1 }} ATTEMPT</strong>
                                                         </div>
-                                                        @if($item->status =="Scheduled")                                                        
+                                                        @if($item->status =="Scheduled")
                                                             <div class="col-md-4 text-center">
                                                                 <strong> Test Date</strong>
                                                                 <br>
@@ -67,7 +67,7 @@
                                                                 <strong> Remaining Time </strong>
                                                                 <br>
                                                                 <span class="remTime"> {{$item->test_sheduled}} </span>
-                                                            </div>                                                            
+                                                            </div>
                                                             <div class="col-md-3 text-center"  style="height: 60px;margin-top: 8px;">
                                                                 <button href="#" class="btn btn-primary btn-sm  float-right" disabled> Take Test </button>
                                                             </div>
@@ -76,18 +76,18 @@
                                                                     <strong> Test Date</strong>
                                                                     <br>
                                                                     <span>{{ $item->test_sheduled  }}</span>
-                                                                </div>                                                                                  
+                                                                </div>
                                                                 <div class="col-md-2 text-center">
                                                                     <strong> Status </strong>
                                                                     <br>
                                                                     <span class="text-info"> {{  $item->status }} </span>
-                                                                </div>  
+                                                                </div>
                                                                 <div class="col-md-2 text-center" >
                                                                     <strong> Expire In </strong>
                                                                     <br>
                                                                     <span class="expiryIn"> {{ Carbon\Carbon::parse( $testGiven[0]->test_sheduled.' '.$testGiven[0]->slots->to)->format('Y-m-d h:i A')}}  </span>
-                                                                </div>  
-                                                                                                                       
+                                                                </div>
+
                                                                 <div class="col-md-2"  style="height: 60px;margin-top: 8px;">
                                                                     <a href="{{ url('employee/assessment/start') }}" class="btn btn-primary btn-sm  float-right"> Take Test </a>
                                                                 </div>
@@ -101,9 +101,9 @@
                                                                     <strong> Status </strong>
                                                                     <br>
                                                                     <span class="text-danger"> {{ $item->status }} </span>
-                                                                </div>                                                            
+                                                                </div>
                                                                 <div class="col-md-3 text-center">
-                                                                    
+
                                                                 </div>
                                                         @elseif($item->status =="Completed")
                                                                 <div class="col-md-2 text-center">
@@ -115,20 +115,24 @@
                                                                     <strong> Status </strong>
                                                                     <br>
                                                                     <span class="text-success"> {{ $item->status }} </span>
-                                                                </div>                                                            
+                                                                </div>
                                                                 <div class="col-md-2 text-center">
                                                                     <strong> Tot Marks </strong>
                                                                     <br>
                                                                     @php $score=0;  @endphp
                                                                     @foreach ($item->testquestions as $opt)
-                                                                           @php $score = $score + $opt->answeres->marks ; @endphp
+                                                                           @php
+                                                                            if(isset($opt->answeres->marks)){
+                                                                                $score = $score + $opt->answeres->marks ;
+                                                                            }
+                                                                           @endphp
                                                                     @endforeach
                                                                     <span class="text-success"> {!! $score .'/10' !!} </span>
                                                                 </div>
                                                                 <div class="col-md-3 text-center">
                                                                     <strong> Ranking/Category </strong>
                                                                     <br>
-                                                                    @php 
+                                                                    @php
                                                                         $totPercents = round(($score/10)*100 , 2);
                                                                         if($totPercents < 60 )
                                                                             $category = '<span class="text-danger">Need Improvement</span>';
@@ -155,7 +159,7 @@
                                         @endforelse
                                      </ol>
                                     </div>
-                                    <br>                               
+                                    <br>
                                     <div class="lock_explanation float-right">
                                         @if(count($testGiven) < 3 )
                                             @if( count($testGiven)==0||$testGiven[0]->status=="Expired"||$testGiven[0]->status=="Completed")
@@ -185,7 +189,7 @@
             <form method="POST" action="{{ url('employee/assessment/schedule')}}" id="frmSchedule">
                 @csrf
                 <div class="modal-body">
-                    <div class="form-row"> 
+                    <div class="form-row">
                         <div class="form-group col-md-12">
                             <div class="form-group">
                                 <label class="form-label text-dark">Test Date</label>
@@ -196,15 +200,15 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>      
+                        </div>
                         <div class="form-group col-md-12">
                             <div class="form-group">
                                 <label class="form-label text-dark">Test Slot Time</label>
                                 <select class="form-control select2" id="testslot" name="testslot" >
                                     <option selected value=""> select test slot </option>
                                     @foreach ($testSlots as $item)
-                                        <option value="{{ $item->id}}" @if( old('testslot')==$item->id)selected @endif > {{Carbon\Carbon::parse($item->from)->format('g:i A')." To ". Carbon\Carbon::parse($item->to)->format('g:i A') }}</option>    
-                                    @endforeach                                        
+                                        <option value="{{ $item->id}}" @if( old('testslot')==$item->id)selected @endif > {{Carbon\Carbon::parse($item->from)->format('g:i A')." To ". Carbon\Carbon::parse($item->to)->format('g:i A') }}</option>
+                                    @endforeach
                                 </select>
                                 @error('testslot')
                                     <span class="invalid-feedback" role="alert">
@@ -212,7 +216,7 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>   
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -238,8 +242,8 @@
     @endif
 
         $(function(){
-           setInterval(function(){         
-                        @if(isset($testGiven[0]->test_sheduled)  && $testGiven[0]->status=="Scheduled" )                   
+           setInterval(function(){
+                        @if(isset($testGiven[0]->test_sheduled)  && $testGiven[0]->status=="Scheduled" )
                             date_future = new Date("{{Carbon\Carbon::parse( $testGiven[0]->test_sheduled.' '.$testGiven[0]->slots->from)->format('Y-m-d h:i A')}}");
                             date_now = new Date();
                             seconds = Math.floor((date_future - (date_now))/1000);
@@ -247,7 +251,7 @@
                                 var test = "{{$testGiven[0]->status}}";
                                 if(test=="Scheduled"){
                                     updateTestStatus("Started");
-                                }                               
+                                }
                             }
                             minutes = Math.floor(seconds/60);
                             hours = Math.floor(minutes/60);
@@ -255,12 +259,12 @@
                             hours = hours-(days*24);
                             minutes = minutes-(days*24*60)-(hours*60);
                             seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
-                            $(".remTime").text(days.pad(2) + ":" + hours.pad(2) + ":" + minutes.pad(2) + ":" + seconds.pad(2));   
-                            
+                            $(".remTime").text(days.pad(2) + ":" + hours.pad(2) + ":" + minutes.pad(2) + ":" + seconds.pad(2));
+
                         @endif
                 },1000);
         });
-        
+
         $(function(){
             setInterval(function(){
                      @if(isset($testGiven[0]->test_sheduled)  && $testGiven[0]->status=="Started" )
@@ -298,8 +302,8 @@
                 } ,
                 error:function(e){
                     console.log(e.responseText);
-                }  
-             });        
+                }
+             });
         }
 
         Number.prototype.pad = function(size) {

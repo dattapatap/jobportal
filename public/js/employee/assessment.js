@@ -17,7 +17,7 @@ function displayTimer(){
         remTime--;
         var mins=Math.floor(remTime/60);
         var secs=Math.floor(remTime%60) ;
-        if(remTime < 0) 
+        if(remTime < 0)
             updateServer();
         $('#timeRemaining').text(mins.pad(2)+":"+secs.pad(2));
         console.log(mins.pad(2)+":"+secs.pad(2));
@@ -36,7 +36,7 @@ function updateServer(){
             } ,
             error:function(e){
                 console.log(e.responseText);
-            }  
+            }
         });
 }
 

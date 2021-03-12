@@ -10,7 +10,7 @@ use App\Models\Role;
 use App\Models\Employee;
 
 
-class User extends Authenticatable 
+class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -59,6 +59,11 @@ class User extends Authenticatable
     public function employee(){
         return $this->hasOne(Employee::class, 'user_id');
     }
+
+    // public function notifications(){
+    //     return $this->hasMany(Notification::class, 'notifiable_id');
+    // }
+
 
 
 }

@@ -64,7 +64,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="ml-auto">
-                                                                <a href="#" class="mr-3"><i class="fa fa-user text-muted mr-1"></i>{{ Auth::user()->name }}</a>
+                                                                {{-- <a href="#" class="mr-3"><i class="fa fa-user text-muted mr-1"></i>{{ Auth::user()->name }}</a> --}}
                                                                 <a href="{{ url('recruiter/postedjobs/view/'.$job->id)}}" class="btn btn-primary btn-md text-white"> <i class="fa fa-eye"></i> </a>
                                                                 <a href="{{ url('recruiter/postedjobs/delete/'.$job->id)}}" class="btn btn-danger btn-md text-white"> <i class="fa fa-trash-o"></i> </a>
                                                                 @if($job->status)

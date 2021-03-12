@@ -3,7 +3,11 @@
 <div class="app-content">
     <div class="side-app">
         <div class="page-header">
-            <h4 class="page-title">Profile</h4>
+            <h4 class="page-title">Recruiter</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url('admin/recruiter')}}">Recruiter</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Profile</li>
+            </ol>
         </div>
 
         <div class="row">
@@ -13,9 +17,9 @@
                         @if($user->user->avatar)
                             <img class="card-profile-img" src="{{ asset('storage/images/profiles/'.$user->user->avatar) }}" alt="img">
                         @else
-                            <img class="card-profile-img" src="{{ asset('assets/images/users/male/25.jpg')}}" alt="img"> 
+                            <img class="card-profile-img" src="{{ asset('assets/images/users/male/25.jpg')}}" alt="img">
                         @endif
-                        <h3 class="mb-1 text-info">{{ $user->name }}</h3>   
+                        <h3 class="mb-1 text-info">{{ $user->name }}</h3>
                     </div>
                 </div>
                 <div class="card p-5 ">
@@ -54,7 +58,7 @@
                                 <h6 class="mediafont text-dark">Twitter</h6><a class="d-block" href="#">{{ $user->twiter}}</a>
                             </div>
                             <!-- media-body -->
-                        </div>          
+                        </div>
 
                         <!-- media -->
                         <div class="media mt-1 pb-2">
@@ -79,9 +83,9 @@
                                     <table class="table row table-borderless w-100 m-0 ">
                                         <tbody class="col-lg-12 col-xl-12 col-md-12 p5">
                                             <div class="col-12 p-1" style="text-align: center">
-                                                 <h2 class="text-info mt-2"> {{ $user->company_name }}</h2>                                                 
+                                                 <h2 class="text-info mt-2"> {{ $user->company_name }}</h2>
                                             </div>
-                                            <div class="col-12" style="text-align: center">       
+                                            <div class="col-12" style="text-align: center">
                                                 @if($user->status)
                                                     <h4 class="text-success float-right"><strong> Verified </strong> </h4>
                                                 @else
@@ -94,7 +98,7 @@
                                                 </div>
                                            @endif
                                         </tbody>
-                                        <tbody class="col-lg-12 col-xl-6 p-2">                                           
+                                        <tbody class="col-lg-12 col-xl-6 p-2">
                                             <tr>
                                                 <td><strong>Contact Person :</strong> {{ $user->contact_person }}</td>
                                             </tr>
@@ -121,7 +125,7 @@
                                 <div class="row mt-5 profie-img">
                                     <div class="col-md-4">
                                         <div class="media-heading">
-                                             <h5><strong>Package Selected</strong></h5>                                       
+                                             <h5><strong>Package Selected</strong></h5>
                                             <div class="col-md-12 text-center p-5">
                                                <h3><strong class="text-info">Premium</strong></h3>
                                             </div>
@@ -129,7 +133,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="media-heading">
-                                            <h5><strong>Available Points</strong></h5>                                       
+                                            <h5><strong>Available Points</strong></h5>
                                             <div class="col-md-12 text-center p-5">
                                                <h3><strong class="text-info">130.00</strong></h3>
                                             </div>
@@ -137,30 +141,30 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="media-heading">
-                                            <h5><strong>Total Posted Jbs</strong></h5>                                       
+                                            <h5><strong>Total Posted Jbs</strong></h5>
                                             <div class="col-md-12 text-center p-5">
                                                <h3><strong class="text-info">{{ count($user->jobs)}}</strong></h3>
                                             </div>
                                         </div>
                                     </div>
-                                </div>    
+                                </div>
 
                                 <div class="row mt-5 profie-img">
                                     <div class="col-md-12">
                                         <div class="media-heading">
-                                            <h5><strong>About Company</strong></h5>                                       
+                                            <h5><strong>About Company</strong></h5>
                                            <p>
                                                {{ $user->about }}
                                            </p>
                                        </div>
-                                    </div>                                    
-                                </div>  
+                                    </div>
+                                </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
-                       
+
             </div>
 
         </div>
@@ -169,7 +173,7 @@
 @endsection
 
 @section('scripts')
-<script src="{{asset('js/recruiter/profile.js')}}"> </script>   
+<script src="{{asset('js/recruiter/profile.js')}}"> </script>
 <script>
         $('.btn-verify').click(function(){
             event.preventDefault();

@@ -19,11 +19,14 @@ class CreateEmpTestsTable extends Migration
             $table->foreign('emp_id')->references('id')->on('employee');
             $table->integer('tot_ques');
             $table->time('max_time');
+            $table->integer('last_q_no')->default(1);
             $table->string('status');
             $table->time('rem_time');
-            $table->unsignedBigInteger('test_scheduled')->nullable();            
-            $table->foreign('test_scheduled')->references('id')->on('test_slots');
-            $table->dateTime('test_taken');
+            $table->date('test_scheduled');
+            $table->unsignedBigInteger('slot_id');
+            $table->foreign('slot_id')->references('id')->on('test_slots');
+            $table->dateTime('test_taken')->nullable();
+            $table->integer('test_category')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

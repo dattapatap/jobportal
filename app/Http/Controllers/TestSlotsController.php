@@ -13,7 +13,7 @@ class TestSlotsController extends Controller
 
     public function index()
     {
-        $slots = TestSlots::where('deleted_at', null)->paginate(2);
+        $slots = TestSlots::where('deleted_at', null)->paginate(10);
         return view('admin.assessment.testslots.index', compact('slots'));
     }
 
@@ -32,7 +32,7 @@ class TestSlotsController extends Controller
             'from' => 'required|date_format:H:i',
             'to' => ['required','date_format:H:i','after:from',new ValidTimeOfOneHour($totalDuration)],
         ]);
-        
+
         $timeSlot = new TestSlots;
         $timeSlot->description = $request->post('desc');
         $timeSlot->from = $request->post('from');
@@ -45,7 +45,7 @@ class TestSlotsController extends Controller
 
     public function show(TestSlots $testSlots)
     {
-      
+
     }
 
     public function status(Request $request, $id)
@@ -53,7 +53,7 @@ class TestSlotsController extends Controller
         $testSlots = TestSlots::find($id);
         if($testSlots->status=="Active"){
             $testSlots->status="InActive";
-        }else{            
+        }else{
             $testSlots->status="Active";
         }
         $testSlots->save();
@@ -87,9 +87,9 @@ class TestSlotsController extends Controller
     }
 
     public function destroy(TestSlots $testSlots, $id)
-    {   
+    {
         $testSlots = TestSlots::find($id);
-        $testSlots->delete();        
+        $testSlots->delete();
         return redirect()->route('admin.testslots.index')->with('success', 'Slot deleted successfully');
     }
 }

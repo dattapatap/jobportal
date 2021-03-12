@@ -11,7 +11,6 @@ class Userskills extends Model
     use HasFactory;
     protected $fillable = ['emp_id', 'skill_id'];
 
-
     public function skills(){
         return $this->belongsTo(Skills::class, 'skill_id');
     }
@@ -21,9 +20,9 @@ class Userskills extends Model
         return $this->belongsTo(Employee::class, 'emp_id');
     }
 
-   public function userskills(){
-       return $this->belongsTo(Skills::class, 'skill_id');
-   }
+    public function userskills(){
+        return $this->belongsTo(Skills::class, 'skill_id');
+    }
 
 
 }

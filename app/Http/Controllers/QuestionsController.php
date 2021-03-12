@@ -13,8 +13,6 @@ use \Illuminate\Support\Facades\DB;
 
 class QuestionsController extends Controller
 {
-
-
     public function index(Request $request){
         if ($request->ajax()) {
             $data = Questions::where('deleted_at',null)
@@ -46,30 +44,30 @@ class QuestionsController extends Controller
     }
 
 
-    public function create()
-    {  
+    public function create(){
          $category = QuestionCategory::where('deleted_at', null)->get();
          $type = DB::table('question_types')->get();
-        return view('admin.assessment.questions.create', compact('category', 'type'));
+         return view('admin.assessment.questions.create', compact('category', 'type'));
     }
 
+    public function store(Request $request){
 
-    public function store(Request $request)
-    {
+        $q_id = $request->post('q_id');
+        $q_category = $request->post('cat');
+        $q_type = $request->post('quest');
+        $question_text = $request->post('question');
+        $options = json_decode($request->post('option'), true);
+        $marks = json_decode($request->post('ans') , true);
+
         try{
             DB::beginTransaction();
-
-            $question  = new Questions();
-            $question->qc_id = $request->question_category;
-            $question->q_type = $request->question_type;
-            $question->name = $request->question;
-            $question->tot_options = count($request->opt);
-
+            $question  = new Questions;
+            $question->qc_id = $q_category;
+            $question->q_type = $q_type;
+            $question->name = $question_text;
+            $question->tot_options = count($marks);
             $question->save();
             $q_id = $question->id;
-
-            $options = $request->opt;
-            $marks = $request->marks;
             for($ctr=0; $ctr < count($options); $ctr++){
                 $ques_ops  = new QuestionOptions();
                 $ques_ops->q_id  = $q_id;
@@ -78,35 +76,43 @@ class QuestionsController extends Controller
                 $ques_ops->save();
             }
             DB::commit();
-            $request->session()->flash('success',"Question Added Successfully");   
-            return redirect('/admin/questions');  
-          
+            $request->session()->flash('success',"Question added Successfully");
+            return response()->json(['code'=>200, 'message'=>'Question Added Successfully','data' => $question], 200);
         }catch(Exception $ex){
             DB::rollBack();
             echo $ex->getMessage();
-            return back()->with(['error'=>"Question not saved, Please try again"]);   
-        }                 
+            echo $ex->getLine();
+            return response()->json(['code'=>202, 'message'=>'Question not added, please try again','data' => $question], 200);
+        }
     }
 
     public function edit($id){
-            $category = QuestionCategory::where('deleted_at', null)->get();            
-            $type = DB::table('question_types')->get();            
+            $category = QuestionCategory::where('deleted_at', null)->get();
+            $type = DB::table('question_types')->get();
             $ques = Questions::where(['id' => $id])->with('options')->firstOrFail();
             return view('admin.assessment.questions.edit', compact('category', 'type', 'ques'));
     }
 
     public function update(Request $request){
+        $q_id = $request->post('q_id');
+        $q_category = $request->post('cat');
+        $q_type = $request->post('quest');
+        $question_text = $request->post('question');
+        $options = json_decode($request->post('option'), true);
+        $marks = json_decode($request->post('ans') , true);
+        $newOPtions = json_decode($request->post('opts') , true);
+
         try{
             DB::beginTransaction();
-            $question = Questions::where(['id'=>$request->post('question_id')])->first();
-            $question->qc_id = $request->post('question_category');
-            $question->q_type = $request->post('question_type');
-            $question->name = $request->post('question');
-            $question->tot_options = count($request->post('opt'));
+            $question = Questions::where(['id'=>$request->post('q_id')])->first();
+
+            $question->qc_id = $q_category;
+            $question->q_type = $q_type;
+            $question->name = $question_text;
+            $question->tot_options = count($options);
             $question->save();
-            $options = $request->post('opt');
-            $marks = $request->post('marks');
-            $array_questions = $request->post('optionsId');
+
+            $array_questions = $newOPtions;
             for($ctr=0; $ctr < count($options); $ctr++){
                 if($array_questions[$ctr] > 0){
                     $ques_ops  = QuestionOptions::find($array_questions[$ctr]);
@@ -122,12 +128,14 @@ class QuestionsController extends Controller
                 }
             }
             DB::commit();
-            $request->session()->flash('success',"Question Updated Successfully");   
-            return redirect('/admin/questions');
+            $request->session()->flash('success',"Question updated successfully");
+            return response()->json(['code'=>200, 'message'=>'Question updated successfully','data' => $question], 200);
         }catch(Exception $ex){
             DB::rollBack();
-            return back()->with(['error'=>"Question not updated, Please try again"]);   
-        }   
+            echo $ex->getMessage();
+            echo $ex->getLine();
+            return response()->json(['code'=>202, 'message'=>'Question not added, please try again','data' => $question], 200);
+        }
     }
 
     public function delete($id){

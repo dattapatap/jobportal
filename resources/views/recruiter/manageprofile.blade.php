@@ -52,7 +52,7 @@
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Contact Person Name</label>
-                                    <input type="text" name="contact_person" value="{{ old('contact_person', $user->recruiter->contact_person) }}" class="form-control" placeholder="Company Name" >
+                                    <input type="text" name="contact_person" value="{{ old('contact_person', $user->contact_person) }}" class="form-control" placeholder="Company Name" >
                                     @error('contact_person')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{  $message }}</strong>
@@ -85,7 +85,7 @@
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Location</label>
-                                    <input type="text" name="location" value="{{ old('location', $user->recruiter->location )}}" class="form-control" placeholder="City"  >
+                                    <input type="text" name="location" value="{{ old('location', $user->location )}}" class="form-control" placeholder="City"  >
                                     @error('location')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -96,7 +96,7 @@
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Industry</label>
-                                    <input type="text" name="proffession" value="{{ old('proffession',$user->recruiter->proffession) }}" class="form-control" placeholder="Industry" >
+                                    <input type="text" name="proffession" value="{{ old('proffession',$user->proffession) }}" class="form-control" placeholder="Industry" >
                                     @error('proffession')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -107,7 +107,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="form-label">Website</label>
-                                    <input type="text" name="website" value="{{ old('website',$user->recruiter->website) }}" class="form-control" placeholder="website" >
+                                    <input type="text" name="website" value="{{ old('website',$user->website) }}" class="form-control" placeholder="website" >
                                     @error('website')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -118,7 +118,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="form-label">Twiter</label>
-                                    <input type="text" name="twiter" value="{{ old('twiter', $user->recruiter->twiter) }}" class="form-control" placeholder="twiter" >
+                                    <input type="text" name="twiter" value="{{ old('twiter', $user->twiter) }}" class="form-control" placeholder="twiter" >
                                     @error('twiter')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -130,7 +130,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="form-label">LinkedIn</label>
-                                    <input type="text" name="linkedin" value="{{ old('linkedin', $user->recruiter->linkedin )}}" class="form-control" placeholder="LinkedIn">
+                                    <input type="text" name="linkedin" value="{{ old('linkedin', $user->linkedin )}}" class="form-control" placeholder="LinkedIn">
                                     @error('linkedin')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -141,7 +141,7 @@
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
                                     <label class="form-label">About Company</label>
-                                    <textarea rows="5" name="about" value="{{ old('about',$user->recruiter->about) }}" class="form-control" placeholder="Enter About your description" > {{ $user->recruiter->about }}</textarea>
+                                    <textarea rows="5" name="about" value="{{ old('about',$user->about) }}" class="form-control" placeholder="Enter About your description" > {{ $user->about }}</textarea>
                                     @error('about')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -159,4 +159,5 @@
         </div>
     </div>
 </div>
+
 @endsection

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TestCompleted extends Notification
+class RecruiterInteres extends Notification
 {
     use Queueable;
 
@@ -17,11 +17,12 @@ class TestCompleted extends Notification
      * @return void
      */
 
-    public $user, $testSlot, $slottime;
+    public $user, $recruiter, $employee;
 
-    public function __construct($test)
+    public function __construct( $recruiter, $employee )
     {
-        $this->testSlot = $test;
+        $this->recruiter = $recruiter;
+        $this->employee = $employee;
     }
 
     public function via($notifiable)
@@ -37,24 +38,26 @@ class TestCompleted extends Notification
                 ->subject($subject)
                 ->greeting($greeting)
                 ->salutation('Yours Faithfully')
-                ->line('Your Test Completed Successfully.')
-                ->line('Check your score')
-                ->action('Check Score', url('http://localhost:8000/employee/assessment'))
-                ->line('Thank you for using our application!');
+                ->line($this->recruiter)
+                ->line('Recruiter showed interest on Employee.')
+                ->line('Employee - '.$this->employee)
+                ->action('View', url(base_path().'/admin/notifications'));
     }
 
     public function toDatabase($notifiable)
     {
-        return ([
-            'data' => "Your Test Completed Completed Successfully"
-        ]);
+        return [
+            'data' => $this->recruiter.' Recruiter showed interest on Employee- '.$this->employee,
+            'employee' => $this->employee,
+            'recruiter' => $this->recruiter,
+            'link'=> base_path().'/admin/notifications',
+        ];
     }
-
 
     public function toArray($notifiable)
     {
         return [
-            //
+
         ];
     }
 }

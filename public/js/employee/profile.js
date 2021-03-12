@@ -8,10 +8,9 @@ $(document).ready(function() {
     $('select2').select2();
     $("#passingyear").datepicker({
         format: "yyyy",
-        viewMode: "years", 
+        viewMode: "years",
         minViewMode: "years"
     });
-
 
 
     $('.editPersonal').click(function(e){
@@ -30,15 +29,15 @@ $(document).ready(function() {
                     $('#email').val(response.email);
                     $('#mobile').val(response.mobile);
                     $('#address').val(response.address);
-                    $("#emp_id").val(response.id);    
+                    $("#emp_id").val(response.id);
                     $(".btn-saveprofile").val('Update');
-                    $('#personalDetails').modal('show'); 
+                    $('#personalDetails').modal('show');
                 }
             },
             error:function(error){
                 console.log(error);
             }
-        });        
+        });
     });
     $('.frmProfile').submit(function(e){
         e.preventDefault();
@@ -51,7 +50,7 @@ $(document).ready(function() {
                 data: formData,
                 success: function(data) {
                     console.log(data);
-                    if(data.code == 200) {               
+                    if(data.code == 200) {
                         $('.frmProfile')[0].reset();
                         toastr.success(data.message);
                         $('#personalDetails').modal('hide');
@@ -66,14 +65,14 @@ $(document).ready(function() {
                 },
                 error: (response) => {
                     console.log(response);
-                    if(response.status === 422) {   
+                    if(response.status === 422) {
                         let errors = response.responseJSON.errors;
                         Object.keys(errors).forEach(function (key) {
                             console.log(key);
                             $("#" + key + "Input").addClass("is-invalid");
                             $("#" + key + "Error").children("strong").text(errors[key][0]);
                         });
-                    } 
+                    }
                     else {
                         window.location.reload();
                     }
@@ -82,7 +81,9 @@ $(document).ready(function() {
 
     })
 
-
+    $('.btn-addCareer').click(function(){
+        $('#careerDetails').modal('show');
+    });
     $('.frmcareerdetail').submit(function(e){
         e.preventDefault();
         let formData = $(this).serializeArray();
@@ -94,10 +95,10 @@ $(document).ready(function() {
                 data: formData,
                 success: function(data) {
                     console.log(data);
-                    if(data.code == 200) {               
+                    if(data.code == 200) {
                         $('.frmProfile')[0].reset();
                         toastr.success(data.message);
-                        $('#personalDetails').modal('hide');
+                        $('#careerDetails').modal('hide');
                         location.reload();
                     }else{
                         if(data.code ==203){
@@ -109,14 +110,14 @@ $(document).ready(function() {
                 },
                 error: (response) => {
                     console.log(response);
-                    if(response.status === 422) {   
+                    if(response.status === 422) {
                         let errors = response.responseJSON.errors;
                         Object.keys(errors).forEach(function (key) {
                             console.log(key);
                             $("#" + key + "Input").addClass("is-invalid");
                             $("#" + key + "Error").children("strong").text(errors[key][0]);
                         });
-                    } 
+                    }
                 }
         });
 
@@ -138,24 +139,25 @@ $(document).ready(function() {
                     $('#year').val(data.experience_year);
                     $('#month').val(data.experience_month);
                     $('#currctc').val(data.current_ctc);
-                    $("#expctc").val(data.expected_ctc);    
-                    $("#location").val(data.location_prefered).trigger('change');    
-                    
+                    $("#expctc").val(data.expected_ctc);
+                    $("#location").val(data.location_prefered).trigger('change');
+
                     $("#career_id").val(data.id);
 
                     $(".btnCareer").text('Update');
-                    $('#careerDetails').modal('show'); 
+                    $('#careerDetails').modal('show');
                 }
             },
             error:function(error){
                 console.log(error);
             }
-        });        
+        });
     })
 
 
 // Educations Details
     $('.btn-addEducation').click(function(){
+        $('.frmEducation')[0].reset();
         $('#educationDetails').modal('show');
     });
     $('#education').change(function(){
@@ -218,7 +220,7 @@ $(document).ready(function() {
                 data: formData,
                 success: function(data) {
                     console.log(data);
-                    if(data.code == 200) {               
+                    if(data.code == 200) {
                         $('.frmEducation')[0].reset();
                         toastr.success(data.message);
                         $('#educationDetails').modal('hide');
@@ -233,14 +235,14 @@ $(document).ready(function() {
                 },
                 error: (response) => {
                     console.log(response);
-                    if(response.status === 422) {   
+                    if(response.status === 422) {
                         let errors = response.responseJSON.errors;
                         Object.keys(errors).forEach(function (key) {
                             console.log(key);
                             $("#" + key + "Input").addClass("is-invalid");
                             $("#" + key + "Error").children("strong").text(errors[key][0]);
                         });
-                    } 
+                    }
                 }
         });
 
@@ -261,24 +263,25 @@ $(document).ready(function() {
                     $('#institude').val(data.institude);
                     $('#courseType').val(data.coursetype);
                     $('#passingyear').val(data.passingyear);
-                    $("#percent").val(data.percent);    
-                    
+                    $("#percent").val(data.percent);
+
                     $("#edu_id").val(data.id);
 
                     $(".btneducations").text('Update');
-                    $('#educationDetails').modal('show'); 
+                    $('#educationDetails').modal('show');
                 }
             },
             error:function(error){
                 console.log(error);
             }
-        });        
+        });
      })
 
 
     // Educations Details
     $('.datepicker').datepicker({format: "dd-mm-yyyy"});
-    $('.btn-addEducation').click(function(){
+    $('.btn-addExperience').click(function(){
+        $('.frmExp')[0].reset();
         $('#expDetails').modal('show');
     });
     $('.frmExp').submit(function(e){
@@ -292,7 +295,7 @@ $(document).ready(function() {
                 data: formData,
                 success: function(data) {
                     console.log(data);
-                    if(data.code == 200) {               
+                    if(data.code == 200) {
                         $('.frmExp')[0].reset();
                         toastr.success(data.message);
                         location.reload();
@@ -306,7 +309,7 @@ $(document).ready(function() {
                 },
                 error: (response) => {
                     console.log(response);
-                    if(response.status === 422) {   
+                    if(response.status === 422) {
                         let errors = response.responseJSON.errors;
                         Object.keys(errors).forEach(function (key) {
                             console.log(key);
@@ -314,7 +317,7 @@ $(document).ready(function() {
                             $("#" + key + "Error").children("strong").text(errors[key][0]);
 
                         });
-                    } 
+                    }
                 }
         });
 
@@ -335,21 +338,24 @@ $(document).ready(function() {
                     $('#from').val(data.from_date);
                     $('#to').val(data.to_date);
                     $('#explocation').val(data.location).trigger('change');
-                    
+
                     $("#exp_id").val(data.id);
 
                     $(".addexp").text('Update');
-                    $('#expDetails').modal('show'); 
+                    $('#expDetails').modal('show');
                 }
             },
             error:function(error){
                 console.log(error);
             }
-        });        
+        });
      })
+
+
 
     // Skill Details
     $('.btn-addSkills').click(function(){
+        $('#frmSkills')[0].reset();
         $('#skillDetails').modal('show');
     });
     $('#frmSkills').submit(function(e){
@@ -363,7 +369,7 @@ $(document).ready(function() {
                 data:{'skills': formData},
                 success: function(data) {
                     console.log(data);
-                    if(data.code == 200) {               
+                    if(data.code == 200) {
                         $('#frmSkills')[0].reset();
                         toastr.success(data.message);
                         location.reload();
@@ -379,8 +385,9 @@ $(document).ready(function() {
                     console.log(response.responseText);
                 }
         });
-    
+
     })
+
     $('.skilldelete').click(function(e){
        var skill =  $(this).attr('id');
         $.ajax({
@@ -388,13 +395,13 @@ $(document).ready(function() {
             type:'POST',
             data:{'skillid': skill },
             success: function(data) {
-                if(data.status == true) {               
-                    toastr.success(data.message);                   
+                if(data.status == true) {
+                    toastr.success(data.message);
                 }
             },
             error: (response) => {
                 console.log(response.responseText);
-            }             
+            }
         });
         $(this).parent('i').remove();
     })
@@ -414,10 +421,10 @@ $(document).ready(function() {
                 data:formData,
                 cache:false,
                 contentType: false,
-                processData: false,  
+                processData: false,
                 success: function(data) {
                     console.log(data);
-                    if(data.code == 200) {               
+                    if(data.code == 200) {
                         $('#frmSkills')[0].reset();
                         toastr.success(data.message);
                         location.reload();
@@ -431,28 +438,28 @@ $(document).ready(function() {
                 },
                 error: (response) => {
                     console.log(response);
-                    if(response.status === 422) {   
+                    if(response.status === 422) {
                         let errors = response.responseJSON.errors;
                         Object.keys(errors).forEach(function (key) {
                             console.log(key);
                             $("#" + key + "Input").addClass("is-invalid");
                             $("#" + key + "Error").children("strong").text(errors[key][0]);
                         });
-                    } 
+                    }
                 }
         });
-    
+
     })
-    
+
     //Profile
     $('.btnProfilePic').click(function(){
         $('#profilepic').modal('show');
-    });   
+    });
     $('#profileupload').submit(function(e) {
         e.preventDefault();
         let formData = new FormData(this);
         $('#image-input-error').text('');
-     
+
         $.ajax({
            type:'POST',
            url: "/employee/profile/profilpicupload",
@@ -474,8 +481,8 @@ $(document).ready(function() {
                  $('#image-input-error').text(response.responseJSON.errors.profile_pic);
             }
         });
-    }); 
-    
+    });
+
 
 
 

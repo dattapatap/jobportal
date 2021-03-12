@@ -45,9 +45,9 @@ class TestRemainingTime extends Notification
 
     public function toDatabase($notifiable)
     {
-        return [
+        return ([
             'data' => "Your Sheduledd test start within 15 Minutes"
-        ];
+        ]);
     }
     /**
      * Get the array representation of the notification.

@@ -11,7 +11,10 @@ class DashboardController extends Controller
 {
     public function index(){
         $user = Auth::user()->recruiter;
-        $postedJobs = Jobs::where('rec_id',$user->rec_id)->orderBy('id','desc')->offset(0)->limit(5)->get();
-        return view('recruiter.dashboard', compact('user','postedJobs'));
+        $postedJobs = Jobs::where('rec_id',$user->id)->orderBy('id','desc')->limit(5)->get();
+
+        $jbs = Jobs::where('rec_id', $user->id)->get();
+        $totjobs = count($jbs);
+        return view('recruiter.dashboard', compact('user','postedJobs', 'totjobs'));
     }
 }

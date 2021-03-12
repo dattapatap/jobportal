@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\Recruiter;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Notifications\AdminRegister;
 use App\Notifications\UserRegistration;
 use Carbon\Carbon;
 use Exception;
@@ -33,7 +34,7 @@ class RegisterController extends Controller
         }else{
             $this->redirectTo = route('login');
         }
-        $this->middleware('guest')->except('logout');        
+        $this->middleware('guest')->except('logout');
     }
 
     /**
@@ -79,7 +80,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10|unique:users',
-            'password' => 'required|string|min:8|confirmed',            
+            'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
         ]);
 
@@ -91,7 +92,7 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'mobile' => $request->mobile,
                 'password' => Hash::make($request->password),
-            ]);       
+            ]);
 
             $employee = Employee::create([
                 'first_name' => $request->name,
@@ -99,6 +100,10 @@ class RegisterController extends Controller
                 'registerd_date' => Carbon::now(),
             ]);
             $user->notify(new UserRegistration($user));
+
+            $admin = User::find(1);
+            $admin->notify(new AdminRegister($user));
+
             DB::commit();
             Auth::login($user);
             return redirect()->to('employee/dashboard');
@@ -121,18 +126,18 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10|unique:users',
-            'password' => 'required|string|min:8|confirmed',            
+            'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
         ]);
         DB::beginTransaction();
-        try{            
+        try{
             $user = User::create([
                         'name' => $request->name,
                         'role_id' => 2,
                         'email' => $request->email,
                         'mobile' => $request->mobile,
                         'password' => Hash::make($request->password),
-                    ]);       
+                    ]);
 
             $recruiter = Recruiter::create([
                             'company_name' => $request->name,
@@ -142,6 +147,9 @@ class RegisterController extends Controller
 
             $user->notify(new UserRegistration($user));
 
+            $admin = User::find(1);
+            $admin->notify(new AdminRegister($user));
+
             Auth::login($user);
             return redirect()->to('recruiter/dashboard');
         }catch(Exception $e){
@@ -150,7 +158,7 @@ class RegisterController extends Controller
             if($errorCode == 1062)
                 session()->flash('error',"Duplicate Entry of Email/Mobile");
             else
-                session()->flash('error',"Invalid details, Please try again");                
+                session()->flash('error',"Invalid details, Please try again");
             return redirect()->back()->withInput();
         }
     }

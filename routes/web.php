@@ -1,4 +1,6 @@
 <?php
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -6,7 +8,43 @@ Route::get('/', function () { return view('index'); });
 Route::get('/index', function () { return view('index'); });
 
 Route::get('/jobs', function(){  return view('jobs');});
-Route::get('/recruiters', function(){  return view('recruiters'); });
+Route::get('/about-us', function(){  return view('about-us'); });
+Route::get('/testimonials', function(){  return view('testimonials'); });
+
+
+Route::get('job-submit', function(){
+    if(Auth::check() && Auth::user()->role_id == 2){
+        return redirect('recruiter/jobs/add-newjob');
+    }else{
+        return redirect('/recr/login');
+    }
+});
+Route::get('emp-resume', function(){
+    if(Auth::check() && Auth::user()->role_id == 3){
+        return redirect('employee/profile/profile');
+    }else{
+        return redirect('/login');
+    }
+});
+Route::get('/user-register', function(){
+    if(Auth::user() && Auth::user()->role_id === 3){
+        return redirect('employee/profile/profile');
+    }else{
+        return redirect('/register');
+    }
+});
+Route::get('/upload-web-resume', function(){
+    if(Auth::user() && Auth::user()->role_id == 3){
+        return redirect('employee/profile/profile');
+    }elseif(Auth::user() && Auth::user()->role_id == 2){
+        return redirect('recruiter/dashboard');
+    }else{
+        return redirect('/login');
+    }
+});
+
+
+
 
 Auth::routes();
 Route::post('/emp/login', [App\Http\Controllers\Auth\LoginController::class, 'empLogin'])->name('login-employee');
@@ -24,11 +62,15 @@ Route::get('login/{provider}/callback',[App\Http\Controllers\Auth\LoginControlle
 
 
 
+
+
+
 Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(){
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
 
     Route::get('employee', [App\Http\Controllers\Admin\AdminEmployee::class, 'index'])->name('employee');
+    Route::get('employee/view/{id}', [App\Http\Controllers\Admin\AdminEmployee::class, 'view']);
 
     Route::get('recruiter', [App\Http\Controllers\Admin\AdminRecruiter::class, 'index'])->name('recruiter');
     Route::get('recruiter/view/{id}', [App\Http\Controllers\Admin\AdminRecruiter::class, 'view']);
@@ -47,24 +89,24 @@ Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'adm
 
     Route::get('questions', [App\Http\Controllers\QuestionsController::class, 'index']);
     Route::get('questions/create/', [App\Http\Controllers\QuestionsController::class, 'create']);
-    Route::post('questions/create', [App\Http\Controllers\QuestionsController::class, 'store'])->name('questions.create');
+    Route::post('questions/create/new', [App\Http\Controllers\QuestionsController::class, 'store']);
     Route::get('questions/edit/{id}', [App\Http\Controllers\QuestionsController::class, 'edit']);
-    Route::post('questions/update', [App\Http\Controllers\QuestionsController::class, 'update'])->name('questions.update');
+    Route::post('questions/update', [App\Http\Controllers\QuestionsController::class, 'update']);
     Route::get('questions/delete/{id}', [App\Http\Controllers\QuestionsController::class, 'delete']);
 
-    Route::get('qpcategory', [App\Http\Controllers\QPaperCategoryController::class, 'index']);
-    Route::get('qpcategory/manage/', [App\Http\Controllers\QPaperCategoryController::class, 'manageqpcategory']);
-    Route::get('qpcategory/manage/{id}', [App\Http\Controllers\QPaperCategoryController::class, 'manageqpcategory']);
-    Route::post('qpcategory', [App\Http\Controllers\QPaperCategoryController::class, 'store'])->name('qpcategory.process');
-    Route::get('qpcategory/delete/{QPaperCategory}', [App\Http\Controllers\QPaperCategoryController::class, 'delete']);
+    // Route::get('qpcategory', [App\Http\Controllers\QPaperCategoryController::class, 'index']);
+    // Route::get('qpcategory/manage/', [App\Http\Controllers\QPaperCategoryController::class, 'manageqpcategory']);
+    // Route::get('qpcategory/manage/{id}', [App\Http\Controllers\QPaperCategoryController::class, 'manageqpcategory']);
+    // Route::post('qpcategory', [App\Http\Controllers\QPaperCategoryController::class, 'store'])->name('qpcategory.process');
+    // Route::get('qpcategory/delete/{QPaperCategory}', [App\Http\Controllers\QPaperCategoryController::class, 'delete']);
 
 
-    Route::get('qp', [App\Http\Controllers\QuestionPaperController::class, 'index']);
-    Route::get('qp/create/', [App\Http\Controllers\QuestionPaperController::class, 'create']);
-    Route::post('qp/create', [App\Http\Controllers\QuestionPaperController::class, 'store'])->name('qp.create');
-    Route::get('qp/edit/{id}', [App\Http\Controllers\QuestionPaperController::class, 'edit']);
-    Route::post('qp/update', [App\Http\Controllers\QuestionPaperController::class, 'update'])->name('qp.update');
-    Route::get('qp/delete/{id}', [App\Http\Controllers\QuestionPaperController::class, 'delete']);
+    // Route::get('qp', [App\Http\Controllers\QuestionPaperController::class, 'index']);
+    // Route::get('qp/create/', [App\Http\Controllers\QuestionPaperController::class, 'create']);
+    // Route::post('qp/create', [App\Http\Controllers\QuestionPaperController::class, 'store'])->name('qp.create');
+    // Route::get('qp/edit/{id}', [App\Http\Controllers\QuestionPaperController::class, 'edit']);
+    // Route::post('qp/update', [App\Http\Controllers\QuestionPaperController::class, 'update'])->name('qp.update');
+    // Route::get('qp/delete/{id}', [App\Http\Controllers\QuestionPaperController::class, 'delete']);
 
 
     Route::get('industries', [App\Http\Controllers\IndustriesController::class, 'index']);
@@ -108,6 +150,12 @@ Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'adm
     Route::resource('testslots', App\Http\Controllers\TestSlotsController::class);
 
 
+    Route::get('notifications', [App\Http\Controllers\Admin\NotificationController::class, 'index']);
+    Route::post('notification/read', [App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])->name('markNotification');
+
+
+
+
     Route::get('profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile');
     // Admin Profile
     Route::post('profile/upload', [App\Http\Controllers\Admin\ProfileController::class, 'uploadProfile'])->name('profile.upload');
@@ -127,8 +175,14 @@ Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruit
     Route::post('profile/changepassword', [App\Http\Controllers\Recruiter\ProfileController::class, 'updatePassword'])->name('change.password');
 
     Route::get('packages', [App\Http\Controllers\Recruiter\PackageController::class, 'index']);
-    Route::get('viewdcandidate', [App\Http\Controllers\Recruiter\CandidatesController::class, 'index']);
 
+    Route::get('viewdcandidate', [App\Http\Controllers\Recruiter\CandidatesController::class, 'index']);
+    Route::post('viewdcandidate/search/', [App\Http\Controllers\Recruiter\CandidatesController::class, 'search'])->name('search.candidate');
+    Route::post('emp/showinterest', [App\Http\Controllers\Recruiter\CandidatesController::class, 'showInterest']);
+
+
+    Route::get('notifications', [App\Http\Controllers\Recruiter\NotificationController::class, 'index']);
+    Route::post('notification/read', [App\Http\Controllers\Recruiter\NotificationController::class, 'markAsRead'])->name('markNotification');
 
     Route::get('postedjobs', [App\Http\Controllers\Recruiter\JobsController::class, 'index']);
     Route::get('jobs/add-newjob', [App\Http\Controllers\Recruiter\JobsController::class, 'viewnewjobform']);
@@ -139,6 +193,9 @@ Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruit
 
 
 });
+
+
+
 
 Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee', 'middleware' => ['auth', 'employee']], function(){
     Route::get('dashboard',[App\Http\Controllers\Employee\DashboardController::class, 'index'])->name('dashboard');

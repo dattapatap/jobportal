@@ -47,9 +47,9 @@ class TestScheduled extends Notification
 
     public function toDatabase($notifiable)
     {
-        return [
+        return ([
             'data' => "Your Test Scheduled Successfully The test time slot is ".$this->testSlot->test_sheduled." ".Carbon::parse($this->slottime->to)->format('h:m A')."-".Carbon::parse($this->slottime->to)->format('h:m A')
-        ];
+        ]);
     }
     /**
      * Get the array representation of the notification.

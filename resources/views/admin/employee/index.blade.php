@@ -24,9 +24,9 @@
                     <div class="card-body">
                         <div>
                             <table id="emplist" class="responsive display nowrap" cellspacing="0" width="100%">
-                                <thead>                               
+                                <thead>
                                     <tr>
-                                        <th> # </th>                                        
+                                        <th> # </th>
                                         <th>Action</th>
                                         <th>First name</th>
                                         <th>Last name</th>
@@ -40,7 +40,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                              
+
                                 </tbody>
                             </table>
                         </div>
@@ -58,7 +58,7 @@
 @section('scripts')
 <script src="{{ asset('assets/plugins/bootstrap-switch/bootstrap.switch.min.js')}}" data-turbolinks-track="true"></script>
 <script>
-    $('#emplist').dataTable({           
+    $('#emplist').dataTable({
         processing: true,
         serverside: true,
         responsive: true,
@@ -68,7 +68,7 @@
             error:function(err){
                 console.log(err.responseText);
             }
-        }, 
+        },
         columns: [
             {data: 'DT_RowIndex', name: '#'},
             {data: 'action', name: 'Action', orderable: false, searchable: false},
@@ -96,7 +96,7 @@
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
-                url: '/admin/recruiter/status',
+                url: '/admin/employee/status',
                 data: { status: userState, id: userid },
                 success: function(data) {
                     console.log(data);

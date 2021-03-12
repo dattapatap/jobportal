@@ -2,9 +2,9 @@
 @section('content')
 <section class="sptb">
     <style>
-   </style> 
+   </style>
     <div class="container">
-        <div class="row ">          
+        <div class="row ">
             @include('employee.dashboardLayout')
             <div class="col-lg-9 col-md-12 col-md-12">
                 <div class="card dropify-image-avatar">
@@ -15,7 +15,7 @@
                         <div class="col-md-6">
                                 <div class="col-md-12" style="test-align:right;">
                                     <span>Time Remaining: </span>
-                                    <span id="timeRemaining"> @php printf("%d:%d" ,session()->get('rem_time')/60,  
+                                    <span id="timeRemaining"> @php printf("%d:%d" ,session()->get('rem_time')/60,
                                                                     session()->get('rem_time')%60); @endphp </span>
                                 </div>
                         </div>
@@ -29,19 +29,19 @@
                                             <li>
                                                 <input type="hidden" name="QNO" value="{{ session()->get('currQNo')  }}">
                                                 <span style="margin-bottom:10px;">{{ html_entity_decode($objQuest->name) }}</span>
-            
+
                                                 <ol class="alpha-list mt-3" style="list-style:none;" >
                                                    @foreach ($objQuest->options as $item)
                                                     <li class="mb-2">
                                                         <input type="radio" name="options" value="{{ $item->id}}" name="checked" />
                                                         {{  html_entity_decode($item->options) }}
-                                                    </li>                                                        
+                                                    </li>
                                                    @endforeach
                                                 </ol>
-            
+
                                             </li>
                                         </ol>
-                                        <div class="col-md-12 float-right">            
+                                        <div class="col-md-12 float-right">
                                             &nbsp;&nbsp;&nbsp;
                                             <input id="next" type="submit" name="submit" class="btn btn-primary float-right"
                                              @if(session()->get('currQNo')== session()->get('maxQuestions'))

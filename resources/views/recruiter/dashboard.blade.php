@@ -20,7 +20,7 @@
                             <i class="icon icon-people text-primary"></i>
                         </div>
                         <p class="card-text mt-3 mb-3">Total Posted Jobs</p>
-                        <p class="h2 text-center text-primary">3,456</p>
+                        <p class="h2 text-center text-primary"> {{ $totjobs }}</p>
                     </div>
                 </div>
             </div><!-- COL END -->
@@ -85,25 +85,27 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($postedJobs as $item)
-                                        <tr @if($loop->even) style="background-color:blue;" @endif>
+                                        <tr>
+                                            <td>{{$loop->index + 1}}</td>
+                                            <td>{{ $item->jobrole->name }}</td>
+                                            <td>{{ $item->created_at}}</td>
                                             <td>
-
+                                                <a href="#" class="badge badge-warning"> {{ $item->industry->name }}</a>
                                             </td>
-                                            <td>Web Developer</td>
-                                            <td> Oct-23-2018 , 9:18</td>
+                                            <td>  {{ $item->job_tot_positions }}</td>
+                                            <td > {{ $item->job_tot_positions }} </td>
                                             <td>
-                                                <a href="#" class="badge badge-warning">IT</a>
-                                            </td>
-                                            <td>05</td>
-                                            <td >36</td>
-                                            <td>
-                                                <a href="#" class="badge badge-warning">Completed</a>
+                                                @if($item->status)
+                                                    <a href="#" class="badge badge-success"> Active </a>
+                                                @else
+                                                    <a href="#" class="badge badge-danger"> InActive </a>
+                                                @endif
                                             </td>
                                             <td>
                                                 {{-- <a class="btn btn-success btn-sm text-white" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
                                                 <a class="btn btn-danger btn-sm text-white" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-trash-o"></i></a>
                                                 <a class="btn btn-info btn-sm text-white" data-toggle="tooltip" data-original-title="Save to Wishlist"><i class="fa fa-heart-o"></i></a> --}}
-                                                <a class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
+                                                <a  href="{{ url('recruiter/postedjobs/view/'.$item->id)}}"  class="btn btn-primary btn-sm text-white" data-toggle="tooltip" data-original-title="View"><i class="fa fa-eye"></i></a>
                                             </td>
                                         </tr>
                                     @empty

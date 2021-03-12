@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class JobsController extends Controller
 {
    public function index(){
-       $jobs = Jobs::where('deleted_at', null) 
+       $jobs = Jobs::where('deleted_at', null)
                      ->orderBy('created_at', 'desc')
                      ->with('recruiter')
                      ->paginate(5);
@@ -22,7 +22,7 @@ class JobsController extends Controller
 
    public function viewJobs($id){
         $jobs = Jobs::where('id', $id)
-        ->with('recruiter')
+        ->with('industry', 'jobrole', 'location', 'recruiter')
         ->first();
         return view('admin.jobs.show', compact('jobs'));
    }

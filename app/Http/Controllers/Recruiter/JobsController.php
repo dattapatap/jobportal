@@ -18,7 +18,7 @@ class JobsController extends Controller
 {
    public function index(){
        $user = auth()->User();
-       $jobs = Jobs::where('rec_id', Auth::user()->recruiter->id)
+       $jobs = Jobs::where('rec_id', $user->recruiter->id)
                         ->with('industry', 'jobrole', 'location', 'recruiter')
                         ->where('deleted_at', null)
                         ->orderBy('created_at', 'desc')
