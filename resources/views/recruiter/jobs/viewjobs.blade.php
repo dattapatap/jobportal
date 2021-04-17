@@ -91,7 +91,10 @@
                         <div class="list-id">
                             <div class="row">
                                 <div class="col">
-                                    {{-- <a class="mb-0">Job ID : #8976542</a> --}}
+                                    <a class="mb-0">Job ID : ##{{ $jobs->id}}</a>
+                                </div>
+                                <div class="col">
+                                    <a class="mb-0">Applied : @if(isset($jobs->applied)) {{ count($jobs->applied )}} @endif</a>
                                 </div>
                                 <div class="col col-auto">
                                     Posted By <a class="mb-0 font-weight-bold"></a> / {{ $jobs->created_at}}
@@ -100,8 +103,44 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-
+            <div class="col-md-12">
+                <div class="card overflow-hidden">
+                    <div class="card-header border-top">
+                        <h4 class="card-title"> Applied Candidates</h4>
+                    </div>
+                    <div class="card-body border-top">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Applied Date</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    @if(isset($jobs->applied))
+                                        @php  $ctr=1; @endphp
+                                        @forelse ($jobs->applied as $item)
+                                        <tr>
+                                            <th scope="row"> {{ $ctr }}</th>
+                                            <td> <a href="javascript:void(0);">{{ $item->employee->first_name.' '. $item->employee->last_name }} </a></td>
+                                            <td>{{ $item->created_at }}</td>
+                                            @php $ctr++; @endphp
+                                        </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="3" style="text-align: center;"> No one applied this job </td>
+                                            </tr>
+                                        @endforelse
+                                    @endif
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

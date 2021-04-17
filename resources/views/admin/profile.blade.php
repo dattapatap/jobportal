@@ -14,9 +14,9 @@
                         @if(Auth::user()->avatar)
                             <img class="card-profile-img" src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="img">
                         @else
-                            <img class="card-profile-img" src="{{ asset('assets/images/users/male/25.jpg')}}" alt="img"> 
+                            <img class="card-profile-img" src="{{ asset('assets/images/users/male/25.jpg')}}" alt="img">
                         @endif
-                        <h3 class="mb-1 text-info">{{ Auth::user()->name }}</h3>   
+                        <h3 class="mb-1 text-info">{{ Auth::user()->name }}</h3>
                         <a href="#" class="btn btn-success btn-sm mt-2 btnProfilePic"><i class="fa fa-pencil" aria-hidden="true"></i> Edit profile</a>
                     </div>
                 </div>
@@ -62,10 +62,10 @@
                                     </table>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
 
         </div>
@@ -83,13 +83,13 @@
             <form id="profileupload" method="POST"  enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <div class="form-row"> 
+                    <div class="form-row">
                         <div class="form-group col-md-12">
                             <div class="">
                                 <input type="file" name="profile_pic" id="profile_pic" class="dropify" data-height="180" required />
                                 <span id="image-input-error" style="color: red;font-size:12px;"></span>
-                            </div>    
-                        </div>                        
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -106,11 +106,11 @@
 <script src="{{ asset('assets/plugins/fileuploads/js/dropify.js')}}"></script>
 <script src="{{ asset('assets/plugins/fileuploads/js/dropfy-custom.js')}}"></script>
 <script src="{{asset('js/admin/profile.js')}}"> </script>
-<script>   
+<script>
     $(document).ready(function(){
         $('.btnProfilePic').click(function(){
             $('#profilepic').modal('show');
         });
-    });    
-</script>    
+    });
+</script>
 @endsection

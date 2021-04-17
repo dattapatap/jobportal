@@ -41,18 +41,24 @@ class LoginController extends Controller
         $validator = $request->validate([
             'email' => 'required|string',
             'password' => 'required|string'
-            ]);
-            if (Auth::attempt($validator)) {
-                if(Auth::user()->role_id == 3){
-                    return redirect()->route('employee.dashboard');
-                }else{
-                    $this->guard()->logout();
-                    return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
+         ]);
+
+         if (Auth::attempt($validator)) {
+            if(Auth::user()->role_id == 3){
+                if(session()->has('url.intended')){
+                    return redirect()->intended(session('url.intended'));
                 }
+                return redirect()->route('employee.dashboard');
             }else{
-              return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
+
+                $this->guard()->logout();
+                return redirect()->back()->with('error', 'Oppes! You you login as Employer')->withInput();
             }
+         }else{
+            return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
+         }
     }
+
 
     public function recruiterLoginShow(){
         return view('auth.recruiter-login');
@@ -64,15 +70,22 @@ class LoginController extends Controller
         ]);
         if (Auth::attempt($validator)) {
             if(Auth::user()->role_id == 2){
-                return redirect()->route('recruiter.dashboard');
+                if(Auth::user()->status=='Active'){
+                    return redirect()->route('recruiter.dashboard');
+                }else{
+                    $this->guard()->logout();
+                    return redirect()->back()->with('error', 'Oppes! Your account is inactive')->withInput();
+                }
             }else{
                 $this->guard()->logout();
-                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
+                return redirect()->back()->with('error', 'Oppes! You you login as Employee')->withInput();
             }
         }else{
            return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
         }
     }
+
+
     public function adminLoginshow(){
         return view('auth.adminlogin');
     }
@@ -81,9 +94,15 @@ class LoginController extends Controller
                         'email' => 'required|string',
                         'password' => 'required|string'
         ]);
+
         if (Auth::attempt($validator)) {
             if(Auth::user()->role_id == 1){
+                if(Auth::user()->status=='Active'){
                     return redirect()->route('admin.dashboard');
+                }else{
+                    $this->guard()->logout();
+                    return redirect()->back()->with('error', 'Oppes! Your account is inactive')->withInput();
+                }
             }else{
                 $this->guard()->logout();
                 return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
@@ -94,18 +113,13 @@ class LoginController extends Controller
     }
 
 
-
-
-
-
-
-
     //Social Logins
     public function SocialRedirectEmployer($provider)
     {
         cache()->add('role', '2', 200);
         return Socialite::driver($provider)->redirect();
     }
+
     public function SocialRedirectEmp($provider)
     {
         cache()->add('role', '3', 200);
@@ -123,8 +137,14 @@ class LoginController extends Controller
             if($users->role_id == $role){
                 Auth::login($users);
                 if(Auth::check() && Auth::user()->role_id == 2 ){
+                    if(session()->has('url.intended')){
+                        return redirect()->intended(session('url.intended'));
+                    }
                     return redirect()->to('recruiter/dashboard');
                 } else if(Auth::check() && Auth::user()->role_id == 3 ){
+                    if(session()->has('url.intended')){
+                        return redirect()->intended(session('url.intended'));
+                    }
                     return redirect()->to('employee/dashboard');
                 }
             }else{

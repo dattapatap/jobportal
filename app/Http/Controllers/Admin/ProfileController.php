@@ -19,15 +19,15 @@ class ProfileController extends Controller
        return view('admin.profile');
    }
 
-   public function uploadProfile(Request $request){            
+   public function uploadProfile(Request $request){
         if ($request->hasFile('profile_pic')) {
             if ($request->file('profile_pic')->isValid()) {
                 $validated = $request->validate([
                     'profile_pic' => 'mimes:jpeg,png|max:1024',
-                ]);            
+                ]);
                 $file = $request->file('profile_pic');
                 $filename = $file->getClientOriginalName();
-                $image_resize = Image::make($file->getRealPath());              
+                $image_resize = Image::make($file->getRealPath());
                 $image_resize->resize(128, 128);
                 if(Auth::user()->avatar){
                     Storage::delete('/public/images/profiles/'.Auth::user()->avatar);
@@ -52,10 +52,10 @@ class ProfileController extends Controller
             'confirm_password' => 'required',
         ]);
 
-        $user = Auth::user();
-        if (!Hash::check($request->old_password, $user->password)) {
+        if (!Hash::check($request->post('old_password'), auth()->user()->password)) {
             return back()->with('error', 'Current password does not match!');
         }
+        $user = Auth::user();
         $user->password = Hash::make($request->new_password);
         $user->save();
         return back()->with('success', 'Password successfully changed!');

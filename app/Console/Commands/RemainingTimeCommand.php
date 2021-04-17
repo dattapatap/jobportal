@@ -42,14 +42,14 @@ class RemainingTimeCommand extends Command
      */
     public function handle()
     {
-        
+
         $testAvailable = EmpTest::where('status', 'Scheduled')
                     ->with('slots')
                     ->orderBy('id', 'desc')
                     ->get();
-       
+
         $testAvailable->map(function($testAvailable){
-            
+
             $testDate = Carbon::parse($testAvailable->testDate)->format('Y-m-d');
             $nowDate = Carbon::now()->format('Y-m-d');
             if($testDate == $nowDate ){
@@ -62,9 +62,9 @@ class RemainingTimeCommand extends Command
                 if($remainingTime < 15 && $remainingTime > 5){
                     $emp = Employee::where('id', $testAvailable->emp_id)->first();
                     $user = User::where('id',$emp->user_id)->first();
-                    $user->notify(new TestRemainingTime( $user ));                    
+                    $user->notify(new TestRemainingTime( $user ));
                 }
-            }            
+            }
         });
 
     }

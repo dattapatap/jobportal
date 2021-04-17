@@ -17,9 +17,9 @@
             cursor: default;
         }
 
-    </style> 
+    </style>
     <div class="container">
-        <div class="row ">          
+        <div class="row ">
             @include('employee.dashboardLayout')
             <div class="col-lg-9 col-md-12 col-md-12">
                 <div class="card dropify-image-avatar">
@@ -29,8 +29,8 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-12">          
-                                <div class="col-md-12">    
+                            <div class="col-md-12">
+                                <div class="col-md-12">
                                     <h2 class="text-info text-center">
                                         <br><br>
                                         Thank you for taking the test.
@@ -39,8 +39,8 @@
                                     <p>
                                         <center>Our HR will get in touch with you. </center>
                                     </p>
-                                   
-                                    <br>                               
+
+                                    <br>
                                     <div class="lock_explanation float-right">
                                         <a href="{{ url('employee/assessment')}}" id="btn-starttest" class="btn btn-primary"> Back To Result</a>
                                     </div>

@@ -27,7 +27,7 @@
         init: function() {
             if (this.settings.onlyWithWindowMaxWidth > 0) {
                 this.bindResize();
-                this.responsive();                
+                this.responsive();
             } else {
                 this.showmore();
             }
@@ -106,6 +106,7 @@
                 } else {
                     element.css({
                         'height': settings.closedHeight,
+                        'overflow-y':'hidden',
                         'transition': 'all ' + settings.animationSpeed + 's ease'
                     }).addClass('closed');
                     showMoreButton.html(showMoreInner);
@@ -117,16 +118,17 @@
 
         setOpenHeight: function(noAnimation) {
             $(this.element).css({
-                'height': this.getOpenHeight()
+                'height': 300,
+                'overflow-y':'auto'
             });
             if (noAnimation) {
                 $(this.element).css({
                     'transition': 'none'
-                });    
+                });
             } else {
                 $(this.element).css({
                     'transition': 'all ' + this.settings.animationSpeed + 's ease'
-                });    
+                });
             }
         },
 

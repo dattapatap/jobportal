@@ -26,9 +26,10 @@ class AdminRecruiter extends Controller
                         return $status;
                     })
                     ->addColumn('action', function($data){
-                        $buttons =  '<a href="recruiter/view/'.$data->id .'"class="edit btn btn-info btn-sm"><i class="fa fa-eye"></i></a>';
+                        $buttons =  '<div style="display: flex;"><a href="recruiter/view/'.$data->id .'"class="edit btn btn-info btn-sm"><i class="fa fa-eye"></i></a>';
                         $checkedStatus = ($data->u_status == "Active") ? 'checked':'';
-                        $buttons .= '<div class="bt-switch ml-2" data-toggle="tooltip" data-placement="bottom" title="User Status" ><input type="checkbox" '.$checkedStatus.' id="'.$data->uid.'" data-on-color="warning" data-off-color="danger" data-on-text="A" data-off-text="IA" class="user_status"></div>';
+                        $buttons .= '<div class="bt-switch ml-2" data-toggle="tooltip" data-placement="bottom" title="User Status" ><input type="checkbox" '.$checkedStatus.'
+                                 id="'.$data->uid.'" data-on-color="warning" data-off-color="danger" data-on-text="Active" data-off-text="InActive" class="user_status"></div></div>';
                         return $buttons;
                    })
                     ->rawColumns(['status', 'action'])

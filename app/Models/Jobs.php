@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Employee\EmpJobApplied;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -28,6 +29,10 @@ class Jobs extends Model
 
     public function recruiter(){
         return $this->belongsTo(Recruiter::class, 'rec_id');
+    }
+
+    public function applied(){
+        return $this->hasMany(EmpJobApplied::class, 'job_id');
     }
 
 }

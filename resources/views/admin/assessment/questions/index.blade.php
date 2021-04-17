@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item"><a href="{{ url('admin/questions')}}">Question</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Questions List</li>
             </ol>
-        </div>       
+        </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="card">
@@ -20,16 +20,16 @@
                                 <ul>
                                     <li>{!! \Session::get('success') !!}</li>
                                 </ul>
-                            </div>                        
+                            </div>
                         @endif
                         <div class="p-2 pull-right">
                             <a href="{{url('admin/questions/create ')}}" class="btn btn-sm btn-primary"><i class="side-menu__icon fa fa-arrow-down" style="color:white"></i> Add Question </a>
-                        </div>                      
-                        <div>
-                            <table id="questions" class="responsive display nowrap" cellspacing="0" width="100%">
-                                <thead>                               
+                        </div>
+                        <div class="table-responsive">
+                            <table id="questions" class="table responsive display " cellspacing="0" width="100%">
+                                <thead>
                                     <tr>
-                                        <th> # </th>                                        
+                                        <th> # </th>
                                         <th>Action</th>
                                         <th>Question</th>
                                         <th>Tot Options</th>
@@ -39,7 +39,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                              
+
                                 </tbody>
                             </table>
                         </div>
@@ -56,7 +56,7 @@
 @endsection
 @section('scripts')
 <script>
-    $('#questions').dataTable({           
+    $('#questions').dataTable({
         processing: true,
         serverside: true,
         responsive: true,
@@ -66,16 +66,17 @@
             error:function(err){
                 console.log(err.responseText);
             }
-        }, 
+        },
         columns: [
             {data: 'DT_RowIndex', name: '#'},
-            {data: 'action', name: 'Action', orderable: false, searchable: false},
+            {data: 'action', name: 'Action', orderable: false, searchable: false },
             {data: 'name', name: 'Questions'},
             {data: 'tot_options', name: 'Tot Options'},
             {data: 'category', name: 'Q Category'},
             {data: 'q_type', name: 'Q Type'},
             {data: 'created_at', name: 'Created Date'},
         ],
+
     });
 </script>
 @endsection

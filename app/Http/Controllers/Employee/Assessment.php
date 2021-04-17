@@ -41,27 +41,32 @@ class Assessment extends Controller
         $slot = TestSlots::find($request->testslot);
 
         $request->validate([
-            'testdate' => ['required','date','after_or_equal:'. $emp_redisterd_date .'', new registerDate($emp_redisterd_date)],
+            'testdate' => ['required','date','after_or_equal:'. $emp_redisterd_date .'', new registerDate($emp_redisterd_date),  'after_or_equal:'.now()],
             'testslot' => ['required', 'numeric', new TestSlotTimeValidation($request, $slot)],
         ]);
-        try{
-                DB::beginTransaction();
-                $emp = $this->getEmplyeeDetails();
-                $questions = $this->getAllQuestionsBySkill($emp);
-                if(count($questions) < 10 ){
-                    $request->session()->flash('error',"Short of Questions, Please contact to admin");
+
+        $emp = $this->getEmplyeeDetails();
+        if(!$emp->careers || $emp->userskills->isEmpty() ||empty($emp->educations)||empty($emp->experience) ){
+            $request->session()->flash('error',"Please update your profile before test");
+            return redirect('/employee/assessment');
+        }else{
+            try{
+                    DB::beginTransaction();
+                    $questions = $this->getAllQuestionsBySkill($emp);
+                    if(count($questions) < 20 ){
+                        $request->session()->flash('error',"Short of Questions, Please contact to admin");
+                        return redirect('/employee/assessment');
+                    }
+                    $objQTest = $this->createQuestionTest($questions, $emp, $request);
+                    db::commit();
+
+                    Notification::send(auth()->user(), new TestScheduled($objQTest, $slot));
+                    $request->session()->flash('success',"Test Scheduled Successfully");
                     return redirect('/employee/assessment');
-                }
-                $objQTest = $this->createQuestionTest($questions, $emp, $request);
-                db::commit();
-
-                Notification::send(auth()->user(), new TestScheduled($objQTest, $slot));
-
-                $request->session()->flash('success',"Test Scheduled Successfully");
-                return redirect('/employee/assessment');
             }catch(Exception $ex){
                 echo  $ex->getMessage();
             }
+        }
     }
 
     //Create New Test By Employee
@@ -71,15 +76,11 @@ class Assessment extends Controller
                     ->first();
             if(!$test){
                 $this->assignTest();
-
                 return view('employee.assessment.testwelcome');
             }
             if($test->status=="started"){
                 return view('employee.assessment.testwelcome');
             }
-
-
-
 
             if($test->status=="Completed"){
                 $test = EmpTest::where('emp_id', auth()->user()->employee->id)
@@ -96,9 +97,15 @@ class Assessment extends Controller
 
             }
     }
+
+
+
     public function getEmplyeeDetails(){
         $employee =  Employee::where('id', auth()->user()->employee->id)
         ->with('careers')
+        ->with('userskills')
+        ->with('educations')
+        ->with('experience')
         ->with('userskills')
         ->first();
         return $employee;
@@ -127,7 +134,7 @@ class Assessment extends Controller
                          ->where('q_type',$expCategory)
                          ->whereIn('qc_id',$arraSkills )
                          ->inRandomOrder()
-                         ->take(10)
+                         ->take(20)     //Max Questions for One Test 20 Questions
                          ->get();
 
         return $questions;
@@ -137,11 +144,11 @@ class Assessment extends Controller
             $test->emp_id = $emp->id;
             $test->last_q_no = 1;
             $test->tot_ques = count($questions);
-            $test->max_time = '10.00';
+            $test->max_time = '15.00';  //Max Time for Test 15 Min
             $test->status = 'Scheduled';
             $test->test_sheduled = $request->testdate;
             $test->slot_id = $request->testslot;
-            $test->rem_time = '10.00';
+            $test->rem_time = '15.00';
             $test->save();
             $ctr = 1;
             foreach($questions as $quest){

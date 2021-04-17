@@ -20,7 +20,7 @@ class CreateEmployeeTable extends Migration
             $table->string('address', 1000)->nullable();
             $table->string('status')->default('');
             $table->dateTime('registerd_date');
-            $table->string('test')->default(0)->nullable();
+            $table->string('test_given')->default(0)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item"><a href="{{ url('admin/courses')}}">Courses</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Courses</li>
             </ol>
-        </div>       
+        </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="card">
@@ -20,17 +20,17 @@
                                 <ul>
                                     <li>{!! \Session::get('success') !!}</li>
                                 </ul>
-                            </div>                        
+                            </div>
                         @endif
                         <div class="p-2 pull-right">
-                            <a href="{{url('admin/courses/manage ')}}" class="btn btn-sm btn-primary"><i class="side-menu__icon fa fa-arrow-down" 
+                            <a href="{{url('admin/courses/manage ')}}" class="btn btn-sm btn-primary"><i class="side-menu__icon fa fa-arrow-down"
                                 style="color:white"></i> Add Course </a>
-                        </div>                      
+                        </div>
                         <div>
                             <table id="courses" class="responsive display nowrap" cellspacing="0" width="100%">
-                                <thead>                               
+                                <thead>
                                     <tr>
-                                        <th> # </th>                                        
+                                        <th> # </th>
                                         <th>Action</th>
                                         <th>Education</th>
                                         <th>Course Name</th>
@@ -38,7 +38,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                              
+
                                 </tbody>
                             </table>
                         </div>
@@ -55,7 +55,7 @@
 @endsection
 @section('scripts')
 <script>
-    $('#courses').dataTable({           
+    $('#courses').dataTable({
         processing: true,
         serverside: true,
         responsive: true,
@@ -65,7 +65,7 @@
             error:function(err){
                 console.log(err.responseText);
             }
-        }, 
+        },
         columns: [
             {data: 'DT_RowIndex', name: '#'},
             {data: 'action', name: 'Action', orderable: false, searchable: false},

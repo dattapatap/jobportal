@@ -1,15 +1,18 @@
 @extends('admin.layout.layout')
-@section('content');
-
+@section('content')
+@section('style')
 <style>
-    #reclist td:nth-child(2) {
-        text-align: right;
-        width: 100px !important;
-        display: flex;
-    }
-    
+#emplist td:nth-child(2) {
+    text-align: right;
+    width: 100px !important;
+    display: flex;
+}
+.btn-group-sm>.btn, .btn-sm {
+    font-size: .75rem;
+    width: 2rem;
+}
 </style>
-
+@endsection
 <div class="app-content">
     <div class="side-app">
         <div class="page-header">
@@ -24,7 +27,7 @@
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div>
+                        <div class="table-responsive">
                             <table id="reclist" class="responsive display nowrap">
                                 <thead>
                                     <tr>
@@ -36,11 +39,11 @@
                                         <th class="wd-15p">Mobile</th>
                                         <th class="wd-10p">Address</th>
                                         <th class="wd-25p">Status</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   
+
                                 </tbody>
                             </table>
                         </div>
@@ -68,7 +71,7 @@
                error:function(err){
                    console.log(err.responseText);
                }
-            }, 
+            },
             columns: [
                 {data: 'DT_RowIndex', name: 'Sl No'},
                 {data: 'action', name: 'Action', orderable: false, searchable: false},
@@ -78,7 +81,7 @@
                 {data: 'mobile', name: 'Phone No'},
                 {data: 'location', name: 'Address'},
                 {data: 'status', name: 'Status'},
-                
+
             ],
             "fnDrawCallback": function() {
                 $(".bt-switch input[type='checkbox']").bootstrapSwitch();

@@ -17,13 +17,13 @@
                 <li class="breadcrumb-item"><a href="{{ url('admin/testslots')}}">Test Slot List</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Test Slots</li>
             </ol>
-        </div>       
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="p-2">
                     <a href="{{route('admin.testslots.index')}}" class="btn btn-primary"><i class="side-menu__icon fa fa-arrow-left" style="color:white"></i> Back </a>
-                </div>  
-                <div class="col-md-6 offset-3">                    
+                </div>
+                <div class="col-md-6 offset-3">
                     <form class="card" action="{{ route('admin.testslots.store')}}" method="POST">
                         @csrf
                         <div class="card-header">
@@ -41,7 +41,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>   
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Slot Timing From</label>
@@ -52,7 +52,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>   
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label"> To</label>
@@ -63,7 +63,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>   
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer text-right">

@@ -56,7 +56,7 @@ class CourseSpecificationsController extends Controller
         $rules = array(
              'course'       => 'required|numeric|gt:0',
              'name'=>"required|string|max:255",
-        );     
+        );
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -71,9 +71,9 @@ class CourseSpecificationsController extends Controller
             }
             $qc->course_id = $request->post('course');
             $qc->name = $request->post('name');
-            $qc->save();  
-            $request->session()->flash('success',$msg);   
-            return redirect('/admin/course/specifications');         
+            $qc->save();
+            $request->session()->flash('success',$msg);
+            return redirect('/admin/course/specifications');
         }
     }
     public function delete($id){
@@ -88,6 +88,6 @@ class CourseSpecificationsController extends Controller
         return response()->json(['status'=>true, 'data' => $spec]);
     }
 
-    
+
 
 }

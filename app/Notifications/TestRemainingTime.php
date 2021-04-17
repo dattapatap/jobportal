@@ -39,7 +39,7 @@ class TestRemainingTime extends Notification
                 ->salutation('Yours Faithfully')
                 ->line('Your Sheduledd test start within 15 Minutes.')
                 ->line('Take the test as per you sheduled')
-                ->action('Take Test', url('http://localhost:8000/employee/assessment'))
+                ->action('Take Test', url(env('APP_URL').'employee/assessment'))
                 ->line('Thank you for using our application!');
     }
 

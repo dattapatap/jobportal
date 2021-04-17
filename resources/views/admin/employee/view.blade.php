@@ -136,20 +136,20 @@
                                                                                 }
                                                                                 @endphp
                                                                            @endforeach
-                                                                           <span class="text-success"> {!! $score .'/10' !!} </span>
+                                                                           <span class="text-success"> {!! $score .'/20' !!} </span>
                                                                        </div>
                                                                        <div class="col-md-3 text-center">
                                                                            <strong> Ranking/Category </strong>
                                                                            <br>
                                                                            @php
-                                                                               $totPercents = round(($score/10)*100 , 2);
-                                                                               if($totPercents < 60 )
+                                                                               $totPercents = round(($score/20)*100 , 2);
+                                                                               if($totPercents < 40 )
                                                                                    $category = '<span class="text-danger">Need Improvement</span>';
-                                                                               elseif($totPercents >= 60 && $totPercents < 75 )
+                                                                               elseif($totPercents >= 40 && $totPercents < 65 )
                                                                                    $category = '<span class="text-warning">Good</span>';
-                                                                               elseif($totPercents >= 75 && $totPercents < 85 )
+                                                                               elseif($totPercents >= 65 && $totPercents < 90 )
                                                                                    $category = '<span class="text-info">Excellent</span>';
-                                                                               elseif($totPercents >= 85  )
+                                                                               elseif($totPercents >= 90  )
                                                                                   $category = '<span class="text-success">Outstanding</span>';
 
                                                                            @endphp
@@ -341,12 +341,44 @@
                         <h3 class="card-title"> Expertise And Knowledge Details(Skills) </h3>
                     </div>
                     <div class="card-body">
-                        @foreach ($user->userskills as $item)
-                            <i class="btn btn-outline-success mb-3"> {{ $item->userskills->description }} </a></i>&nbsp;&nbsp;&nbsp;
-                        @endforeach
+                        @if(isset($user->userskills))
+                            @foreach ($user->userskills as $item)
+                                <i class="btn btn-outline-success mb-3"> {{ $item->userskills->description }} </a></i>&nbsp;&nbsp;&nbsp;
+                            @endforeach
+                        @endif
                     </div>
                 </div>
 
+                <!-- Audit Faced Details  -->
+                <div class="card" style="margin-bottom:20px;margin-top:30px">
+                    <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
+                    <div class="card-header ">
+                        <h3 class="card-title"> Regulatory Audits Faced  </h3>
+                    </div>
+                    <div class="card-body">
+                        @if(isset($user->empAudits))
+                            @foreach ($user->empAudits as $item)
+                            <i class="btn btn-outline-success mb-3" >{{ $item->audits->countries->name. ' - '.$item->audits->authority }}</i>&nbsp;&nbsp;&nbsp;
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+
+
+                <!-- Organisations Faced Details  -->
+                <div class="card" style="margin-bottom:20px;margin-top:30px">
+                    <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
+                    <div class="card-header ">
+                        <h3 class="card-title"> Organisations Attended </h3>
+                    </div>
+                    <div class="card-body">
+                        @if(isset($user->empOrgnisations))
+                            @foreach ($user->empOrgnisations as $item)
+                                <i class="btn btn-outline-success mb-3" >{{ $item->organisation->name }} </i>&nbsp;&nbsp;&nbsp;
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
 
                 {{-- Resume Upload --}}
                 <div class="card" style="margin-bottom:20px;margin-top:30px">

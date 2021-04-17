@@ -1,14 +1,18 @@
 @extends('admin.layout.layout')
-@section('content');
+@section('content')
+@section('style')
 <style>
-
 #emplist td:nth-child(2) {
     text-align: right;
     width: 100px !important;
     display: flex;
 }
-
+.btn-group-sm>.btn, .btn-sm {
+    font-size: .75rem;
+    width: 2rem;
+}
 </style>
+@endsection
 <div class="app-content">
     <div class="side-app">
         <div class="page-header">
@@ -22,7 +26,7 @@
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div>
+                        <div class="table-responsive">
                             <table id="emplist" class="responsive display nowrap" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>

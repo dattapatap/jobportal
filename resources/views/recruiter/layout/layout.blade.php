@@ -35,7 +35,7 @@
 		<link href="{{ asset('assets/css/icons.css')}}" rel="stylesheet"/>
         <link href="{{ asset('js/toastr.min.css') }}" rel="stylesheet" />
         <!--Select2 Plugin -->
-        <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
 		<!-- Color-Skins -->
 		<link id="theme" rel="stylesheet" href="{{ asset('assets/color-skins/color-skins/color10.css')}}" />
 		<!-- WYSIWYG Editor css -->
@@ -210,10 +210,9 @@
 		<script src="{{ asset('assets/js/index3.js')}}"></script>
         <script src="{{ asset('js/toastr.min.js') }}"></script>
 		<!-- file uploads js -->
-		<script src="{{ asset('js/select2.full.min.js')}}"></script>
+		<script src="{{ asset('assets/plugins/select2/select2.full.min.js')}}"></script>
 		<script src="{{ asset('assets/plugins/fileuploads/js/dropify.js')}}"></script>
 		<script src="{{ asset('assets/plugins/fileuploads/js/dropfy-custom.js')}}"></script>
-
 
         @if(auth()->user())
             <script>

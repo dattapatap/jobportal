@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b819c7d968b538ff47ae5fe82ce1c1d",
+    "content-hash": "e48dd5d51fb4148c8ad4fbfb7053c673",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -109,6 +109,134 @@
                 }
             ],
             "time": "2020-08-18T23:57:15+00:00"
+        },
+        {
+            "name": "craftsys/msg91-laravel",
+            "version": "v0.12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/craftsys/msg91-laravel.git",
+                "reference": "e630c4487a85eb0653b0861939848aa60b812500"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/craftsys/msg91-laravel/zipball/e630c4487a85eb0653b0861939848aa60b812500",
+                "reference": "e630c4487a85eb0653b0861939848aa60b812500",
+                "shasum": ""
+            },
+            "require": {
+                "craftsys/msg91-php": "^0.15.1",
+                "illuminate/support": "^5.2|^6.0|^7.0|^8.0",
+                "php": "^7.1.3|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.8|^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "^5.3|^6.0|^7.0|^8.0|^9.4"
+            },
+            "suggest": {
+                "craftsys/msg91-laravel-notification-channel": "Easily send sms/otp notifications via msg91 channel"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.x.x-dev"
+                },
+                "laravel": {
+                    "aliases": {
+                        "Msg91": "Craftsys\\Msg91\\Facade\\Msg91"
+                    },
+                    "providers": [
+                        "Craftsys\\Msg91\\Msg91LaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Craftsys\\Msg91\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sudhir Mitharwal",
+                    "email": "luckysud4@gmail.com",
+                    "homepage": "http://github.com/sudkumar",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel service provider for Msg91 apis to Send OTPs, Verify OTPs, Resend OTPs, Send SMS (Short Message) etc",
+            "homepage": "https://github.com/craftsys/msg91-laravel",
+            "keywords": [
+                "laravel",
+                "msg91",
+                "otp",
+                "php",
+                "resend otp",
+                "short message",
+                "sms",
+                "verify otp"
+            ],
+            "time": "2021-03-23T01:43:29+00:00"
+        },
+        {
+            "name": "craftsys/msg91-php",
+            "version": "v0.15.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/craftsys/msg91-php.git",
+                "reference": "ae340fed2a8eaa614f671716feb3db85c843c584"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/craftsys/msg91-php/zipball/ae340fed2a8eaa614f671716feb3db85c843c584",
+                "reference": "ae340fed2a8eaa614f671716feb3db85c843c584",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.5.5|^7.0.1",
+                "php": ">=7.1|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5|^8.4.0|^9.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.x.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Craftsys\\Msg91\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sudhir Mitharwal",
+                    "email": "luckysud4@gmail.com",
+                    "homepage": "http://github.com/sudkumar",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Client for using Msg91's API to Send OTPs, Verify OTPs, Resend OTPs, Send SMS (Short Message) etc.",
+            "homepage": "https://github.com/craftsys/msg91-php",
+            "keywords": [
+                "msg91",
+                "otp",
+                "php",
+                "resend otp",
+                "short message",
+                "sms",
+                "verify otp"
+            ],
+            "time": "2021-03-23T01:37:30+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2547,6 +2675,112 @@
                 }
             ],
             "time": "2020-08-18T17:17:46+00:00"
+        },
+        {
+            "name": "razorpay/razorpay",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/razorpay/razorpay-php.git",
+                "reference": "6dad785301f6391fad108dc0abccea662ad7f93b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/razorpay/razorpay-php/zipball/6dad785301f6391fad108dc0abccea662ad7f93b",
+                "reference": "6dad785301f6391fad108dc0abccea662ad7f93b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.3.0",
+                "rmccue/requests": "v1.7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8|~5.0",
+                "raveren/kint": "1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Razorpay\\Api\\": "src/",
+                    "Razorpay\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Abhay Rana",
+                    "email": "nemo@razorpay.com",
+                    "homepage": "https://captnemo.in",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Shashank Kumar",
+                    "email": "shashank@razorpay.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Razorpay PHP Client Library",
+            "homepage": "https://docs.razorpay.com",
+            "keywords": [
+                "api",
+                "client",
+                "php",
+                "razorpay"
+            ],
+            "time": "2021-04-05T05:10:01+00:00"
+        },
+        {
+            "name": "rmccue/requests",
+            "version": "v1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rmccue/Requests.git",
+                "reference": "87932f52ffad70504d93f04f15690cf16a089546"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rmccue/Requests/zipball/87932f52ffad70504d93f04f15690cf16a089546",
+                "reference": "87932f52ffad70504d93f04f15690cf16a089546",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "requests/test-server": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Requests": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "authors": [
+                {
+                    "name": "Ryan McCue",
+                    "homepage": "http://ryanmccue.info"
+                }
+            ],
+            "description": "A HTTP library written in PHP, for human beings.",
+            "homepage": "http://github.com/rmccue/Requests",
+            "keywords": [
+                "curl",
+                "fsockopen",
+                "http",
+                "idna",
+                "ipv6",
+                "iri",
+                "sockets"
+            ],
+            "time": "2016-10-13T00:11:37+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

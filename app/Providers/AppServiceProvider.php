@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Industries;
 use App\Models\Notification;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +32,12 @@ class AppServiceProvider extends ServiceProvider
                 view()->share('notifications', $notifications);
                 view()->share('unreadNotf', $unreadNotf);
             }
+
+            $jobsCateg = Industries::where('deleted_at', null)->inRandomOrder()->orderBy('name', 'ASC')->limit(6)->get();
+            $jobs = Industries::where('deleted_at', null)->inRandomOrder()->orderBy('name', 'ASC')->limit(30)->get();
+            view()->share('categ', $jobsCateg );
+            view()->share('reletedcategory', $jobs );
+
         });
     }
 }

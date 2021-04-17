@@ -80,9 +80,9 @@ class CoursesController extends Controller
             }
             $qc->edu_id = $request->post('education');
             $qc->name = Str::upper($request->post('name'));
-            $qc->save();  
-            $request->session()->flash('success',$msg);   
-            return redirect('/admin/courses');         
+            $qc->save();
+            $request->session()->flash('success',$msg);
+            return redirect('/admin/courses');
         }
     }
     public function delete($id){
@@ -93,7 +93,7 @@ class CoursesController extends Controller
     public function getAllByEducation(Request $request){
         $courses = Courses::where('edu_id', $request->post('edu'))
                             ->where('deleted_at',null)->get();
-                            
+
         return response()->json(['status'=>true, 'data' => $courses]);
     }
 

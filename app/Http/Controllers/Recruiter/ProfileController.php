@@ -32,17 +32,20 @@ class ProfileController extends Controller
                 $validated = $request->validate([
                     'profile_pic' => 'mimes:jpeg,png|max:1024',
                 ]);
+
+                $user = Auth::user();
+
                 $file = $request->file('profile_pic');
                 $filename = $file->getClientOriginalName();
                 // Remove unwanted characters
                 $image_resize = Image::make($file->getRealPath());
                 $image_resize->resize(128, 128);
-                if(Auth::user()->avatar){
-                    Storage::delete('/public/images/profiles/'.Auth::user()->avatar);
+                if($user->avatar){
+                    Storage::delete('/public/images/profiles/'.$user->avatar);
                 }
-                $image_resize->save(public_path().'/storage/images/profiles/' .Auth::user()->id.'_'.$filename);
-                $user = User::where('id', Auth::user()->id);
-                $user->avatar = Auth::user()->id.'_'.$filename;
+                $image_resize->save(public_path().'/storage/images/profiles/' .$user->id.'_'.$filename);
+
+                $user->avatar = $user->id.'_'.$filename;
                 $user->save();
                 return response()->json(['success' => 'Your profile has been successfully Upload']);
             }
@@ -92,7 +95,7 @@ class ProfileController extends Controller
    }
 
    public function changepassword(){
-    $user = Auth::user()->recruiter;
+        $user = Auth::user()->recruiter;
         return view('recruiter.changepassword', compact('user'));
    }
    public function updatePassword( Request $request){
@@ -102,10 +105,10 @@ class ProfileController extends Controller
             'confirm_password' => 'required',
         ]);
 
-        $user = User::where('id', Auth::user()->id);
-        if (!Hash::check($request->old_password, $user->password)) {
+        if (!Hash::check($request->post('old_password'), auth()->user()->password)) {
             return back()->with('error', 'Current password does not match!');
         }
+        $user = Auth::user();
         $user->password = Hash::make($request->new_password);
         $user->save();
         return back()->with('success', 'Password successfully changed!');

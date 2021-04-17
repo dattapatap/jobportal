@@ -16,7 +16,7 @@ class CitiesController extends Controller
                    ->with('states')
                    ->orderBy('id','desc')
                    ->get();
-                  
+
            return Datatables::of($data)
                   ->addIndexColumn()
                   ->addColumn('action', function($data){
@@ -35,7 +35,6 @@ class CitiesController extends Controller
        }
        return view('admin.others.city.index');
     }
-
 
     public function manageCity(Request $request, $id='')
     {
@@ -82,9 +81,9 @@ class CitiesController extends Controller
             }
             $qc->state_id = $request->state;
             $qc->name = $request->name;
-            $qc->save();  
-            $request->session()->flash('success',$msg);   
-            return redirect('/admin/cities');         
+            $qc->save();
+            $request->session()->flash('success',$msg);
+            return redirect('/admin/cities');
         }
     }
 

@@ -23,9 +23,10 @@ class AdminEmployee extends Controller
             return Datatables::of($data)
                    ->addIndexColumn()
                    ->addColumn('action', function($data){
-                            $buttons =  '<a href="employee/view/'.$data->id .'"class="edit btn btn-info btn-sm"><i class="fa fa-eye"></i></a>';
+                            $buttons =  '<div style="display: flex;"><a href="employee/view/'.$data->id .'"class="edit btn btn-info btn-sm"><i class="fa fa-eye"></i></a>';
                             $checkedStatus = ($data->status == "Active") ? 'checked':'';
-                            $buttons .= '<div class="bt-switch ml-2" data-toggle="tooltip" data-placement="bottom" title="User Status" ><input type="checkbox" '.$checkedStatus.' id="'.$data->u_id.'" data-on-color="warning" data-off-color="danger" data-on-text="A" data-off-text="IA" class="user_status"></div>';
+                            $buttons .= '<div class="bt-switch ml-2" data-toggle="tooltip" data-placement="bottom" title="User Status" ><input type="checkbox" '.$checkedStatus.' id="'.$data->u_id.'"
+                                         data-on-color="warning" data-off-color="danger" data-on-text="Active" data-off-text="InActive" class="user_status"></div></div>';
                             return $buttons;
                     })
                    ->addColumn('status', function ($data) {
@@ -39,7 +40,7 @@ class AdminEmployee extends Controller
 
     public function view($id){
         $user = Employee::where('id', $id)
-                    ->with('user', 'userskills', 'experience', 'careers', 'educations')
+                    ->with('user', 'userskills', 'experience', 'careers', 'educations', 'empAudits.audits', 'empOrgnisations' )
                     ->first();
 
         if($user){
@@ -48,6 +49,9 @@ class AdminEmployee extends Controller
             abort('404');
         }
         $user->test = $tests;
+
+        // dd($user);
+
         return view('admin.employee.view', compact('user'));
 
     }

@@ -177,6 +177,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Craftsys\Msg91\Msg91LaravelServiceProvider::class,
 
     ],
 
@@ -233,7 +234,7 @@ return [
         'DataTables' => Yajra\DataTables\DataTablesServiceProvider::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
+        'Msg91' => Craftsys\Msg91\Facade\Msg91::class,
     ],
 
 ];

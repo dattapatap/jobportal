@@ -84,8 +84,8 @@ class RegisterController extends Controller
             'password_confirmation' => 'required',
         ]);
 
-        DB::beginTransaction();
         try{
+            DB::beginTransaction();
             $user = User::create([
                 'name' => $request->name,
                 'role_id' => 3,
@@ -99,12 +99,13 @@ class RegisterController extends Controller
                 'user_id' => $user->id,
                 'registerd_date' => Carbon::now(),
             ]);
-            $user->notify(new UserRegistration($user));
 
+            $user->notify(new UserRegistration($user));
             $admin = User::find(1);
             $admin->notify(new AdminRegister($user));
 
             DB::commit();
+
             Auth::login($user);
             return redirect()->to('employee/dashboard');
         }catch(\Exception $e){
@@ -114,12 +115,13 @@ class RegisterController extends Controller
                 session()->flash('error',"Duplicate Entry of Email/Mobile");
             else
                 session()->flash('error',"Invalid details, Please try again");
+
             return redirect()->back()->withInput();
         }
     }
 
     public function recruiterRegisetrShow(){
-        return view('Auth.recruiter-register');
+        return view('auth.recruiter-register');
     }
     public function recruiterRegister(Request $request){
         $request->validate([
@@ -129,8 +131,10 @@ class RegisterController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
         ]);
-        DB::beginTransaction();
+
         try{
+            DB::beginTransaction();
+
             $user = User::create([
                         'name' => $request->name,
                         'role_id' => 2,
@@ -138,17 +142,18 @@ class RegisterController extends Controller
                         'mobile' => $request->mobile,
                         'password' => Hash::make($request->password),
                     ]);
-
             $recruiter = Recruiter::create([
                             'company_name' => $request->name,
                             'user_id' => $user->id
                          ]);
+
+
+                         $user->notify(new UserRegistration($user));
+                         $admin = User::find(1);
+                         $admin->notify(new AdminRegister($user));
+
+
             DB::commit();
-
-            $user->notify(new UserRegistration($user));
-
-            $admin = User::find(1);
-            $admin->notify(new AdminRegister($user));
 
             Auth::login($user);
             return redirect()->to('recruiter/dashboard');

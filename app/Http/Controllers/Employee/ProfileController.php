@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Models\Audit;
 use App\Models\City;
 use App\Models\Education;
 use App\Models\Educations;
+use App\Models\EmpAudit;
 use App\Models\EmpCareer;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employee;
+use App\Models\EmpOrganisation;
 use App\Models\Experience;
 use App\Models\Industries;
 use App\Models\JobPositions;
+use App\Models\Organisation;
 use App\Models\Skills;
 use App\Models\Userskills;
 use Carbon\Carbon;
@@ -33,6 +37,8 @@ class ProfileController extends Controller
         $positions = JobPositions::where('deleted_at',null)->get();
         $city = City::where('deleted_at',null)->get();
         $education = Education::where('deleted_at',null)->get();
+        $audit = Audit::where('deleted_at',null)->with('countries')->get();
+        $orgs = Organisation::where('deleted_at',null)->get();
 
         $user = User::where('id' , Auth::user()->id)
                           ->with('employee')
@@ -42,11 +48,11 @@ class ProfileController extends Controller
                          ->with('educations.educ','educations.cour', 'educations.spec' )
                          ->with('experience.loations')
                          ->with('userskills.userskills')
+                         ->with('empAudits.audits.countries')
+                         ->with('empOrgnisations.organisation')
                          ->first();
 
-
-        return view('employee.profile.profile')->with(compact('skills','industry', 'positions','city', 'user', 'emp', 'education'));
-
+        return view('employee.profile.profile')->with(compact('skills','industry', 'positions','city', 'user', 'emp', 'education', 'audit', 'orgs'));
 
     }
 
@@ -258,6 +264,65 @@ class ProfileController extends Controller
            return response()->json(['status'=>true, 'message' => "Skill Removed"]);
     }
 
+    //Audits
+    public function addAudit(Request $request){
+        $user = Auth::user()->employee;
+        $audit = $request->post('audits');
+        if(!$audit){
+            return response()->json(['code'=>202, 'message'=>'Audit not updated, please try again'], 202);
+        }
+        foreach ($audit as $audits) {
+            $ifExist = EmpAudit::where('audit', $audits['value'])
+                                ->where('emp_id', $user->id )
+                                ->first();
+            if(!$ifExist){
+                $empAudit = new EmpAudit();
+                $empAudit->emp_id = $user->id;
+                $empAudit->audit = $audits['value'];
+                $empAudit->save();
+            }
+        }
+        $request->session()->flash('success', "Audit Added");
+        return response()->json(['code'=>200, 'message'=> "Audit Added"] , 200);
+    }
+    public function deleteAudit(Request $request){
+           $audit = $request->post('auditid');
+
+           $empaud = EmpAudit::find($audit)->delete();
+           return response()->json(['status'=>true, 'message' => "Audit Removed"]);
+    }
+
+    //Organisations
+    public function addorganisation(Request $request){
+        $user = Auth::user()->employee;
+        $orgs = $request->post('orgs');
+        if(!$orgs){
+            return response()->json(['code'=>202, 'message'=>'Organisation not updated, please try again'], 202);
+        }
+        foreach ($orgs as $org) {
+            $ifExist = EmpOrganisation::where('org_id', $org['value'])
+                                ->where('emp_id', $user->id )
+                                ->first();
+            if(!$ifExist){
+                $empOrgs = new EmpOrganisation();
+                $empOrgs->emp_id = $user->id;
+                $empOrgs->org_id = $org['value'];
+                $empOrgs->save();
+            }
+        }
+        $request->session()->flash('success', "Organisations Added");
+        return response()->json(['code'=>200, 'message'=> "Organisations Added"] , 200);
+    }
+    public function deleteorganisation(Request $request){
+           $org = $request->post('orgid');
+
+           $emporg = EmpOrganisation::find($org)->delete();
+           return response()->json(['status'=>true, 'message' => "Organisation Removed"]);
+    }
+
+
+
+
 //Upload Resume
     public function uploadResume(Request $request){
         $validation = $request->validate([
@@ -290,18 +355,20 @@ class ProfileController extends Controller
                 $filename = $file->getClientOriginalName();
                 $image_resize = Image::make($file->getRealPath());
                 $image_resize->resize(300, 300);
-                if(Auth::user()->avatar){
+
+                $user = Auth::user();
+
+                if($user->avatar){
                     Storage::delete('/public/images/profiles/'.Auth::user()->avatar);
                 }
-                $image_resize->save(public_path().'/storage/images/profiles/' .Auth::user()->id.'_'.$filename);
-                $user = Auth::user();
-                $user->avatar = Auth::user()->id.'_'.$filename;
+                $image_resize->save(public_path().'/storage/images/profiles/' .$user->id.'_'.$filename);
+
+                $user->avatar = $user->id.'_'.$filename;
                 $user->save();
                 return response()->json(['success' => 'Your profile has been successfully Upload']);
             }
             return response()->json(['error' => 'Your profile not Uploaded']);
         }
-
     }
 
 }

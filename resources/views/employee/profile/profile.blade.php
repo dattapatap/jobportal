@@ -35,10 +35,6 @@
     <div class="container">
         <div class="row ">
             @include('employee.dashboardLayout')
-            <style>
-
-
-            </style>
             <div class="col-lg-9 col-md-12 col-md-12">
                     @if (\Session::has('success'))
                         <div class="alert alert-success">
@@ -136,7 +132,7 @@
                         <div class="card-header ">
                             <h3 class="card-title">Career Details</h3>
                             <div class="card-options">
-                                @if(!$emp->careers)
+                                @if(!$emp->careers))
 							      <a class="btn btn-success btn-sm btn-addCareer"><i class="fa fa-plus"></i> Add </a>
                                 @else
                                   <a class="editCareer btn" id="{{$emp->careers->id}}" ><i class="fe fe-edit "></i></a>
@@ -189,7 +185,7 @@
                         <div class="card-header ">
                             <h3 class="card-title"> Educations Details </h3>
                             <div class="card-options">
-                                @if(!$emp->educations)
+                                @if($emp->educations->isEmpty())
                                 <a class="btn btn-sm btn-success btn-addEducation" ><i class="fa fa-plus"></i> Add </a>
                                 @else
                                 <a class="btn btn-sm btn-success btn-addEducation" ><i class="fa fa-plus"></i> Add More</a>
@@ -246,7 +242,7 @@
                         <div class="card-header ">
                             <h3 class="card-title"> Working Experience </h3>
                             <div class="card-options">
-                                @if(!$emp->experience)
+                                @if($emp->experience->isEmpty())
                                    <a class="btn btn-sm btn-success btn-addExperience"><i class="fa fa-plus"></i> Add </a>
                                 @else
                                    <a class="btn btn-sm btn-success btn-addExperience"><i class="fa fa-plus"></i> Add More</a>
@@ -296,7 +292,7 @@
                         <div class="card-header ">
                             <h3 class="card-title"> Expertise And Knowledge Details(Skills) </h3>
                             <div class="card-options">
-                                @if(!$emp->skills)
+                                @if($emp->userskills->isEmpty())
                                    <a class="btn btn-sm btn-success btn-addSkills" ><i class="fa fa-plus"></i> Add </a>
                                 @else
                                    <a class="btn btn-sm btn-success btn-addSkills" ><i class="fa fa-plus"></i> Add More</a>
@@ -304,11 +300,60 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            @foreach ($emp->userskills as $item)
-                               <i class="btn btn-outline-success mb-3" >{{ $item->userskills->description }} <a id="{{ $item->id }}" class="fa fa-times skilldelete" style="position: relative;top: -10px;left: 7px;"></a></i>&nbsp;&nbsp;&nbsp;
-                            @endforeach
+                            @if(isset($emp->experience))
+                                @foreach ($emp->userskills as $item)
+                                <i class="btn btn-outline-success mb-3" >{{ $item->userskills->description }} <a id="{{ $item->id }}" class="fa fa-times skilldelete" style="position: relative;top: -10px;left: 7px;"></a></i>&nbsp;&nbsp;&nbsp;
+                                @endforeach
+                            @endif
                         </div>
                     </div>
+
+                    <!-- Audit Faced Details  -->
+                    <div class="card" style="margin-bottom:20px;margin-top:30px">
+                        <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
+                        <div class="card-header ">
+                            <h3 class="card-title"> Regulatory Audits Faced  </h3>
+                            <div class="card-options">
+                                @if($emp->empAudits->isEmpty())
+                                   <a class="btn btn-sm btn-success btn-addAudits" ><i class="fa fa-plus"></i> Add </a>
+                                @else
+                                   <a class="btn btn-sm btn-success btn-addAudits" ><i class="fa fa-plus"></i> Add More</a>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @if(isset($emp->empAudits))
+                                @foreach ($emp->empAudits as $item)
+                                <i class="btn btn-outline-success mb-3" >{{ $item->audits->countries->name. ' - '.$item->audits->authority }} <a id="{{ $item->id }}" class="fa fa-times auditdelete" style="position: relative;top: -10px;left: 7px;"></a></i>&nbsp;&nbsp;&nbsp;
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+
+
+                    <!-- Organisations Faced Details  -->
+                    <div class="card" style="margin-bottom:20px;margin-top:30px">
+                        <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
+                        <div class="card-header ">
+                            <h3 class="card-title"> Organisations Attended </h3>
+                            <div class="card-options">
+                                @if($emp->empOrgnisations->isEmpty())
+                                    <a class="btn btn-sm btn-success btn-addorg" ><i class="fa fa-plus"></i> Add </a>
+                                @else
+                                    <a class="btn btn-sm btn-success btn-addorg" ><i class="fa fa-plus"></i> Add More</a>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @if(isset($emp->empOrgnisations))
+                                @foreach ($emp->empOrgnisations as $item)
+                                   <i class="btn btn-outline-success mb-3" >{{ $item->organisation->name }} <a id="{{ $item->id }}" class="fa fa-times orgdelete" style="position: relative;top: -10px;left: 7px;"></a></i>&nbsp;&nbsp;&nbsp;
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
+
+
 
 
                     {{-- Resume Upload --}}
@@ -317,7 +362,7 @@
                         <div class="card-header ">
                             <h3 class="card-title"> Resume </h3>
                             <div class="card-options">
-                                @if(!isset($emp->careers->resume))
+                                @if(!$emp->careers->resume))
                                    <a class="btn btn-success btn-sm btn-addResume"><i class="fa fa-plus"></i> Add </a>
                                 @else
                                    <a class="btn btn-success btn-sm btn-addResume" ><i class="fa fa-plus"></i> Add New</a>
@@ -797,9 +842,11 @@
                             <div class="form-group">
                                 <label class="form-label text-dark">Top Skills</label>
                                 <select class="form-control select2" id="empskills" name="empskills"  multiple required>
-                                    @foreach ($skills as $item)
+                                    @forelse ($skills as $item)
                                         <option value="{{ $item->id}}"> {{ $item->description }}</option>
-                                    @endforeach
+                                    @empty
+                                        <option value=""> No Skills Found </option>
+                                    @endforelse
                                 </select>
                             </div>
                         </div>
@@ -814,6 +861,82 @@
         </div>
     </div>
 </div>
+
+
+<!-- Audit Details -->
+<div class="modal fade" id="auditDetails" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width: 650px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="example-Modal3">Audits</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" id="frmAudit">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="form-group">
+                                <label class="form-label text-dark">Top Audits</label>
+                                <select class="form-control select2" id="empaudits" name="empaudits"  multiple required>
+                                    @forelse ($audit as $item)
+                                        <option value="{{ $item->id}}"> {{ $item->countries->name.' - '.$item->authority }}</option>
+                                    @empty
+                                        <option value=""> No Audit Found </option>
+                                    @endforelse
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"> Add </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Organisation Details -->
+<div class="modal fade" id="organisation" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width: 650px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="example-Modal3">Organisations</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="POST" id="frmOrg">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="form-group">
+                                <label class="form-label text-dark">Organisations</label>
+                                <select class="form-control select2" id="emporgs" name="emporgs"  multiple required>
+                                    @forelse ($orgs as $item)
+                                        <option value="{{ $item->id}}"> {{ $item->name }}</option>
+                                    @empty
+                                        <option value=""> No Organisations Found </option>
+                                    @endforelse
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"> Add </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
 <!--Resume -->
 <div class="modal fade" id="resumeModel" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog" role="document" style="min-width: 650px !important;">

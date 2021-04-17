@@ -51,7 +51,7 @@ class UserRegistration extends Notification
                     ->line('Your Registration is done successfully.')
                     ->line('Your User Id is - '.$this->user->email)
                     ->line('Please update your profile, and post the adds.')
-                    ->action('Click To Login', url('http://127.0.0.1:8000/login'))
+                    ->action('Click To Login', url(env('APP_URL').'login'))
                     ->line('Thank you for using our application!');
         }else{
             return (new MailMessage)
@@ -61,7 +61,8 @@ class UserRegistration extends Notification
                 ->line('Your Registration is done successfully.')
                 ->line('Your User Id is - '.$this->user->email)
                 ->line('Please update your profile, and take self assessment test for skills vefifications for further process.')
-                ->action('Mail Action', url('http://127.0.0.1:8000/login'))
+                ->line('Please take a test within 7 days, if not given test your profile should be disqualified , for next process')
+                ->action('Mail Action', url(env('APP_URL').'login'))
                 ->line('Thank you for using our application!');
         }
     }

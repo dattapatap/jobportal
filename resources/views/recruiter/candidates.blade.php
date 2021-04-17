@@ -1,6 +1,26 @@
 @extends('recruiter.layout.layout')
 @section('content')
 <style>
+.select2{
+    width: 100%;
+    border: 1px solid #343a4082;
+    border-radius: 3%;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #e4e4e4;
+    border: 1px solid #e4e6f1;
+    border-radius: 2px;
+    cursor: default;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 0 5px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 33px !important;
+    border-radius: 0;
+}
 </style>
 <div class="app-content">
     <div class="side-app">
@@ -17,42 +37,59 @@
                         <div class="item2-gl">
                             <div class=" mb-0">
                                 <div class="">
-                                    <div class="p-5 bg-white col-md-12">
-                                        <form id="empSearch" action="" method="POST" class="row">
+                                    <div class="p-2 bg-white col-md-12">
+                                        @php
+                                            if(isset($_GET['category'])){
+                                                $arrCategory =  $_GET['category'];
+                                            }else{
+                                                $arrCategory =  '';                                            }
+                                            if(isset($_GET['positions'])){
+                                                $arrPositions =  $_GET['positions'];
+                                            }else{
+                                                $arrPositions =  '';
+                                            }
+                                            if(isset($_GET['skills'])){
+                                                $arrSkills =  $_GET['skills'];
+                                            }else{
+                                                $arrSkills =  array();
+                                            }
+                                        @endphp
+
+                                        <form id="empSearch" action="{{ url('recruiter/employee/search')}}" method="GET" class="row">
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="form-label">Category</label>
-                                                    <select name="category" id="category" class="form-control" style="width: 100%" required>
+                                                    <select name="category" id="category" class="form-control select2" style="width: 100%">
                                                         <option value="" selected> Select Category </option>
-                                                        <option value="1"> Outstanding  </option>
-                                                        <option value="2"> Excellent </option>
-                                                        <option value="3"> Good  </option>
-                                                        <option value="4"> Need Improvement </option>
+                                                        <option value="1" @if($arrCategory=='1') selected="selected"  @endif > Outstanding  </option>
+                                                        <option value="2" @if($arrCategory=='2') selected="selected"  @endif > Excellent </option>
+                                                        <option value="3" @if($arrCategory=='3') selected="selected"  @endif > Good  </option>
+                                                        <option value="4" @if($arrCategory=='4') selected="selected"  @endif > Need Improvement </option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label class="form-label">Job Role</label>
-                                                    <select  name="positions" id="positions" class="form-control select2" style="width: 100%" required>
+                                                    <select  name="positions" id="positions" class="form-control select2" style="width: 100%">
                                                         <option value="" selected> Select Role</option>
                                                         @foreach ($positions as $item)
-                                                            <option value="{{$item->id}}"> {{ $item->name}} </option>
+                                                            <option value="{{$item->id}}" @if($arrPositions==$item->id) selected="selected" @endif > {{ $item->name}} </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="form-label">Skills</label>
-                                                    <select class="form-control select2"  id="skills" name="skills" multiple style="width: 100%" required>
+                                                    <select class="form-control"  id="skills" name="skills[]" multiple="multiple" style="width: 100%">
                                                         @foreach ($skills as $item)
-                                                                <option value="{{$item->id}}"> {{ $item->description}} </option>
+                                                                <option value="{{$item->id}}" {{ (in_array( $item->id, $arrSkills))?'selected':'' }} > {{ $item->description}} </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
                                                 <div class="form-group p-5">
                                                     <button type="submit" class="btn btn-md btn-info"> Search </button>
                                                 </div>
@@ -64,7 +101,7 @@
                             <div class="tab-content company-list">
                                 <div class="tab-pane active" id="tab-11">
                                     <div class="row">
-                                        @foreach ($candidates as $item)
+                                        @forelse ($candidates as $item)
                                             <div class="col-lg-6">
                                                 <div class="card overflow-hidden br-0 overflow-hidden">
                                                     <div class="d-sm-flex card-body p-3">
@@ -85,7 +122,7 @@
                                                                 <a class="text-dark"><h6 class="font-weight-semibold mt-1"><span>Exp Salary : </span>{{ $item->expected_ctc }} LPA </h6></a>
                                                             </div>
                                                             @php $category ="";  @endphp
-                                                            @if(isset($item->test))
+                                                            @if(isset($item->test[0]->test_category))
                                                                 @php $category = $item->test[0]->test_category;  @endphp
                                                                 @foreach ($item->test as $singTest)
                                                                     @php
@@ -118,13 +155,31 @@
                                                                         @endif
                                                             @endforeach
                                                             <div class="mt-3">
-                                                                <button class="btn btn-info mt-1 mb-1 float-right showInterest" id="{{$item->id}}"  >Show Interest</button>
+
+                                                                @if(isset($intrest))
+                                                                    @if(in_array($item->id, $intrest))
+                                                                        <button class="btn btn-info mt-1 mb-1 float-right" disabled> <i class="fa fa-check"></i>&nbsp; Interested</button>
+                                                                    @else
+                                                                        <button class="btn btn-info mt-1 mb-1 float-right showInterest" id="{{$item->id}}"  >Show Interest</button>
+                                                                    @endif
+                                                                @else
+                                                                    <button class="btn btn-info mt-1 mb-1 float-right showInterest" id="{{$item->id}}"  >Show Interest</button>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
+                                        @empty
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-body text-center">
+                                                        <h4 class="page-title text-danger">No Candidate found, please try with another key</h4>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
                             </div>
@@ -143,39 +198,19 @@
 @endsection
 @section('scripts')
 <script>
-    $('#empSearch').submit(function(e){
-        e.preventDefault();
-        arraSearch = {};
-        arraSearch['categopry'] = $('#category').val();
-        arraSearch['position'] = $('#positions').val();
-        arraSearch['skills'] = $('#skills').val();
-        var searchData = JSON.stringify(arraSearch);
-        console.log(searchData);
-        $.ajax({
-                url: "{{ route('recruiter.search.candidate') }}",
-                type:'POST',
-                data: {search:searchData },
-                dataType:'json',
-                success: function(response) {
-                  console.log(response);
-                },
-                error: (response) => {
-                    console.log(response.responseText);
-                }
-        });
-
-    });
-
-
     $.ajaxSetup({
         headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
     });
-    $(document).ready(function(){
-        $('.select2').select2();
-    })
 
+    $(document).ready(function(){
+        $('.select2').select2({ });
+        $('#skills').select2({
+            placeholder:'Select Skills',
+        	 placeholder: " Search"
+        })
+    })
     $('.showInterest').click(function(e){
         var emp_id = $(this).attr('id');
         var btn = $(this).prop('disabled', true);

@@ -41,7 +41,7 @@ class TestScheduled extends Notification
                 ->salutation('Yours Faithfully')
                 ->line('You Sheduled your assessment test successfully.')
                 ->line('The test time slot is ' .$this->testSlot->test_sheduled.' '.Carbon::parse($this->slottime->from)->format('h:m A').'-'.Carbon::parse($this->slottime->to)->format('h:m A'))
-                ->action('Take Test', url('http://localhost:8000/employee/assessment'))
+                ->action('Take Test', url(env('APP_URL').'employee/assessment'))
                 ->line('Thank you for using our application!');
     }
 

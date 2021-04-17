@@ -1,50 +1,64 @@
 <?php
 
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\HomeController;
+use Craftsys\Msg91\Facade\Msg91;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
+
+// Website
+Route::get('/dddd', function(){
 
 
-Route::get('/', function () { return view('index'); });
-Route::get('/index', function () { return view('index'); });
 
-Route::get('/jobs', function(){  return view('jobs');});
+//    $xyz = Msg91::sms()->to(7620297516)->flow('6062fb8cd4d3613a7132a18e')->variable('name', 'Dattatray')->send();
+//    Msg91::otp()->to(7620297516)->send();
+});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/index', [HomeController::class, 'index']);
+Route::get('/job/search/{id}/details', [HomeController::class, 'jobView']);
+Route::get('/jobs', [HomeController::class, 'alljobs']);
+Route::get('/jobs/search', [HomeController::class, 'jobSearch']);
+Route::get('/jobs/job-filter', [HomeController::class, 'filterJobsPage']);
+Route::get('/jobs/topsearch', [HomeController::class, 'topSearch']);
+Route::get('/jobs/category/{jobcategory}/', [HomeController::class, 'searchByCategories']);
+
 Route::get('/about-us', function(){  return view('about-us'); });
-Route::get('/testimonials', function(){  return view('testimonials'); });
-
+Route::get('/contact-us', function(){  return view('contact-us'); });
+Route::get('/blogs', [BlogController::class, 'blogs']);
+Route::get('/blog/{id}/details', [BlogController::class, 'blogView']);
 
 Route::get('job-submit', function(){
-    if(Auth::check() && Auth::user()->role_id == 2){
+    if(Auth::check() && Auth::user()->role_id == 2)
         return redirect('recruiter/jobs/add-newjob');
-    }else{
+    else
         return redirect('/recr/login');
-    }
+
 });
 Route::get('emp-resume', function(){
-    if(Auth::check() && Auth::user()->role_id == 3){
+    if(Auth::check() && Auth::user()->role_id == 3)
         return redirect('employee/profile/profile');
-    }else{
+    else
         return redirect('/login');
-    }
+
 });
 Route::get('/user-register', function(){
-    if(Auth::user() && Auth::user()->role_id === 3){
+    if(Auth::user() && Auth::user()->role_id === 3)
         return redirect('employee/profile/profile');
-    }else{
+    else
         return redirect('/register');
-    }
+
 });
 Route::get('/upload-web-resume', function(){
-    if(Auth::user() && Auth::user()->role_id == 3){
+    if(Auth::user() && Auth::user()->role_id == 3)
         return redirect('employee/profile/profile');
-    }elseif(Auth::user() && Auth::user()->role_id == 2){
+    elseif(Auth::user() && Auth::user()->role_id == 2)
         return redirect('recruiter/dashboard');
-    }else{
+    else
         return redirect('/login');
-    }
+
 });
-
-
-
 
 Auth::routes();
 Route::post('/emp/login', [App\Http\Controllers\Auth\LoginController::class, 'empLogin'])->name('login-employee');
@@ -60,10 +74,8 @@ Route::get('loginEmployer/{provider}/rec', [App\Http\Controllers\Auth\LoginContr
 Route::get('loginEmp/{provider}/emp', [App\Http\Controllers\Auth\LoginController::class, 'SocialRedirectEmp']);
 Route::get('login/{provider}/callback',[App\Http\Controllers\Auth\LoginController::class, 'SocialCallback']);
 
-
-
-
-
+Route::get('job/{id}/apply', [App\Http\Controllers\Employee\EmpJobAppliedController::class, 'apply']);
+Route::get('job/{id}/save', [App\Http\Controllers\Employee\EmpJobSavedController::class, 'save']);
 
 Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(){
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
@@ -79,7 +91,7 @@ Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'adm
 
     Route::get('postedjobs', [App\Http\Controllers\Admin\JobsController::class, 'index']);
     Route::get('jobs/view/{id}', [App\Http\Controllers\Admin\JobsController::class, 'viewJobs']);
-
+    Route::get('postedjobs/status/{jobs}', [App\Http\Controllers\Admin\JobsController::class, 'changeStatus']);
 
     Route::get('questionCategory', [App\Http\Controllers\QuestionCategoryController::class, 'index']);
     Route::get('questionCategory/manage/', [App\Http\Controllers\QuestionCategoryController::class, 'manageCategory']);
@@ -93,21 +105,6 @@ Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'adm
     Route::get('questions/edit/{id}', [App\Http\Controllers\QuestionsController::class, 'edit']);
     Route::post('questions/update', [App\Http\Controllers\QuestionsController::class, 'update']);
     Route::get('questions/delete/{id}', [App\Http\Controllers\QuestionsController::class, 'delete']);
-
-    // Route::get('qpcategory', [App\Http\Controllers\QPaperCategoryController::class, 'index']);
-    // Route::get('qpcategory/manage/', [App\Http\Controllers\QPaperCategoryController::class, 'manageqpcategory']);
-    // Route::get('qpcategory/manage/{id}', [App\Http\Controllers\QPaperCategoryController::class, 'manageqpcategory']);
-    // Route::post('qpcategory', [App\Http\Controllers\QPaperCategoryController::class, 'store'])->name('qpcategory.process');
-    // Route::get('qpcategory/delete/{QPaperCategory}', [App\Http\Controllers\QPaperCategoryController::class, 'delete']);
-
-
-    // Route::get('qp', [App\Http\Controllers\QuestionPaperController::class, 'index']);
-    // Route::get('qp/create/', [App\Http\Controllers\QuestionPaperController::class, 'create']);
-    // Route::post('qp/create', [App\Http\Controllers\QuestionPaperController::class, 'store'])->name('qp.create');
-    // Route::get('qp/edit/{id}', [App\Http\Controllers\QuestionPaperController::class, 'edit']);
-    // Route::post('qp/update', [App\Http\Controllers\QuestionPaperController::class, 'update'])->name('qp.update');
-    // Route::get('qp/delete/{id}', [App\Http\Controllers\QuestionPaperController::class, 'delete']);
-
 
     Route::get('industries', [App\Http\Controllers\IndustriesController::class, 'index']);
     Route::get('industries/manage/', [App\Http\Controllers\IndustriesController::class, 'manageIndustries']);
@@ -149,6 +146,17 @@ Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'adm
     Route::get('testslots/status/{id}', [App\Http\Controllers\TestSlotsController::class, 'status']);
     Route::resource('testslots', App\Http\Controllers\TestSlotsController::class);
 
+    Route::resource('country', App\Http\Controllers\CountryController::class);
+    Route::resource('organisation', App\Http\Controllers\OrganisationController::class);
+    Route::resource('audit', App\Http\Controllers\AuditController::class);
+
+
+    Route::get('blog/status', [App\Http\Controllers\BlogController::class, 'changeStatus']);
+    Route::resource('blogs', App\Http\Controllers\BlogController::class);
+
+    Route::get('packages/status/{id}', [App\Http\Controllers\PackageController::class, 'changeStatus']);
+    Route::resource('packages', App\Http\Controllers\PackageController::class);
+
 
     Route::get('notifications', [App\Http\Controllers\Admin\NotificationController::class, 'index']);
     Route::post('notification/read', [App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])->name('markNotification');
@@ -163,7 +171,6 @@ Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'adm
     Route::post('profile/changepassword', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('change.password');
 });
 
-
 Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruiter', 'middleware' => ['auth', 'recruiter']], function(){
     Route::get('dashboard', [App\Http\Controllers\Recruiter\DashboardController::class, 'index'])->name('dashboard');
     Route::get('profile', [App\Http\Controllers\Recruiter\ProfileController::class, 'index'])->name('profile');
@@ -177,7 +184,7 @@ Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruit
     Route::get('packages', [App\Http\Controllers\Recruiter\PackageController::class, 'index']);
 
     Route::get('viewdcandidate', [App\Http\Controllers\Recruiter\CandidatesController::class, 'index']);
-    Route::post('viewdcandidate/search/', [App\Http\Controllers\Recruiter\CandidatesController::class, 'search'])->name('search.candidate');
+    Route::get('employee/search', [App\Http\Controllers\Recruiter\CandidatesController::class, 'search']);
     Route::post('emp/showinterest', [App\Http\Controllers\Recruiter\CandidatesController::class, 'showInterest']);
 
 
@@ -187,19 +194,22 @@ Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruit
     Route::get('postedjobs', [App\Http\Controllers\Recruiter\JobsController::class, 'index']);
     Route::get('jobs/add-newjob', [App\Http\Controllers\Recruiter\JobsController::class, 'viewnewjobform']);
     Route::post('jobs/new/create', [App\Http\Controllers\Recruiter\JobsController::class, 'create'])->name('createjob');
+    Route::post('jobs/new/update', [App\Http\Controllers\Recruiter\JobsController::class, 'update'])->name('updatejob');
     Route::get('postedjobs/view/{jobs}', [App\Http\Controllers\Recruiter\JobsController::class, 'viewjobs']);
+    Route::get('postedjobs/edit/{jobs}', [App\Http\Controllers\Recruiter\JobsController::class, 'editjobs']);
     Route::get('postedjobs/delete/{jobs}', [App\Http\Controllers\Recruiter\JobsController::class, 'delete']);
     Route::get('postedjobs/status/{jobs}', [App\Http\Controllers\Recruiter\JobsController::class, 'changeStatus']);
 
+    // Route::get('razorpay-payment', [RazorpayPaymentController::class, 'index']);
+    Route::post('payment', [App\Http\Controllers\PaymentsController::class, 'payment'])->name('payment.pay_now');
 
 });
 
-
-
-
 Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee', 'middleware' => ['auth', 'employee']], function(){
     Route::get('dashboard',[App\Http\Controllers\Employee\DashboardController::class, 'index'])->name('dashboard');
-    Route::get('profile/profile', [App\Http\Controllers\Employee\ProfileController::class, 'index'])->name('profile');
+    Route::get('profile', [App\Http\Controllers\Employee\ProfileController::class, 'index'])->name('profile');
+    Route::get('jobs', [App\Http\Controllers\Employee\EmpJobAppliedController::class, 'index'])->name('savedjobs');
+    Route::post('jobs/delete', [App\Http\Controllers\Employee\EmpJobSavedController::class, 'delete'])->name('savedjob.delete');
 
     Route::post('profile/updateprofile', [App\Http\Controllers\Employee\ProfileController::class, 'updateProfile']);
     Route::get('profile/editprofile/{id}', [App\Http\Controllers\Employee\ProfileController::class, 'editprofile']);
@@ -211,6 +221,11 @@ Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee'
     Route::post('profile/addExperience', [App\Http\Controllers\Employee\ProfileController::class, 'addExperience']);
     Route::post('profile/addSkills', [App\Http\Controllers\Employee\ProfileController::class, 'addSkills']);
     Route::post('profile/deleteSkill', [App\Http\Controllers\Employee\ProfileController::class, 'deleteSkills']);
+    Route::post('profile/addAudits', [App\Http\Controllers\Employee\ProfileController::class, 'addAudit']);
+    Route::post('profile/deleteaudit', [App\Http\Controllers\Employee\ProfileController::class, 'deleteAudit']);
+    Route::post('profile/addOrganisations', [App\Http\Controllers\Employee\ProfileController::class, 'addorganisation']);
+    Route::post('profile/deleteOrgs', [App\Http\Controllers\Employee\ProfileController::class, 'deleteorganisation']);
+
     Route::post('profile/uploadResume', [App\Http\Controllers\Employee\ProfileController::class, 'uploadResume']);
 
     Route::post('profile/profilpicupload', [App\Http\Controllers\Employee\ProfileController::class, 'uploadProfile']);
@@ -230,7 +245,9 @@ Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee'
 
     Route::get('assessment/testpage', function(){ return view('employee.assessment.testpage'); });
     Route::get('assessment/testTaken', function(){ return view('employee.assessment.testTaken');  });
-
-
-
 });
+
+
+
+
+

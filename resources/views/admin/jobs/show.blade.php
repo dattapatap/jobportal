@@ -1,7 +1,5 @@
-@extends('recruiter.layout.layout')
+@extends('admin.layout.layout')
 @section('content')
-
-
     <div class="app-content">
         <div class="side-app">
             <div class="page-header">
@@ -13,6 +11,7 @@
             </div>
             <br>
             <div class="row">
+
                 <div class="col-md-12">
                     <div class="card overflow-hidden">
                         {{-- <div class="ribbon ribbon-top-right text-danger"><span class="bg-danger">Urgent</span></div> --}}
@@ -23,15 +22,14 @@
                                         <div class="d-md-flex">
                                             {{-- <img src="{{ asset('assets/images/products/logo/img1.jpg')}}" class="w-20 h-20" alt="user"> --}}
                                             <div class="ml-4">
-                                                <a href="" class="text-dark">
-                                                    <h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $jobs->job_title }}
-                                                    </h4>
-                                                </a>
+                                                {{-- <a href="javascript:void(0)"; class="text-dark"> --}}
+                                                    <h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $jobs->job_title }} </h4>
+                                                {{-- </a> --}}
                                                 <div class="">
                                                     <ul class="mb-2" style="font-size: 15px;">
                                                         <li class="mr-3 mt-2"><a
                                                                 href="{{ url('admin/recruiter/view/' . $jobs->recruiter->id) }}"
-                                                                class="icons"><i class="si si-factory text-muted mr-1"></i>
+                                                                class="icons"><i class="si si-user text-muted mr-1"></i>
                                                                 {{ $jobs->recruiter->company_name }} </a></li>
                                                         <li class="mr-3 mt-2"><a class="icons"><i
                                                                     class="si si-briefcase text-muted mr-1"></i>
@@ -141,7 +139,10 @@
                             <div class="list-id">
                                 <div class="row">
                                     <div class="col">
-                                        {{-- <a class="mb-0">Job ID : #8976542</a> --}}
+                                        <a class="mb-0">Job ID : ##{{ $jobs->id}}</a>
+                                    </div>
+                                    <div class="col">
+                                        <a class="mb-0">Applied : @if(isset($jobs->applied)) {{ count($jobs->applied )}} @endif</a>
                                     </div>
                                     <div class="col col-auto">
                                         Posted By <a class="mb-0 font-weight-bold"></a> / {{ $jobs->created_at }}
@@ -150,12 +151,50 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
+
+                <div class="col-md-12">
+                    <div class="card overflow-hidden">
+                        <div class="card-header border-top">
+                            <h4 class="card-title"> Applied Candidates</h4>
+                        </div>
+                        <div class="card-body border-top">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-dark">
+                                      <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Action</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Applied Date</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if(isset($jobs->applied))
+                                            @php  $ctr=1; @endphp
+                                            @forelse ($jobs->applied as $item)
+                                            <tr>
+                                                <th scope="row"> {{ $ctr }}</th>
+                                                <td> <a href="{{ url('admin/employee/view/'.$item->emp_id)}}" class="fa fa-eye "></a></td>
+                                                <td> <a href="{{ url('admin/employee/view/'.$item->emp_id)}}">{{ $item->employee->first_name.' '. $item->employee->last_name }} </a></td>
+                                                <td>{{ $item->created_at }}</td>
+                                                @php $ctr++; @endphp
+                                            </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="3" style="text-align: center;"> No one applied this job </td>
+                                                </tr>
+                                            @endforelse
+                                        @endif
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
-
 
 @endsection

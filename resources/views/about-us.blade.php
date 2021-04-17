@@ -1,5 +1,12 @@
 @extends('website.layout')
 @section('content')
+<style>
+     .breadcrumb-item a {
+        color: rgb(255 255 255);
+    }
+
+</style>
+
 
 		<!--Breadcrumb-->
 		<section>
@@ -24,64 +31,94 @@
 			<div class="container">
 				<div class="section-title center-block text-center">
 					<h2>How It Works?</h2>
-					<p>Mauris ut cursus nunc. Morbi eleifend, ligula at consectetur vehicula</p>
+					<p>Say hello to your dream job with IPJ</p>
 				</div>
 				<div class="row">
-					<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="col-lg-2 col-md-6 col-sm-4">
 						<div class="">
 							<div class="mb-lg-0 mb-4">
 								<div class="service-card text-center">
 									<div class="bg-light icon-bg icon-service text-purple about">
-										<img src="../assets/images/products/about/megaphone.png" alt="img">
+										<img src="{{ asset('assets/images/ic1.png')}}" alt="img">
 									</div>
 									<div class="servic-data mt-3">
 										<h4 class="font-weight-semibold mb-2">Create Account</h4>
-										<p class="text-muted mb-0">Nam libero tempore, cum soluta nobis est eligendi cumque facere possimus</p>
+										{{-- <p class="text-muted mb-0">Nam libero tempore, cum soluta nobis est eligendi cumque facere possimus</p> --}}
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="col-lg-2 col-md-6 col-sm-4">
 						<div class="">
 							<div class="mb-lg-0 mb-4">
 								<div class="service-card text-center">
 									<div class="bg-light icon-bg icon-service text-purple about">
-										<img src="../assets/images/products/about/employees.png" alt="img">
+										<img src="{{ asset('assets/images/ic2.png')}}" alt="img">
 									</div>
 									<div class="servic-data mt-3">
-										<h4 class="font-weight-semibold mb-2">Register</h4>
-										<p class="text-muted mb-0">Nam libero tempore, cum soluta nobis est eligendi cumque facere possimus</p>
+										<h4 class="font-weight-semibold mb-2">Take a Test</h4>
+										{{-- <p class="text-muted mb-0">Nam libero tempore, cum soluta nobis est eligendi cumque facere possimus</p> --}}
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="col-lg-2 col-md-6 col-sm-4">
 						<div class="">
 							<div class="mb-sm-0 mb-4">
 								<div class="service-card text-center">
 									<div class="bg-light icon-bg icon-service text-purple about">
-										<img src="../assets/images/products/about/pencil.png" alt="img">
+										<img src="{{ asset('assets/images/ic3.png')}}" alt="img">
 									</div>
 									<div class="servic-data mt-3">
-										<h4 class="font-weight-semibold mb-2">Search Jobs</h4>
-										<p class="text-muted mb-0">Nam libero tempore, cum soluta nobis est eligendi cumque facere possimus</p>
+										<h4 class="font-weight-semibold mb-2">Get Score</h4>
+										{{-- <p class="text-muted mb-0">Nam libero tempore, cum soluta nobis est eligendi cumque facere possimus</p> --}}
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="col-lg-2 col-md-6 col-sm-4">
 						<div class="">
 							<div class="">
 								<div class="service-card text-center">
 									<div class="bg-light icon-bg icon-service text-purple about">
-										<img src="../assets/images/products/about/coins.png" alt="img">
+										<img src="{{ asset('assets/images/ic4.png')}}" alt="img">
 									</div>
 									<div class="servic-data mt-3">
-										<h4 class="font-weight-semibold mb-2">Save & Apply</h4>
-										<p class="text-muted mb-0">Nam libero tempore, cum soluta nobis est eligendi cumque facere possimus</p>
+										<h4 class="font-weight-semibold mb-2">Search Jobs</h4>
+										{{-- <p class="text-muted mb-0">Nam libero tempore, cum soluta nobis est eligendi cumque facere possimus</p> --}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                    <div class="col-lg-2 col-md-6 col-sm-4">
+						<div class="">
+							<div class="">
+								<div class="service-card text-center">
+									<div class="bg-light icon-bg icon-service text-purple about">
+										<img src="{{ asset('assets/images/ic5.png')}}" alt="img">
+									</div>
+									<div class="servic-data mt-3">
+										<h4 class="font-weight-semibold mb-2">Save and Apply</h4>
+										{{-- <p class="text-muted mb-0">Nam libero tempore, cum soluta nobis est eligendi cumque facere possimus</p> --}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                    <div class="col-lg-2 col-md-6 col-sm-4">
+						<div class="">
+							<div class="">
+								<div class="service-card text-center">
+									<div class="bg-light icon-bg icon-service text-purple about">
+										<img src="{{ asset('assets/images/ic6.png')}}" alt="img">
+									</div>
+									<div class="servic-data mt-3">
+										<h4 class="font-weight-semibold mb-2">Get Hired</h4>
+										{{-- <p class="text-muted mb-0">Nam libero tempore, cum soluta nobis est eligendi cumque facere possimus</p> --}}
 									</div>
 								</div>
 							</div>
@@ -92,99 +129,8 @@
 		</section>
 		<!--/How to work-->
 
-		<!--post section-->
-		<section>
-			<div class="cover-image sptb bg-background-color" data-image-src="../assets/images/banners/banner4.jpg">
-				<div class="content-text mb-0">
-					<div class="container">
-						<div class="text-center text-white section-title pb-0">
-							<h2 class="mb-2 display-5">Let's Update Your Skills with Our Training Professionals...</h2>
-							<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-							<div class="mt-5">
-								<a href="ad-posts.html" class="btn btn-secondary">Free Post Ad</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!--/post section-->
-
-		<!--section-->
-		<section class="sptb bg-white">
-			<div class="container">
-				<div class="section-title center-block text-center">
-					<h2>Why Choose Us?</h2>
-					<p>Mauris ut cursus nunc. Morbi eleifend, ligula at consectetur vehicula</p>
-				</div>
-				<div class="row ">
-					<div class="col-md-6 col-lg-4 features">
-						<div class="card bg-light">
-							<div class="card-body text-center">
-								<div class="feature">
-									<h3 class="font-weight-bold">Job Security</h3>
-									<p>our being able to do what we like best, every pleasure is to be welcomed and every pain.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-4 features">
-						<div class="card bg-light">
-							<div class="card-body text-center">
-								<div class="feature">
-									<h3 class="font-weight-bold"> All Jobs Notifications Available</h3>
-									<p>our being able to do what we like best, every pleasure is to be welcomed and every pain.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-4 features">
-						<div class="card bg-light">
-							<div class="card-body text-center">
-								<div class="feature">
-									<h3 class="font-weight-bold">Recruitment Services</h3>
-									<p>our being able to do what we like best, every pleasure is to be welcomed and every pain.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-4 features">
-						<div class="card mb-lg-0 bg-light">
-							<div class="card-body text-center">
-								<div class="feature">
-									<h3 class="font-weight-bold">100% Job Assistance</h3>
-									<p>our being able to do what we like best, every pleasure is to be welcomed and every pain.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-4 features">
-						<div class="card mb-lg-0 mb-md-0 bg-light">
-							<div class="card-body text-center">
-								<div class="feature">
-									<h3 class="font-weight-bold">User Friendly</h3>
-									<p>our being able to do what we like best, every pleasure is to be welcomed and every pain.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-4 features">
-						<div class="card mb-0 bg-light">
-							<div class="card-body text-center">
-								<div class="feature">
-									<h3 class="font-weight-bold">24/7 Support</h3>
-									<p>our being able to do what we like best, every pleasure is to be welcomed and every pain.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!--/section-->
-
-		<!--Statistics-->
-		<section>
+        <!--Statistics-->
+		{{-- <section>
 			<div class="about-1 cover-image bg-background-color" data-image-src="../assets/images/banners/banner5.jpg">
 				<div class="content-text mb-0 text-white info">
 					<div class="container">
@@ -229,31 +175,71 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</section> --}}
 		<!--/Statistics-->
-		<!-- Onlinesletter-->
-		<section class="sptb border-top">
+
+    	<!--section-->
+		<section class="sptb bg-white">
 			<div class="container">
-				<div class="row">
-					<div class="col-lg-7 col-xl-6 col-md-12">
-						<div class="sub-newsletter">
-							<h3 class="mb-2"><i class="fa fa-paper-plane-o mr-2"></i> Subscribe To Our Onlinesletter</h3>
-							<p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+				<div class="row no-gutters row-deck find-job">
+					<div class="col-md-6">
+						<div class="bg-light p-0 box-shadow2 border-transparent">
+							<div class="card-body text-center pb-5">
+								<div class="bg-white icon-bg  icon-service text-purple mb-4">
+									<img src="{{ asset('assets/images/svgs/jobs/find.svg')}}" alt="img">
+								</div>
+								<h6 class="card-title mb-4">For the Job Seekers</h6>
+								<p style="text-align: left">
+                                    The opportunities in pharma industry are made easy to find with IPJ. At
+                                    first glance, you’ll realize that IPJ isn’t just a job portal: its so much more
+                                    than that. All that a Jobseeker have to do is undertake a test and get
+                                    registered. Upon registration , JS shall enter their skill sets and
+                                    preferred location for job openings and Apply on jobs with matching JD.
+                                </p>
+                                <p style="text-align: left">
+                                    With its numerous filters and customized options, IPJ makes it easy for
+                                    prospective job seekers to cut through the clutter and land upon the
+                                    exact opportunity suited for your needs.
+                                </p>
+                                <p style="text-align: left">
+                                    As IPJ directly connects candidates and companies together, you can
+                                    be assured that your application and resume is being seen by the
+                                    absolute right people.
+                                </p>
+							</div>
 						</div>
 					</div>
-					<div class="col-lg-5 col-xl-6 col-md-12">
-						<div class="input-group sub-input mt-1">
-							<input type="text" class="form-control input-lg " placeholder="Enter your Email">
-							<div class="input-group-append ">
-								<button type="button" class="btn btn-primary  btn-lg br-tr-3  br-br-3">
-									Subscribe
-								</button>
+					<div class="col-md-6">
+						<div class="bg-white p-0 mt-5 mt-md-0 border box-shadow2">
+							<div class="card-body text-center pb-5">
+								<div class="bg-light icon-bg  icon-service text-purple mb-4">
+									<img src="{{ asset('assets/images/svgs/jobs/work.svg')}}" alt="img">
+								</div>
+								<h6 class="card-title  mb-4">For the Employers</h6>
+								<p style="text-align: left">
+                                    With its Stringent test and results, IPJ provides platform that allows
+                                    employers to Target their Jobs To Only Right resource. It allows to
+                                    Connect with largest pool of right candidates in lesser time.
+                                </p>
+                                <p style="text-align: left">
+                                    Led by a team of strategists and Pharma domain experts, IPJ is a truly
+                                    integrated human resource web portal which delivers thought-through
+                                    HR plans executed for its clients from Pharma vertical.
+                                </p>
+                                <p style="text-align: left">
+                                    IPJ is amongst the few organizations that takes care of every need of
+                                    the pharmaceutical industry – from Senior Level Recruitment to
+                                    Volume Hiring, to providing Corporate Support Team.
+
+                                </p>
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-		<!--/Onlinesletter-->
+		<!--section-->
+
 
 @endsection

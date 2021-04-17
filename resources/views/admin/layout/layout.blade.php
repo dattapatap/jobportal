@@ -33,21 +33,21 @@
     <link href="{{ asset('css/datatable.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/datatable.responsive.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('js/toastr.min.css') }}" rel="stylesheet" />
-    <!-- Morris.js Charts Plugin -->
-    {{-- <link href="{{ asset('assets/plugins/morris/morris.css') }}" rel="stylesheet" /> --}}
-    <!-- Custom scroll bar css-->
+    {{-- <link href="{{ asset('css/sweetalert.min.css') }}" rel="stylesheet" /> --}}
+
     <link href="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/bootstrap-switch/bootstrap.switch.css')}}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/bootstrap-switch/bootstrap.switch.min.css')}}" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+
     <!---Font icons-->
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" />
     <!-- Color-Skins -->
     <link id="theme" rel="stylesheet" media="all" href="{{ asset('assets/color-skins/color-skins/color10.css') }}" />
-
     @yield('style')
 </head>
-
 <body class="app sidebar-mini">
     <!--Loader-->
     <!-- <div id="global-loader">
@@ -176,7 +176,7 @@
                     <li class="slide">
                         <a class="side-menu__item" data-toggle="slide" href="#"><i
                                 class="side-menu__icon fa fa-tachometer"></i>
-                            <span class="side-menu__label">Assessment Tool</span><i class="angle fa fa-angle-right"></i>
+                            <span class="side-menu__label">Assessment</span><i class="angle fa fa-angle-right"></i>
                         </a>
                         <ul class="slide-menu">
                             <li>
@@ -197,19 +197,14 @@
 
                         </ul>
                     </li>
-                    <li class="slide">
-                        <a class="side-menu__item" data-toggle="slide" href="#"><i
-                                class="side-menu__icon fa fa-tachometer"></i>
-                            <span class="side-menu__label">Packages</span><i class="angle fa fa-angle-right"></i>
-                        </a>
-                        <ul class="slide-menu">
-                            <li>
-                                <a href="#" class="slide-item">Package List</a>
-                            </li>
-                            <li>
-                                <a href="#" class="slide-item">Payment Transactions</a>
-                            </li>
-                        </ul>
+                    <li>
+                        <a class="side-menu__item" href="{{ url('admin/transactions')}}"><i class="side-menu__icon fa fa-user"></i><span
+                                class="side-menu__label">Transactions</span></a>
+                    </li>
+
+                    <li>
+                        <a class="side-menu__item" href="{{ url('admin/blogs')}}"><i class="side-menu__icon fa fa-user"></i><span
+                                class="side-menu__label">Blogs</span></a>
                     </li>
 
                     <li class="slide">
@@ -234,6 +229,12 @@
                         </a>
                         <ul class="slide-menu">
                             <li>
+                                <a href="{{ url('admin/packages')}}" class="slide-item">Packages</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('admin/country')}}" class="slide-item">Country</a>
+                            </li>
+                            <li>
                                 <a href="{{ url('admin/states')}}" class="slide-item">State</a>
                             </li>
                             <li><a href="{{ url('admin/cities')}}" class="slide-item">City</a></li>
@@ -242,6 +243,12 @@
                             </li>
                             <li>
                                 <a href="{{ url('admin/jobpositions')}}" class="slide-item">Job Positions</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('admin/audit')}}" class="slide-item">Audits</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('admin/organisation')}}" class="slide-item">Organisations</a>
                             </li>
                         </ul>
                     </li>
@@ -253,7 +260,7 @@
 
 
             <!-- Applications Content Body -->
-            @yield('content');
+            @yield('content')
 
             <!-- End Main Content -->
         </div>
@@ -292,19 +299,12 @@
     <script src="{{ asset('assets/plugins/jqvmap/jquery.vmap.js') }}"></script>
     <script src="{{ asset('assets/plugins/jqvmap/maps/jquery.vmap.world.js') }}"></script>
     <script src="{{ asset('assets/plugins/jqvmap/jquery.vmap.sampledata.js') }}"></script>
-    <!-- ECharts Plugin -->
-    {{-- <script src="{{ asset('assets/plugins/echarts/echarts.js') }}"></script> --}}
-    <!-- jQuery Sparklines -->
-    {{-- <script src="{{ asset('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}">  </script> --}}
-    <!-- Datatable -->
+
     <script src="{{ asset('js/datatable.min.js') }}"></script>
     <script src="{{ asset('js/datatable.responsive.min.js') }}"></script>
-    <!-- Flot Chart -->
-    {{-- <script src="{{ asset('assets/plugins/flot/jquery.flot.js') }}"></script>
-    <script src="{{ asset('assets/plugins/flot/jquery.flot.fillbetween.js') }}"></script>
-    <script src="{{ asset('assets/plugins/flot/jquery.flot.pie.js') }}"></script> --}}
-    {{-- Toaster --}}
+
     <script src="{{ asset('js/toastr.min.js') }}"></script>
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
     <!--Counters -->
     <script src="{{ asset('assets/plugins/counters/counterup.min.js') }}"></script>
@@ -312,13 +312,13 @@
     <script src="{{ asset('assets/plugins/counters/numeric-counter.js') }}"></script>
     <!-- Custom scroll bar Js-->
     <script src="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-    <!-- CHARTJS CHART -->
-    {{-- <script src="{{ asset('assets/plugins/chart/Chart.bundle.js') }}"></script>
-    <script src="{{ asset('assets/plugins/chart/utils.js') }}"></script> --}}
-    <!-- Custom Js-->
     <script src="{{ asset('assets/js/admin-custom.js') }}"></script>
     <script src="{{ asset('assets/js/index3.js') }}"></script>
 
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap4.min.js"></script>
 
     @if(auth()->user())
         <script>

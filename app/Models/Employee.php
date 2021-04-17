@@ -34,6 +34,15 @@ class Employee extends Model
     public function userskills(){
         return $this->hasMany(Userskills::class, 'emp_id');
     }
+
+    public function empAudits(){
+        return $this->hasMany(EmpAudit::class, 'emp_id');
+    }
+
+    public function empOrgnisations(){
+        return $this->hasMany(EmpOrganisation::class, 'emp_id');
+    }
+
     public function test(){
         return $this->hasMany(EmpTest::class, 'emp_id');
     }
@@ -41,6 +50,11 @@ class Employee extends Model
     public function interest(){
         return $this->hasMany(Interest::class, 'emp_id');
     }
+
+
+
+
+
 
 
 }

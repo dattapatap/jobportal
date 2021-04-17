@@ -9,7 +9,7 @@
                 <div class="col-lg-5 col-xl-4 col-md-7 d-block mx-auto">
                     <div class="wrapper wrapper2">
                         <div class="p-4 mb-5">
-                            <h4 class="text-left font-weight-semibold fs-16">Login With</h4>
+                            <h4 class="text-left font-weight-semibold fs-16">Employer Login</h4>
                             <div class="btn-list d-sm-flex">
                                 <a href="{{ url('/loginEmployer/google/rec') }}" class="btn btn-secondary mb-sm-0"><i
                                         class="fa fa-google fa-1x mr-2"></i> Google</a>
@@ -33,7 +33,7 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email') }}" required
                                     autocomplete="email" autofocus>
-                               
+
                                 <label>Mail or Username</label>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">

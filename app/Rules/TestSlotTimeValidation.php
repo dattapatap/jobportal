@@ -35,14 +35,16 @@ class TestSlotTimeValidation implements Rule
         $nowDate = Carbon::now()->format('Y-m-d');
         if($testDate > $nowDate ){
             return true;
-        }        
-        if($testDate == $nowDate){           
-            $slotLastTime= Carbon::parse($this->slots->to);
+        }
+        if($testDate == $nowDate){
+            $slotLastTime= Carbon::parse($this->slots->from); // Take Slat Last Time
             $nowDate = Carbon::now();
             $stime = ($slotLastTime->hour * 60) + $slotLastTime->minute;
             $estime = ($nowDate->hour * 60) + $nowDate->minute;
             if($stime > ($estime+20)){
                 return true;
+            }else{
+                return false;
             }
         }
     }

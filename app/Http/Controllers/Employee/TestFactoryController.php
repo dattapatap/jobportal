@@ -26,7 +26,6 @@ class TestFactoryController extends Controller
             $this->updateRemainingTime();
 
             $this->updateTestScoreCategory($TestPaperId);
-
             return redirect('/employee/assessment/testTaken');
         }else{
             $this->updateAnsweres($QNO, $TestPaperId, $selectedOptions);
@@ -84,7 +83,6 @@ class TestFactoryController extends Controller
 
             return response()->json(['status' => false], 202);
         }
-
     }
     public function calculateRemainingTime(){
         $currTimeInMilisec = strtotime(Carbon::now());
@@ -121,19 +119,18 @@ class TestFactoryController extends Controller
                 $tot_marks= $tot_marks + $marks;
             }
         }
-        $totPercents = round(($tot_marks/10)*100 , 2);
-        if($totPercents < 60 )
+        $totPercents = round(($tot_marks/20)*100 , 2);
+        if($totPercents < 40 )
              $category = '4';
-        elseif($totPercents >= 60 && $totPercents < 75 )
+        elseif($totPercents >= 40 && $totPercents < 65 )
              $category = '3';
-        elseif($totPercents >= 75 && $totPercents < 85 )
+        elseif($totPercents >= 65 && $totPercents < 90 )
              $category = '2';
-        elseif($totPercents >= 85  )
+        elseif($totPercents >= 90  )
              $category = '1';
         $result = DB::table('emp_tests')
                     ->where('id', $TestPaperId)
                     ->update([ 'test_category' => $category]);
-
     }
 
 

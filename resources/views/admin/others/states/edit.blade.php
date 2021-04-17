@@ -17,10 +17,10 @@
                 <li class="breadcrumb-item"><a href="{{ url('admin/states')}}">State List</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Manage State</li>
             </ol>
-        </div>       
+        </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-6 offset-3">                    
+                <div class="col-md-6 offset-3">
                     <form class="card" action="{{ route('admin.states.process')}}" method="POST">
                         @csrf
                         <div class="card-header">
@@ -31,14 +31,14 @@
                                 <ul>
                                     <li>{!! \Session::get('error') !!}</li>
                                 </ul>
-                            </div>                        
+                            </div>
                         @endif
                         @if (\Session::has('success'))
                             <div class="alert alert-success">
                                 <ul>
                                     <li>{!! \Session::get('success') !!}</li>
                                 </ul>
-                            </div>                        
+                            </div>
                         @endif
                         <div class="card-body">
                             <div class="row">
@@ -49,7 +49,7 @@
                                         <select class="form-control select2" name="country" id="country"  placeholder="select country" width="100%">
                                             <option selected value=""> Select Country </option>
                                             @forelse ($country as $cat)
-                                                <option value="{{ old('country_id',$cat->id ) }}"   @if( old('name', $result['country_id']) == $cat->id) selected @endif > {{ $cat->name }} </option>                                                
+                                                <option value="{{ old('country_id',$cat->id ) }}"   @if( old('name', $result['country_id']) == $cat->id) selected @endif > {{ $cat->name }} </option>
                                             @empty
                                                 <option value=""> No Country Found</option>
                                             @endforelse
@@ -60,12 +60,12 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>  
+                                </div>
 
 
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label">State Name</label> 
+                                        <label class="form-label">State Name</label>
                                         <input type="text" class="form-control" name="name"  value="{{ old('name', $result['name'] ) }}"  placeholder="State Name">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -73,8 +73,8 @@
                                             </span>
                                         @enderror
                                     </div>
-                                </div>    
-                                <input type="hidden" value="{{$result['id']}}" name="id" >                 
+                                </div>
+                                <input type="hidden" value="{{$result['id']}}" name="id" >
                             </div>
                         </div>
                         <div class="card-footer text-right">
@@ -94,5 +94,5 @@
 @section('scripts')
 <script>
     $('#country').select2();
-</script>   
+</script>
 @endsection

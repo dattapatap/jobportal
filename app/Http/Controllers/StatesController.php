@@ -17,7 +17,7 @@ class StatesController extends Controller
                    ->with('country')
                    ->orderBy('id','desc')
                    ->get();
-                  
+
            return Datatables::of($data)
                   ->addIndexColumn()
                   ->addColumn('action', function($data){
@@ -56,7 +56,7 @@ class StatesController extends Controller
     public function store(Request $request)
     {
 
-        
+
         if($request->post('id') < 0){
             $rules = array(
                 'country'       => 'required|numeric|gt:0',
@@ -83,9 +83,9 @@ class StatesController extends Controller
             }
             $qc->country_id = $request->country;
             $qc->name = $request->name;
-            $qc->save();  
-            $request->session()->flash('success',$msg);   
-            return redirect('/admin/states');         
+            $qc->save();
+            $request->session()->flash('success',$msg);
+            return redirect('/admin/states');
         }
     }
     public function delete($id){

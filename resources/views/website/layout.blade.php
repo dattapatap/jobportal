@@ -29,22 +29,22 @@
     <link href="{{ asset('assets/plugins/fileuploads/css/dropify.css') }}" rel="stylesheet" />
     <!--Select2 Plugin -->
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/js/formelements.js') }}" rel="stylesheet" />
     <!-- Cookie css -->
     <link href="{{ asset('assets/plugins/cookie/cookie.css') }}" rel="stylesheet">
     <!-- Owl Theme css-->
     <link href="{{ asset('assets/plugins/owl-carousel/owl.carousel.css') }}" rel="stylesheet" />
-    <!-- video css-->
-    <link href="{{ asset('assets/plugins/video/insideElementDemo.css') }}" rel="stylesheet" />
     <!-- Custom scroll bar css-->
-    <link href="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.css') }}"
-        rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.css') }}"  rel="stylesheet" />
     <link href="{{ asset('assets/color-skins/color-skins/color10.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/jquery-uislider/jquery-ui.css') }}" rel="stylesheet" />
+
+    <link  href="{{ asset('js/toastr.min.css')}}" rel="stylesheet"/>
     <!-- COLOR-SKINS -->
-    <link id="theme" rel="stylesheet" type="text/css" media="all"
-        href="{{ asset('assets/color-skins/color-skins/color10.css') }}" />
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{ asset('assets/color-skins/color-skins/color10.css') }}" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Goldman&family=Montserrat:wght@400;600&family=PT+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 </head>
 
 <body class="main-body">
@@ -168,14 +168,22 @@
                                     <li class="dropdown">
                                         <a href="#" class="" data-toggle="dropdown"><i
                                                 class="fa fa-home mr-1"></i><span> My Dashboard</span></a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                            <a href="#" class="dropdown-item">
-                                                <i class="dropdown-icon icon icon-user"></i> My Profile
-                                            </a>
 
-                                            <a class="dropdown-item" href="#">
-                                                <i class="dropdown-icon icon icon-bell"></i> Notifications
-                                            </a>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+
+                                            @if(auth()->user()->role_id==1)
+                                                <a href="{{ url('admin/dashboard')}}" class="dropdown-item">
+                                                    <i class="dropdown-icon icon icon-user"></i> My Dashboard
+                                                </a>
+                                            @elseif(auth()->user()->role_id==2)
+                                                <a href="{{ url('recruiter/dashboard')}}" class="dropdown-item">
+                                                    <i class="dropdown-icon icon icon-user"></i> My Dashboard
+                                                </a>
+                                            @else
+                                                <a href="{{ url('employee/dashboard')}}" class="dropdown-item">
+                                                    <i class="dropdown-icon icon icon-user"></i> My Dashboard
+                                                </a>
+                                            @endif
                                             <a class="dropdown-item" href="{{ route('logout') }}"
                                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 <i class="dropdown-icon icon icon-power"></i> Log out
@@ -225,8 +233,8 @@
                     </li>
                     <li><a href="{{ url('about-us')}}">About Us </a></li>
                     <li><a href="{{url('jobs')}}">Jobs </a></li>
-                    <li><a href="{{ url('testimonials')}}">Testimonials </a></li>
-                    <li><a href="#"> Contact Us <span class="horizontal-arrow"></span></a></li>
+                    <li><a href="{{ url('blogs')}}">Blogs </a></li>
+                    <li><a href="{{ url('contact-us')}}"> Contact Us <span class="horizontal-arrow"></span></a></li>
                     <li class="d-lg-none pt-5 pb-2 mt-lg-0">
                         <span><a class="btn btn-secondary ad-post mt-1" href="#"><i class="fa fa-briefcase"></i> Submit
                                 a Job</a></span>
@@ -290,9 +298,11 @@
     <!--Footer Section-->
     <style>
         .main-footer {
-            background-image: url("../../assets/images/world.jpg") !important;
+            background-image: url("{{asset('assets/images/world.jpg')}}") !important;
         }
-
+        .text-white-50{
+          padding-right: 7px;
+        }
     </style>
 
     <section class="main-footer">
@@ -300,24 +310,47 @@
             <div class="footer-main">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-2 col-md-12">
-                            <h6>Job Categories</h6>
-                            <hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
+                        <div class="col-lg-3 col-md-12">
+                            <h6>Office</h6>
+                            <hr class="deep-purple  text-primary accent-2 mb-4 mt-0 d-inline-block mx-auto">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#">Developement</a></li>
-                                <li><a href="#">Designing</a></li>
-                                <li><a href="#">Marketing</a></li>
-                                <li><a href="#">Others</a></li>
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="fa fa-home mr-2 text-muted"></i>
+                                        No.1, Hundred Feet Road, 5th Block, <br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        Koramangala, Bangalore -560 095,<br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        India
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);"><i class="fa fa-envelope fs-12 mr-2 text-muted"></i>
+                                        info@globalcalcium.com
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);"><i class="fa fa-phone mr-2 text-muted"></i> 91-80-40554500</a>
+                                </li>
+                                    <li>
+                                    <a href="javascript:void(0);"><i class="fa fa-print mr-2 text-muted"></i> 91-80-25530807 </a>
+                                </li>
                             </ul>
                         </div>
                         <div class="col-lg-2 col-md-12">
                             <h6>Job Type</h6>
                             <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#">Work from home</a></li>
-                                <li><a href="#">Internship</a></li>
-                                <li><a href="#">Part time</a></li>
-                                <li><a href="#">Full time</a></li>
+                                @if(isset($categ))
+                                    @foreach ($categ as $item)
+                                        <li><a href="{{ url('jobs/category', $item->name)}}"><i class="fa fa-caret-right text-white-50"></i>{{ $item->name}}</a></li>
+                                    @endforeach
+                                @else
+                                    <li><a href="javascript:void(0);"><i class="fa fa-caret-right text-white-50"></i> Work From Home</a></li>
+                                    <li><a href="javascript:void(0);"><i class="fa fa-caret-right text-white-50"></i> Part time</a></li>
+                                    <li><a href="javascript:void(0);"><i class="fa fa-caret-right text-white-50"></i> Full time</a></li>
+                                    <li><a href="javascript:void(0);"><i class="fa fa-caret-right text-white-50"></i> Internship</a></li>
+                                @endif
                             </ul>
                         </div>
                         <div class="col-lg-2 col-md-12">
@@ -326,24 +359,21 @@
                             <ul class="list-unstyled mb-0">
                                 <li><a href="#">Support</a></li>
                                 <li><a href="#">FAQ</a></li>
-                                <li><a href="#">Terms of Service</a></li>
-                                <li><a href="#">Contact Details</a></li>
+                                <li><a href="#">Terms and Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
                             </ul>
                         </div>
-                        <div class="col-lg-3 col-md-12">
+                        <div class="col-lg-2 col-md-12">
                             <h6>Quick Links</h6>
                             <hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#">About Us</a></li>
-
-
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Terms Of Conditions</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="{{ url('about-us')}}"><i class="fa fa-caret-right text-white-50"></i>About Us</a></li>
+                                <li><a href="{{ url('jobs')}}"><i class="fa fa-caret-right text-white-50"></i>Jobs</a></li>
+                                <li><a href="{{ url('blogs')}}"><i class="fa fa-caret-right text-white-50"></i>Blog</a></li>
+                                <li><a href="{{ url('contact-us')}}"><i class="fa fa-caret-right text-white-50"></i>Contact Us</a></li>
                             </ul>
                         </div>
-                        <div class="col-lg-3 col-md-12">
+                        <div class="col-lg-2 col-md-12">
                             <h6 class="mb-2">QR code</h6>
                             <hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
                             <div class="input-group w-100">
@@ -359,7 +389,7 @@
                 <div class="container">
                     <div class="row d-flex">
                         <div class="col-lg-8 col-sm-12  mt-2 mb-2 text-left ">
-                            Copyright © 2019 <a href="#" class="fs-14 text-white">Global Calcium</a>. Designed by <a
+                            Copyright © 2021 <a href="#" class="fs-14 text-white">Global Calcium</a>. Designed by <a
                                 href="digitalnock.com" class="fs-14 text-white">DigitalNock</a> All rights reserved.
                         </div>
                         <div class="col-lg-4 col-sm-12 ml-auto mb-2 mt-2 d-none d-lg-block">
@@ -393,7 +423,6 @@
     <!--Footer Section-->
 
     <a href="#top" id="back-to-top"><i class="fa fa-arrow-up"></i></a>
-
     <!-- JQuery js-->
     <script src="{{ asset('assets/js/vendors/jquery-3.2.1.min.js') }}"></script>
     <!-- Bootstrap js -->
@@ -428,13 +457,9 @@
     <script src="{{ asset('assets/js/showmore.js') }}"></script>
     <script src="{{ asset('assets/plugins/fileuploads/js/dropify.js') }}"></script>
     <script src="{{ asset('assets/plugins/fileuploads/js/dropfy-custom.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-    {{-- <script src="{{ asset('assets/js/upload.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/js/swipe.js') }}"></script> --}}
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
     <!-- Scripts Js-->
     <script src="{{ asset('assets/js/scripts2.js') }}"></script>
-
     <!-- Custom Js-->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     @yield('scripts')

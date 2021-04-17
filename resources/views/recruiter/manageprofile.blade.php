@@ -41,7 +41,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Company Neme</label>
-                                    <input type="text" class="form-control" value=" {{ old('comp_name', $user->name) }} " name="comp_name"  placeholder="Company Name" readonly>
+                                    <input type="text" class="form-control" value=" {{ old('comp_name', $user->company_name) }} " name="comp_name"  placeholder="Company Name" readonly>
                                     @error('comp_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -63,7 +63,7 @@
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Email address</label>
-                                    <input type="email" name="email" value="{{ old('email',$user->email) }}" class="form-control" placeholder="Email" >
+                                    <input type="email" name="email" value="{{ old('email',Auth::user()->email) }}" class="form-control" placeholder="Email" >
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -74,7 +74,7 @@
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Phone</label>
-                                    <input type="text" name="mobile" value="{{ old('mobile', $user->mobile )}}" class="form-control" placeholder="Phone Number" >
+                                    <input type="text" name="mobile" value="{{ old('mobile', Auth::user()->mobile )}}" class="form-control" placeholder="Phone Number" >
                                     @error('mobile')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -141,7 +141,7 @@
                             <div class="col-md-12">
                                 <div class="form-group mb-0">
                                     <label class="form-label">About Company</label>
-                                    <textarea rows="5" name="about" value="{{ old('about',$user->about) }}" class="form-control" placeholder="Enter About your description" > {{ $user->about }}</textarea>
+                                    <textarea rows="5" name="about" class="form-control" placeholder="Enter About your description" >{{ old('about',$user->about) }}</textarea>
                                     @error('about')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

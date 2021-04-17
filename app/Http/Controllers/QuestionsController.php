@@ -23,8 +23,8 @@ class QuestionsController extends Controller
            return Datatables::of($data)
                   ->addIndexColumn()
                   ->addColumn('action', function($data){
-                           $buttons =  '<a href="'.url("admin/questions/edit/". $data->id ."") .'"class="edit btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-                            &nbsp;&nbsp<a href="'.url("admin/questions/delete/". $data->id ."") .'" class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>';
+                           $buttons =  '<div style="white-space: nowrap;"><a href="'.url("admin/questions/edit/". $data->id ."") .'"class="edit btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                            &nbsp;&nbsp<a href="'.url("admin/questions/delete/". $data->id ."") .'" class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a></div>';
                            return $buttons;
                    })
                    ->editColumn('created_at', function ($data) {
@@ -33,6 +33,9 @@ class QuestionsController extends Controller
                    ->editColumn('category', function ($data) {
                       return $data->category->name;
                    })
+                   ->editColumn('name', function ($data) {
+                        return html_entity_decode($data->name);
+                    })
                    ->editColumn('q_type', function ($data) {
                     $types = DB::table('question_types')->where('id' , $data->q_type)->first();
                     return $types->description;

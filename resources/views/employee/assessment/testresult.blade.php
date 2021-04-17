@@ -127,20 +127,20 @@
                                                                             }
                                                                            @endphp
                                                                     @endforeach
-                                                                    <span class="text-success"> {!! $score .'/10' !!} </span>
+                                                                    <span class="text-success"> {!! $score .'/20' !!} </span>
                                                                 </div>
                                                                 <div class="col-md-3 text-center">
                                                                     <strong> Ranking/Category </strong>
                                                                     <br>
                                                                     @php
-                                                                        $totPercents = round(($score/10)*100 , 2);
-                                                                        if($totPercents < 60 )
+                                                                        $totPercents = round(($score/20)*100 , 2);
+                                                                        if($totPercents < 40 )
                                                                             $category = '<span class="text-danger">Need Improvement</span>';
-                                                                        elseif($totPercents >= 60 && $totPercents < 75 )
+                                                                        elseif($totPercents >= 40 && $totPercents < 65 )
                                                                             $category = '<span class="text-warning">Good</span>';
-                                                                        elseif($totPercents >= 75 && $totPercents < 85 )
+                                                                        elseif($totPercents >= 65 && $totPercents < 90 )
                                                                             $category = '<span class="text-info">Excellent</span>';
-                                                                        elseif($totPercents >= 85  )
+                                                                        elseif($totPercents >= 90  )
                                                                            $category = '<span class="text-success">Outstanding</span>';
 
                                                                     @endphp
@@ -189,6 +189,13 @@
             <form method="POST" action="{{ url('employee/assessment/schedule')}}" id="frmSchedule">
                 @csrf
                 <div class="modal-body">
+                    @if (\Session::has('error'))
+                        <div class="alert alert-danger">
+                                <ul>
+                                    <li>{!! \Session::get('error') !!}</li>
+                                </ul>
+                        </div>
+                    @endif
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <div class="form-group">

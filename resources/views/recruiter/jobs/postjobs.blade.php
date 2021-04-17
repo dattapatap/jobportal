@@ -51,6 +51,9 @@
                                                                 <a href="#" class="mr-4"><span><i class="fa fa fa-inr text-muted mr-1"></i>{{ $job->min_salary .' - '. $job->max_salary}}</span></a>
                                                                 <a href="#" class="mr-4"><span><i class="fa fa-clock-o text-muted mr-1"></i> {{ $job->job_type }}</span></a>
                                                                 <a href="#" class="mr-4"><span><i class="fa fa-briefcase text-muted mr-1"></i> {{ $job->min_exp.' - '.$job->max_exp . ' Years Exp'}}</span></a>
+                                                                <a href="{{ url('recruiter/postedjobs/view/'.$job->id)}}" class="mr-4"><span><i
+                                                                    class="fa fa-briefcase text-muted mr-1"></i>
+                                                                {{ count($job->applied ) }} - Applied</span></a>
                                                             </div>
                                                             <p class="mb-0 leading-tight">{!! Str::limit($job->job_desc, 160 ) !!}</p>
                                                         </div>
@@ -66,12 +69,14 @@
                                                             <div class="ml-auto">
                                                                 {{-- <a href="#" class="mr-3"><i class="fa fa-user text-muted mr-1"></i>{{ Auth::user()->name }}</a> --}}
                                                                 <a href="{{ url('recruiter/postedjobs/view/'.$job->id)}}" class="btn btn-primary btn-md text-white"> <i class="fa fa-eye"></i> </a>
+                                                                <a href="{{ url('recruiter/postedjobs/edit/'.$job->id)}}" class="btn btn-primary btn-md text-white"> <i class="fa fa-edit"></i> </a>
                                                                 <a href="{{ url('recruiter/postedjobs/delete/'.$job->id)}}" class="btn btn-danger btn-md text-white"> <i class="fa fa-trash-o"></i> </a>
-                                                                @if($job->status)
+                                                                {{-- @if($job->status)
+                                                                  <a href="javascript:void(0);" class="btn btn-danger btn-md text-white"> In Active </a>
                                                                   <a href="{{ url('recruiter/postedjobs/status/'.$job->id)}}" class="btn btn-danger btn-md text-white"> In Active </a>
                                                                 @else
-                                                                  <a href="{{ url('recruiter/postedjobs/status/'.$job->id)}}" class="btn btn-success btn-md text-white"> Active </a>
-                                                                @endif
+                                                                  <a href="javascript:void(0);" class="btn btn-success btn-md text-white"> Active </a>
+                                                                @endif --}}
                                                             </div>
                                                         </div>
                                                     </div>

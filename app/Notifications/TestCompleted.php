@@ -39,7 +39,7 @@ class TestCompleted extends Notification
                 ->salutation('Yours Faithfully')
                 ->line('Your Test Completed Successfully.')
                 ->line('Check your score')
-                ->action('Check Score', url('http://localhost:8000/employee/assessment'))
+                ->action('Check Score', url(env('APP_URL').'employee/assessment'))
                 ->line('Thank you for using our application!');
     }
 

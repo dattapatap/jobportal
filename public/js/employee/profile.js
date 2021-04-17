@@ -6,6 +6,13 @@ $(document).ready(function() {
     });
 
     $('select2').select2();
+
+
+    $('#empskills,#empaudits, #emporgs').select2({
+        placeholder: "Select an option",
+        allowClear: true
+    })
+
     $("#passingyear").datepicker({
         format: "yyyy",
         viewMode: "years",
@@ -405,6 +412,119 @@ $(document).ready(function() {
         });
         $(this).parent('i').remove();
     })
+
+    // Audit Details
+    $('.btn-addAudits').click(function(){
+        $('#frmAudit')[0].reset();
+        $('#auditDetails').modal('show');
+    });
+    $('#frmAudit').submit(function(e){
+        e.preventDefault();
+        let formData = $(this).serializeArray();
+        $(".invalid-feedback").children("strong").text("");
+        $("#frmAudit input").removeClass("is-invalid");
+        $.ajax({
+                url: "/employee/profile/addAudits",
+                type:'POST',
+                data:{'audits': formData},
+                success: function(data) {
+                    console.log(data);
+                    if(data.code == 200) {
+                        $('#frmAudit')[0].reset();
+                        toastr.success(data.message);
+                        location.reload();
+                    }else{
+                        if(data.code ==203){
+                            toastr.warning(data.message);
+                        }else{
+                            toastr.warning(data.message);
+                        }
+                    }
+                },
+                error: (response) => {
+                    console.log(response.responseText);
+                }
+        });
+
+    })
+
+    $('.auditdelete').click(function(e){
+        var aud =  $(this).attr('id');
+        $.ajax({
+            url: "/employee/profile/deleteaudit",
+            type:'POST',
+            data:{'auditid': aud },
+            success: function(data) {
+                if(data.status == true) {
+                    toastr.success(data.message);
+                }
+            },
+            error: (response) => {
+                console.log(response.responseText);
+            }
+        });
+        $(this).parent('i').remove();
+    })
+
+    //Organisations
+    $('.btn-addorg').click(function(){
+        $('#frmOrg')[0].reset();
+        $('#organisation').modal('show');
+    });
+    $('#frmOrg').submit(function(e){
+        e.preventDefault();
+        let formData = $(this).serializeArray();
+        $(".invalid-feedback").children("strong").text("");
+        $("#frmOrg input").removeClass("is-invalid");
+        $.ajax({
+                url: "/employee/profile/addOrganisations",
+                type:'POST',
+                data:{'orgs': formData},
+                success: function(data) {
+                    console.log(data);
+                    if(data.code == 200) {
+                        $('#frmOrg')[0].reset();
+                        toastr.success(data.message);
+                        location.reload();
+                    }else{
+                        if(data.code ==203){
+                            toastr.warning(data.message);
+                        }else{
+                            toastr.warning(data.message);
+                        }
+                    }
+                },
+                error: (response) => {
+                    console.log(response.responseText);
+                }
+        });
+
+    })
+
+    $('.orgdelete').click(function(e){
+        var org =  $(this).attr('id');
+        $.ajax({
+            url: "/employee/profile/deleteOrgs",
+            type:'POST',
+            data:{'orgid': org },
+            success: function(data) {
+                if(data.status == true) {
+                    toastr.success(data.message);
+                }
+            },
+            error: (response) => {
+                console.log(response.responseText);
+            }
+        });
+        $(this).parent('i').remove();
+    })
+
+
+
+
+
+
+
 
     //Resume Upload
     $('.btn-addResume').click(function(){

@@ -6,6 +6,7 @@ use App\Models\Industries;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class IndustriesController extends Controller
 {
@@ -70,7 +71,7 @@ class IndustriesController extends Controller
                 $qc = new Industries;
                 $msg = "Industry Saved Successfully";
             }
-            $qc->name = $request->name;
+            $qc->name = Str::ucfirst($request->name);
             $qc->save();
             $request->session()->flash('success',$msg);
             return redirect('/admin/industries');
