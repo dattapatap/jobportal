@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Recruiter;
+
 use App\Models\User;
+use App\Models\EmployerPackage;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +45,17 @@ class AdminRecruiter extends Controller
         ->with('jobs')
         ->with('user')
         ->first();
-        return view('admin.recruiter.view', compact('user'));
+
+       $packages = EmployerPackage::where('rec_id', $id)
+                        ->where('package_status', 'Active')
+                        ->orderBy('id', 'ASC')
+                        ->with('package')
+                        ->first();
+       $points = EmployerPackage::where('rec_id', $id )->where('package_status', 'Active')
+                                ->sum('avl_points');
+
+
+        return view('admin.recruiter.view', compact('user', 'packages', 'points'));
     }
 
     public function updateRecruiterStatus(Request $request){

@@ -14,7 +14,7 @@
     <link rel="icon" href="{{asset('favicon.ico')}}" type="image/x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
     <!-- Title -->
-    <title>IndiaPharma Job</title>
+    <title>Indian Pharma Job</title>
     <!-- Bootstrap Css -->
     <link href="{{ asset('assets/plugins/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}"
         rel="stylesheet" />
@@ -35,10 +35,9 @@
     <!-- Owl Theme css-->
     <link href="{{ asset('assets/plugins/owl-carousel/owl.carousel.css') }}" rel="stylesheet" />
     <!-- Custom scroll bar css-->
-    <link href="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.css') }}"  rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/scroll-bar/jquery.mCustomScrollbar.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/color-skins/color-skins/color10.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/jquery-uislider/jquery-ui.css') }}" rel="stylesheet" />
-
     <link  href="{{ asset('js/toastr.min.css')}}" rel="stylesheet"/>
     <!-- COLOR-SKINS -->
     <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{ asset('assets/color-skins/color-skins/color10.css') }}" />
@@ -49,9 +48,9 @@
 
 <body class="main-body">
     <!-- Loader -->
-     {{-- <div id="global-loader">
+     <!-- {{-- <div id="global-loader">
         <img src="{{ asset('assets/images/loader.svg') }}" class="loader-img" alt="">
-    </div> --}}
+    </div> --}} -->
 
     <!-- Popup Intro-->
 

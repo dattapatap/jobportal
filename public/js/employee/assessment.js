@@ -10,6 +10,8 @@ $('input[type ="radio"]').on('click',function(){
 
 function startTimers(interval){
     setInterval(displayTimer, 1000);
+    setInterval(displayTimerCurrent, 1000);
+
     setInterval(updateServer, 1000*(60*interval));
 }
 
@@ -20,8 +22,23 @@ function displayTimer(){
         if(remTime < 0)
             updateServer();
         $('#timeRemaining').text(mins.pad(2)+":"+secs.pad(2));
-        console.log(mins.pad(2)+":"+secs.pad(2));
 }
+
+function displayTimerCurrent(){
+        currQRemTime--;
+        var mins=Math.floor(currQRemTime/60);
+        var secs=Math.floor(currQRemTime%60);
+        if(currQRemTime < 0){
+             $("input:radio[name=options]").attr("disabled",true);
+             $('#next').prop('disabled', false);            
+        }
+
+        if(currQRemTime >= 0)
+            $('#currentRemaining').text(mins.pad(2)+":"+secs.pad(2));
+}
+
+
+
 
 function updateServer(){
         $.ajax({

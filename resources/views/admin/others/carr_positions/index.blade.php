@@ -58,7 +58,7 @@
         serverside: true,
         responsive: true,
         ajax:{
-            url: "/admin/jobpositions",
+            url: '{{ URL::to('/admin/jobpositions')}}',
             type: "GET",
             error:function(err){
                 console.log(err.responseText);

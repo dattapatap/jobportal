@@ -55,7 +55,7 @@
                             <i class="icon fa fa-inr text-secondary"></i>
                         </div>
                         <p class="card-text mt-3 mb-3">Total Payment Received</p>
-                        <p class="h3 text-center text-secondary-1"><i class="fa fa-inr"></i> 5,459 </p>
+                        <p class="h3 text-center text-secondary-1"><i class="fa fa-inr"></i> {{ $totPay }} </p>
                     </div>
                 </div>
             </div><!-- COL END -->

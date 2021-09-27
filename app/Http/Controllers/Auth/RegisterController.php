@@ -75,6 +75,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+
     protected function employeeRegister(Request $request){
         $request->validate([
             'name' => 'required|string|max:255',
@@ -101,6 +103,7 @@ class RegisterController extends Controller
             ]);
 
             $user->notify(new UserRegistration($user));
+           
             $admin = User::find(1);
             $admin->notify(new AdminRegister($user));
 
@@ -131,7 +134,6 @@ class RegisterController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
         ]);
-
         try{
             DB::beginTransaction();
 
@@ -152,9 +154,7 @@ class RegisterController extends Controller
                          $admin = User::find(1);
                          $admin->notify(new AdminRegister($user));
 
-
             DB::commit();
-
             Auth::login($user);
             return redirect()->to('recruiter/dashboard');
         }catch(Exception $e){

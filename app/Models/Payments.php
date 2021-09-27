@@ -10,4 +10,14 @@ class Payments extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+
+
+    public function package(){
+        return $this->belongsTo(Package::class, 'package_id');
+    }
+
+    public function recruiter(){
+        return $this->belongsTo(Recruiter::class, 'rec_id');
+    }
 }

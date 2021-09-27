@@ -17,7 +17,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-    <title>{{ config('app.name', 'IndianPharma Jobs') }}</title>
+    <title>{{ config('app.name') }}</title>
     <link rel="stylesheet" href="{{ asset('assets/fonts/fonts/font-awesome.min.css') }}">
     <link href="{{ asset('assets/plugins/toggle-sidebar/sidemenu.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" rel="stylesheet" />
@@ -180,7 +180,7 @@
                         </a>
                         <ul class="slide-menu">
                             <li>
-                                <a href="{{url('admin/questionCategory')}}" class="slide-item">Question Category</a>
+                                <a href="{{url('admin/skills')}}" class="slide-item">Q Category/Skills</a>
                             </li>
                             <li>
                                 <a href="{{url('admin/questions')}}" class="slide-item">Questions</a>
@@ -198,7 +198,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a class="side-menu__item" href="{{ url('admin/transactions')}}"><i class="side-menu__icon fa fa-user"></i><span
+                        <a class="side-menu__item" href="{{ url('admin/payments')}}"><i class="side-menu__icon fa fa-user"></i><span
                                 class="side-menu__label">Transactions</span></a>
                     </li>
 

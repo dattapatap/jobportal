@@ -23,7 +23,10 @@
                             </div>
                         @endif
                         <div class="p-2 pull-right">
-                            <a href="{{url('admin/questions/create ')}}" class="btn btn-sm btn-primary"><i class="side-menu__icon fa fa-arrow-down" style="color:white"></i> Add Question </a>
+                            <a href="{{url('admin/questions/create')}}" class="btn btn-sm btn-primary"> Add Question </a>
+
+                            <a href="{{url('admin/questions/upload')}}" class="btn btn-sm btn-primary"> Upload Excel </a>
+
                         </div>
                         <div class="table-responsive">
                             <table id="questions" class="table responsive display " cellspacing="0" width="100%">

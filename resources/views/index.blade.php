@@ -6,9 +6,9 @@
             <div class="container-fuild">
                 <!-- Carousel -->
                 <div class="owl-carousel testimonial-owl-carousel2 slider slider-header ">
-                    <div class="item">
+                   <!--  <div class="item">
                         <img alt="first slide" src="{{ asset('assets/images/banners/a.jpg') }}">
-                    </div>
+                    </div> -->
                     <div class="item">
                         <img alt="first slide" src="{{ asset('assets/images/banners/b.jpg') }}">
                     </div>

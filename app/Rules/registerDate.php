@@ -44,6 +44,7 @@ class registerDate implements Rule
      */
     public function message()
     {
-        return 'Your Test Date should be before '.$this->before_date;
+        return 'Your Test validity expired, please contact with admin.';
+        // .$this->before_date;
     }
 }

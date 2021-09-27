@@ -16,7 +16,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('qc_id');
-            $table->foreign('qc_id')->references('id')->on('question_categories');
+            $table->foreign('qc_id')->references('id')->on('skills');
             $table->integer('type');
             $table->text('name');
             $table->integer('tot_options');

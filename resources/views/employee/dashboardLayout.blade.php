@@ -27,9 +27,9 @@
             <a href="{{ route('employee.profile') }}" class="d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Profile
             </a>
-            <a href="{{ route('employee.savedjobs') }}" class=" d-flex border-bottom">
+            <!-- <a href="{{ route('employee.savedjobs') }}" class=" d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Jobs
-            </a>
+            </a> -->
             <a href="{{ url('employee/assessment') }}" class=" d-flex border-bottom">
                 <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> Take Test
             </a>

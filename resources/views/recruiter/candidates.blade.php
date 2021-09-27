@@ -107,7 +107,11 @@
                                                     <div class="d-sm-flex card-body p-3">
                                                         <div class="p-0 m-0 mr-3  mt-md-2">
                                                             <div class="">
+                                                                @isset($item->avatar)
                                                                 <img src=" {{ URL::asset('storage/images/profiles/'.$item->avatar) }}" alt="img" class="w-9 h-9">
+                                                                @else
+                                                                <img src=" {{ asset('assets/images/users/male/25.jpg')}}" alt="img" class="w-9 h-9">
+                                                                @endisset
                                                             </div>
                                                         </div>
                                                         <div class="item-card9  mt-md-1">

@@ -10,4 +10,9 @@ class EmployerPackage extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+
+    public function package(){
+        return $this->belongsTo(Package::class, 'package_id');
+    }
 }

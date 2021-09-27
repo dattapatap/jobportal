@@ -142,7 +142,6 @@
                                                                             $category = '<span class="text-info">Excellent</span>';
                                                                         elseif($totPercents >= 90  )
                                                                            $category = '<span class="text-success">Outstanding</span>';
-
                                                                     @endphp
                                                                     <span class="text-success"> {!! $category !!} </span>
                                                                 </div>
@@ -161,9 +160,18 @@
                                     </div>
                                     <br>
                                     <div class="lock_explanation float-right">
-                                        @if(count($testGiven) < 3 )
-                                            @if( count($testGiven)==0||$testGiven[0]->status=="Expired"||$testGiven[0]->status=="Completed")
-                                                <button class="btn btn-primary btn-scheduleTest"> Schedule Test </button>
+                                        @if(count($testGiven) < 3)
+                                            @if(isset($totPercents))
+                                                @if($totPercents <= 40)
+                                                    @if( count($testGiven)==0||$testGiven[0]->status=="Expired"||$testGiven[0]->status=="Completed")
+                                                        <button class="btn btn-primary btn-scheduleTest"> Schedule Test </button>
+                                                    @endif
+                                                @endif
+                                            @else
+                                                 @if( count($testGiven)==0||$testGiven[0]->status=="Expired"||$testGiven[0]->status=="Completed")
+                                                        <button class="btn btn-primary btn-scheduleTest"> Schedule Test </button>
+                                                    @endif
+
                                             @endif
                                         @endif
                                     </div>
@@ -298,7 +306,7 @@
         function updateTestStatus(val){
             $.ajax({
                 type: "POST",
-                url: "/employee/assessment/updateTestStatus",
+                url: '{{ URL::to('/employee/assessment/updateTestStatus')}}',
                 data:{ status : val},
                 cache: false,
                 success: function(response) {

@@ -127,7 +127,14 @@
                                         <div class="media-heading">
                                              <h5><strong>Package Selected</strong></h5>
                                             <div class="col-md-12 text-center p-5">
-                                               <h1><strong class="text-info">Premium</strong></h1>
+                                                @if(isset($packages))  
+                                                     <h1><strong class="text-info">
+                                                            {{ $packages->package->name }}
+                                                        </strong>
+                                                     </h1>
+                                                @else
+                                                    <h1><strong class="text-info">Expired</strong></h1>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -135,9 +142,26 @@
                                         <div class="media-heading">
                                             <h5><strong>Available Points</strong></h5>
                                             <div class="col-md-12 text-center p-5">
-                                               <h1><strong class="text-info">130.00</strong></h1>
+                                               <h1>
+                                                    <strong class="text-info">
+                                                        @php
+                                                            if(isset($points) ){
+                                                                echo $points;
+                                                            }else{
+                                                                echo "00.00";
+                                                            }
+                                                        @endphp</p>
+                                                    </strong>
+                                                </h1>
                                             </div>
                                         </div>
+                                    </div>
+                                     <div class="col-md-12 text-center p-2">
+                                        @if(isset($packages))  
+                                            <a class="btn btn-warning btn-sm pull-right"  href="{{ url('recruiter/activeplan') }}">View Plan</a>
+                                        @else
+                                           
+                                        @endif
                                     </div>
                                 </div>
 
@@ -151,10 +175,6 @@
                                        </div>
                                     </div>
                                 </div>
-
-
-
-
                             </div>
 
                         </div>

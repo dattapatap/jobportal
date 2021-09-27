@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Recruiter;
 
+
 use App\Http\Controllers\Controller;
+use App\Models\EmployerPackage;
 use App\Models\City;
 use App\Models\Industries;
 use App\Models\JobPositions;
@@ -62,27 +64,74 @@ class JobsController extends Controller
                 'job_tot_positions' => 'required|numeric|min:0|max:50|not_in:0',
                 'job_desc' => 'required|string'
             ]);
-            try{
-                $jobs = new Jobs;
-                $jobs->job_title = $request->job_title;
-                $jobs->job_role = $request->job_role;
-                $jobs->job_industry = $request->job_industry;
-                $jobs->job_type = $request->job_type;
-                $jobs->min_salary = $request->min_salary;
-                $jobs->max_salary = $request->max_salary;
-                $jobs->min_exp = $request->min_exp;
-                $jobs->max_exp = $request->max_exp;
-                $jobs->job_location = $request->job_location;
-                $jobs->job_eligibility = $request->job_eligibility;
-                $jobs->job_tot_positions = $request->job_tot_positions;
-                $jobs->job_desc = $request->job_desc;
-                $jobs->status = true;
-                $jobs->rec_id = Auth::user()->recruiter->id;
-                $jobs->save();
-                $request->session()->flash('success', 'Job Posted Successfully!');
-                return redirect('/recruiter/postedjobs');
-            }catch(Exception $ex){
-                return back()->with('error', 'Job not posted, please try again!')->withInput();
+
+            $poits = EmployerPackage::where('rec_id', Auth::user()->recruiter->id)
+                                    ->where('package_status', 'Active')
+                                    ->sum('avl_points');
+            if($poits){
+                if($poits > 100 ){
+                    DB::beginTransaction();
+                    try{
+                            $jobs = new Jobs;
+                            $jobs->job_title = $request->job_title;
+                            $jobs->job_role = $request->job_role;
+                            $jobs->job_industry = $request->job_industry;
+                            $jobs->job_type = $request->job_type;
+                            $jobs->min_salary = $request->min_salary;
+                            $jobs->max_salary = $request->max_salary;
+                            $jobs->min_exp = $request->min_exp;
+                            $jobs->max_exp = $request->max_exp;
+                            $jobs->job_location = $request->job_location;
+                            $jobs->job_eligibility = $request->job_eligibility;
+                            $jobs->job_tot_positions = $request->job_tot_positions;
+                            $jobs->job_desc = $request->job_desc;
+                            $jobs->status = true;
+                            $jobs->rec_id = Auth::user()->recruiter->id;
+                            $jobs->save();
+
+
+                            $package = EmployerPackage::where('rec_id', Auth::user()->recruiter->id)
+                                                        ->where('package_status', 'Active')
+                                                        ->orderBy('id', 'ASC')
+                                                        ->get();
+
+                            if(isset($package)){
+                                for($ctr=0; $ctr < count($package); $ctr++){
+                                    if( $package[$ctr]->avl_points  > 100){
+                                        DB::table('employer_packages')
+                                                ->where('id', $package[$ctr]->id)
+                                                ->decrement('avl_points', 100);
+                                        break;
+                                        return;
+                                    }else if($package[$ctr]->avl_points  < 100){
+                                        $totPoints = $package[$ctr]->avl_points;
+                                        DB::table('employer_packages')
+                                                ->where('id', $package[$ctr]->id)
+                                                ->update(['avl_points'=> '0', 'package_status' => 'InActive']);
+
+                                        $poittoupdate = 100 - $totPoints;
+                                        DB::table('employer_packages')
+                                                ->where('id', $package[$ctr+1]->id)
+                                                ->decrement('avl_points', $poittoupdate );
+                                        break;
+                                        return;
+                                    }
+                                }   
+                            }
+                            DB::commit();
+                            $request->session()->flash('success', 'Job Posted Successfully!');
+                            return redirect('/recruiter/postedjobs');
+                    }catch(Exception $ex){
+                        DB::rollback();
+                        return back()->with('error', 'Job not posted, please try again!')->withInput();
+                    }
+                }else{
+                    $msg  = '<a href="'. url('recruiter/packages') . '" style="color:#000206;"> click here  </a>';
+                    return back()->with('error', 'Dont have enough points, select new package'.$msg )->withInput();
+                }
+            }else{
+               $msg  = '<a href="'. url('recruiter/packages') . '" style="color:#000206;" > click here  </a>';
+               return back()->with('error', 'Dont have enough points, select new package'.$msg )->withInput();
             }
 
    }

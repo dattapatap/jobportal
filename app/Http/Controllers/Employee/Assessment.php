@@ -41,7 +41,7 @@ class Assessment extends Controller
         $slot = TestSlots::find($request->testslot);
 
         $request->validate([
-            'testdate' => ['required','date','after_or_equal:'. $emp_redisterd_date .'', new registerDate($emp_redisterd_date),  'after_or_equal:'.now()],
+            'testdate' => ['required','date','after_or_equal:'. $emp_redisterd_date .'', new registerDate($emp_redisterd_date)],
             'testslot' => ['required', 'numeric', new TestSlotTimeValidation($request, $slot)],
         ]);
 
@@ -68,6 +68,62 @@ class Assessment extends Controller
             }
         }
     }
+
+    public function sheduleAssessmentPopup(){
+
+        $emp = $this->getEmplyeeDetails();
+        try{
+
+                DB::beginTransaction();
+                $questions = $this->getAllQuestionsBySkill($emp);
+                if(count($questions) < 20 ){
+                    $request->session()->flash('error',"Short of Questions, Please contact to admin");
+                    return redirect('/employee/dashboard');
+                }
+                $slot  = $this->createSlot();
+                $objQTest = $this->createQuestionTestPopup($questions, $emp, $slot);
+                db::commit();
+                return redirect('/employee/assessment/instructions');
+
+        }catch(Exception $ex){
+            echo  $ex->getMessage();
+        }
+    }
+    public function createSlot(){
+        $timeSlot = new TestSlots;
+        $timeSlot->description = "dummy";
+        $timeSlot->from = Carbon::now(); 
+        $timeSlot->to = Carbon::now()->addHour();
+        $timeSlot->deleted_at = Carbon::now();
+        $timeSlot->status = "InActive";
+        $timeSlot->save();
+        return $timeSlot->id;
+    }
+    public function createQuestionTestPopup($questions, $emp, $slot){
+            $test  = new EmpTest;
+            $test->emp_id = $emp->id;
+            $test->last_q_no = 1;
+            $test->tot_ques = count($questions);
+            $test->max_time = '15.00';  //Max Time for Test 15 Min
+            $test->status = 'Started';
+            $test->test_sheduled = Carbon::now();
+            $test->slot_id = $slot;
+            $test->rem_time = '15.00';
+            $test->save();
+            $ctr = 1;
+            foreach($questions as $quest){
+                $testQues = new EmpTestQuestions();
+                $testQues->sl_no = $ctr;
+                $testQues->test_id = $test->id;
+                $testQues->q_id = $quest->id;
+                $testQues->test_id = $test->id;
+                $testQues->save();
+                $ctr++;
+            }
+            return $test;
+    }
+
+
 
     //Create New Test By Employee
     public function testStartPage(Request $request){
@@ -97,9 +153,6 @@ class Assessment extends Controller
 
             }
     }
-
-
-
     public function getEmplyeeDetails(){
         $employee =  Employee::where('id', auth()->user()->employee->id)
         ->with('careers')
@@ -160,7 +213,7 @@ class Assessment extends Controller
                 $testQues->save();
                 $ctr++;
             }
-        return $test;
+            return $test;
     }
 
 
@@ -169,7 +222,7 @@ class Assessment extends Controller
         $employee = auth()->user()->employee;
         $existingTest = DB::table('emp_tests')->where('emp_id', $employee->id )
                         ->where('test_taken', null)
-                        ->where('status', 'started')
+                        ->where('status', 'Started')
                         ->orderBy('id', 'desc')
                         ->first();
 
@@ -182,9 +235,11 @@ class Assessment extends Controller
             $this->setTestSession($existingTest, $employee);
             $questId = $this->returnQuestionId($existingTest->id, $existingTest->last_q_no);
             $objQuest = $this->getFirstQuestion($questId);
+
             return view('employee.assessment.testpage', compact('objQuest'));
         }
     }
+
     public function setTestSession($test, $employee){
         session()->put('qptest_id', $test->id);
         session()->put('emp_id', $employee->id);
@@ -211,10 +266,6 @@ class Assessment extends Controller
                 ->update(['status'=>'Completed', 'test_taken'=>Carbon::now()]);
     }
 
-
-
-
-
     //Update Test Status
     public function updateTestStatus(Request $request){
         $status = $request->post('status');
@@ -229,8 +280,6 @@ class Assessment extends Controller
         }catch(Exception $ex){
             return response()->json(['status'=>false], 202);
         }
-
-
     }
 
 

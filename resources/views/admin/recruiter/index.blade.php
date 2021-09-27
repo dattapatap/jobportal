@@ -96,7 +96,7 @@
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
-                url: '/admin/recruiter/status',
+                url: '{{ URL::to('/admin/recruiter/status')}}',
                 data: { status: userState, id: userid },
                 success: function(data) {
                     console.log(data);

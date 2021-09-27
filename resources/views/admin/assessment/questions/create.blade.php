@@ -58,7 +58,7 @@
                                         <select class="form-control select2" name="question_category" id="question_category"  placeholder="select category">
                                             <option value=" {{ old('question_category') }}"> Select Category </option>
                                             @forelse ($category as $cat)
-                                                <option value="{{ $cat->id }}"> {{ $cat->name }} </option>
+                                                <option value="{{ $cat->id }}"> {{ $cat->description }} </option>
                                             @empty
                                                 <option value=""> No Category Found</option>
                                             @endforelse

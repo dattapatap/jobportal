@@ -11,11 +11,50 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Yajra\DataTables\DataTables;
 use Razorpay\Api\Api;
 
 class PaymentsController extends Controller
 {
 
+    public function index(Request $request){
+        if ($request->ajax()) {
+            $data = Payments::where('deleted_at',null)
+                   ->orderBy('id','desc')
+                   ->with('package')
+                   ->with('recruiter')
+                   ->get();
+           return DataTables::of($data)
+                  ->addIndexColumn()
+                  ->addColumn('action', function($data){
+                           $buttons =  '<a href="'.url("admin/payment/delete/". $data->id ."") .'" class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>';
+                           return $buttons;
+                   })
+                   ->editColumn('status', function ($data) {
+                    if($data->status == 'authorized'){
+                        $ll = '<label class="text-info">'. $data->status .'</label>';
+                        return $ll;
+                    }else if($data->status == 'captured'){
+                        return '<label class="text-success">'. $data->status .'</label>';
+                    }else{
+                        return $data->status;
+                    }
+                    
+                   })
+                   ->editColumn('created_at', function ($data) {
+                    return $data->created_at->format('Y-m-d h:m:s');
+                   })
+                   ->editColumn('package_id', function ($data) {
+                         return $data->package->name;    
+                   })
+                   ->editColumn('rec_id', function ($data) {
+                         return $data->recruiter->company_name;    
+                   })
+                  ->rawColumns(['action', 'status'])
+                  ->make(true);
+       }
+       return view('admin.payments.index');
+    }
 
 
     public function payment(Request $request)
@@ -62,7 +101,6 @@ class PaymentsController extends Controller
             }
         }
     }
-
 
     function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

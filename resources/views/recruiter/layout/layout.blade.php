@@ -165,6 +165,9 @@
 							<li>
 								<a class="side-menu__item" href="{{ url('recruiter/viewdcandidate') }}"><i class="side-menu__icon fa fa-user"></i><span class="side-menu__label">Candidates</span></a>
 							</li>
+							<li>
+								<a class="side-menu__item" href="{{ url('recruiter/transactions') }}"><i class="side-menu__icon fa fa-inr"></i><span class="side-menu__label">Transaction History</span></a>
+							</li>
 						{{-- @endif --}}
 					</ul>
 				</aside>

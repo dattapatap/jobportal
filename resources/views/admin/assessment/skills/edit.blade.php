@@ -12,19 +12,19 @@
 <div class="app-content">
     <div class="side-app">
         <div class="page-header">
-            <h4 class="page-title">Add Question Category</h4>
+            <h4 class="page-title">Add Skills</h4>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('admin/questionCategory')}}">Question Category</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Add Category</li>
+                <li class="breadcrumb-item"><a href="{{ url('admin/skills')}}">Skills</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Skill</li>
             </ol>
         </div>       
         <div class="row">
             <div class="col-md-12">
                 <div class="col-md-6 offset-3">                    
-                    <form class="card" action="{{ route('admin.questionCategory.process')}}" method="POST">
+                    <form class="card" action="{{ route('admin.skills.process')}}" method="POST">
                         @csrf
                         <div class="card-header">
-                            <h3 class="card-title">Question Category</h3>
+                            <h3 class="card-title">Skill</h3>
                         </div>
                         @if (\Session::has('error'))
                             <div class="alert alert-danger">
@@ -44,8 +44,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label">Category Name</label>
-                                        <input type="text" class="form-control" value="{{ $qc_name, old('old_name') }}" name="name"  placeholder="Category Name">
+                                        <label class="form-label">Skill Name</label>
+                                        <input type="text" class="form-control" value="{{ $qc_name, old('old_name') }}" name="name"  placeholder="Skill Name">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

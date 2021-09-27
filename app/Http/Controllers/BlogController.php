@@ -79,6 +79,7 @@ class BlogController extends Controller
                 $filename = $file->getClientOriginalName();
                 $image_resize = Image::make($file->getRealPath());
                 $image_resize->resize(500, 334);
+
                 if (!file_exists(public_path().'/storage/images/blogs')) {
                     mkdir(public_path().'/storage/images/blogs', 666, true);
                 }
@@ -127,6 +128,10 @@ class BlogController extends Controller
         $preBlog = Blog::find($id);
 
         if ($files = $request->file('blogimage')) {
+
+            if (!file_exists(public_path().'/storage/images/blogs')) {
+                  mkdir(public_path().'/storage/images/blogs', 666, true);
+            }
 
             if($preBlog->image){
                 Storage::delete('/public/images/blogs/'.$preBlog->image);

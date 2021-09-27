@@ -361,6 +361,10 @@ class ProfileController extends Controller
                 if($user->avatar){
                     Storage::delete('/public/images/profiles/'.Auth::user()->avatar);
                 }
+                if (!file_exists(public_path().'/storage/images/profiles')) {
+                    mkdir(public_path().'/storage/images/profiles', 666, true);
+                }
+
                 $image_resize->save(public_path().'/storage/images/profiles/' .$user->id.'_'.$filename);
 
                 $user->avatar = $user->id.'_'.$filename;

@@ -51,7 +51,7 @@ class UserRegistration extends Notification
                     ->line('Your Registration is done successfully.')
                     ->line('Your User Id is - '.$this->user->email)
                     ->line('Please update your profile, and post the adds.')
-                    ->action('Click To Login', url(env('APP_URL').'login'))
+                    ->action('Click To Login', url(env('APP_URL').'rec/login'))
                     ->line('Thank you for using our application!');
         }else{
             return (new MailMessage)

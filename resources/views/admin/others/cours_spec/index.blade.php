@@ -59,7 +59,7 @@
         serverside: true,
         responsive: true,
         ajax:{
-            url: "/admin/course/specifications",
+            url:'{{ URL::to('/admin/course/specifications')}}',
             type: "GET",
             error:function(err){
                 console.log(err.responseText);

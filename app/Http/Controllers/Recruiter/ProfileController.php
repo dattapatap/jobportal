@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Recruiter;
 
 use App\Http\Controllers\Controller;
 use App\Models\Recruiter;
+use App\Models\EmployerPackage;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,8 +19,21 @@ class ProfileController extends Controller
 
    public function index(){
        $user = Auth::user();
-       return view('recruiter.profile', compact('user'));
-   }
+        
+       $packages = EmployerPackage::where('rec_id', Auth::user()->recruiter->id)
+                        ->where('package_status', 'Active')
+                        ->orderBy('id', 'ASC')
+                        ->with('package')
+                        ->first();
+       $points = EmployerPackage::where('rec_id', Auth::user()->recruiter->id)->where('package_status', 'Active')
+                                ->sum('avl_points');
+
+     // dd($packages);
+
+       return view('recruiter.profile', compact('user', 'packages', 'points'));
+
+
+   }    
 
    public function editProfile(){
         $user = Auth::user()->recruiter;

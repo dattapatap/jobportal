@@ -43,15 +43,7 @@ class EmpJobAppliedController extends Controller
                     $request->session()->flash('error',"Please update your profile before apply");
                     return redirect()->back();
                 }else{
-                    dd($employee->test);
-                    if($employee->test->isEmpty()){
-
-
-                    }else{
-                        $test = $employee->test;
-                        dd($test);
-
-                    }
+                    
                     $jobid = $id;
                     $appJob = new EmpJobApplied();
                     $appJob->emp_id = $employee->id;

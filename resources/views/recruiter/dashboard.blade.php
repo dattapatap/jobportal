@@ -31,8 +31,19 @@
                         <div class="fa-stack fa-lg fa-1x icons shadow-default bg-secondary-transparent">
                             <i class="icon icon-refresh text-secondary"></i>
                         </div>
-                        <p class="card-text mt-3 mb-3">Selected Package</p>
-                        <p class="h2 text-center text-secondary">2,635</p>
+                        <p class="card-text mt-3 mb-3">Current Package</p>
+                        <p class="h2 text-center text-secondary">
+                            @if(isset($packages))  
+                                 <h3 class="text-info" style="font-size:18px;" >
+                                        {{ $packages->package->name }}
+                                 </h5>
+                            @else
+                                 <h3 class="text-danger" style="font-size:18px;" > expired </h5>
+                        
+                            @endif
+                        </p>
+
+                        </p>
                     </div>
                 </div>
             </div><!-- COL END -->
@@ -44,7 +55,14 @@
                             <i class="icon icon-speech text-info"></i>
                         </div>
                         <p class="card-text mt-3 mb-3">Available Points</p>
-                        <p class="h2 text-center text-success-1">245</p>
+                        <p class="h2 text-center text-success-1">
+                            @php
+                                if(isset($points)){
+                                    echo $points;
+                                }else{
+                                    echo "00.00";
+                                }
+                            @endphp</p>
                     </div>
                 </div>
             </div><!-- COL END -->
@@ -55,8 +73,8 @@
                         <div class="fa-stack fa-lg icons shadow-default bg-warning-transparent">
                             <i class="icon icon-rocket text-warning"></i>
                         </div>
-                        <p class="card-text mt-3 mb-3">Total Candidate Viewd</p>
-                        <p class="h2 text-center text-secondary-1">5,459</p>
+                        <p class="card-text mt-3 mb-3">Interest Showed Candidate</p>
+                        <p class="h2 text-center text-secondary-1">{{ $totItrest }}</p>
                     </div>
                 </div>
             </div><!-- COL END -->

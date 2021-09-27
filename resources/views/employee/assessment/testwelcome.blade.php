@@ -16,7 +16,6 @@
             pointer-events: none;
             cursor: default;
         }
-
     </style>
  
     <div class="container">
@@ -43,12 +42,12 @@
                                             <base target="_top">
                                             <ul id="quiz_student_details">
                                                 <li style="">
-                                                <span class="title"> Total Questions </span> <span class="value"> 10 </span>
+                                                <span class="title"> Total Questions </span> <span class="value"> 20 </span>
                                                 </li> 
                                                 <li>
                                                     <span class="title">Max Time Limit</span>
                                                         <span class="value">
-                                                            10 Minutes
+                                                            15 Minutes
                                                         </span>
                                                 </li>                                                            
                                             </ul>                        
@@ -57,12 +56,12 @@
                                                 <p>Before starting the test please update your profile with all category eg. career, educations, work exp., skills and resume with all requirements fields. becaus this test depend upon your skills and experience level</p>
                                                 <p>Once test started, do not refresh the page, do not close the brouser.</p>
                     
-                                                <p>This test consists of 10 multiple-choice questions.</p>
+                                                <p>This test consists of 20 multiple-choice questions.</p>
                                                 <ul>
                                                     <li>
                                                     <strong>Multiple Attempts</strong> - You will have three attempts for this test with your highest score being recorded for next recruitment process.</li>
                                                     <li>
-                                                    <strong>Timing</strong> - You will need to complete each of your attempts in one sitting, as you are allotted 10 minutes to complete each attempt.</li>
+                                                    <strong>Timing</strong> - You will need to complete each of your attempts in one sitting, as you are allotted 15 minutes to complete each attempt.</li>
                                                     <li>
                                                     <strong>Questions</strong> - All Questions are mandatory. No negetive marks</li>
                                                 </ul>
@@ -74,9 +73,6 @@
                                     <div class="lock_explanation float-right">
                                         <a href="{{ url('employee/assessment/start')}}" id="btn-starttest" class="btn btn-primary disabled"> Start Test </a>
                                     </div>
-                                    
-                                    
-                                    
                                 </div>
                             </div>
 

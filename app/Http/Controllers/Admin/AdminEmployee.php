@@ -49,10 +49,16 @@ class AdminEmployee extends Controller
             abort('404');
         }
         $user->test = $tests;
-
-        // dd($user);
-
         return view('admin.employee.view', compact('user'));
 
     }
+
+    public function updateEmployeeStatus(Request $request){
+        $user = User::find($request->id);
+        $user->status = $request->status;
+        $user->save();
+        return response()->json(['success'=>true,'message'=>'Status Changed Successfully']);
+    }
+
+
 }

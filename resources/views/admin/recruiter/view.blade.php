@@ -127,7 +127,14 @@
                                         <div class="media-heading">
                                              <h5><strong>Package Selected</strong></h5>
                                             <div class="col-md-12 text-center p-5">
-                                               <h3><strong class="text-info">Premium</strong></h3>
+                                               @if(isset($packages))  
+                                                     <h3><strong class="text-info">
+                                                            {{ $packages->package->name }}
+                                                        </strong>
+                                                     </h4>
+                                                @else
+                                                    <h1><strong class="text-info">Expired</strong></h1>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -135,7 +142,15 @@
                                         <div class="media-heading">
                                             <h5><strong>Available Points</strong></h5>
                                             <div class="col-md-12 text-center p-5">
-                                               <h3><strong class="text-info">130.00</strong></h3>
+                                                <h2><strong class="text-info">
+                                                        @php
+                                                            if(isset($points) ){
+                                                                echo $points;
+                                                            }else{
+                                                                echo "00.00";
+                                                            }
+                                                        @endphp</p>
+                                                </strong></h2>
                                             </div>
                                         </div>
                                     </div>

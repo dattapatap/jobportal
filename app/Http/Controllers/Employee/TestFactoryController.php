@@ -39,10 +39,18 @@ class TestFactoryController extends Controller
     }
 
     public function updateAnsweres($qno, $TestPaperId, $selectedOptions){
-        $result = DB::table('emp_test_questions')
-                    ->where('sl_no', $qno)
-                    ->where('test_id', $TestPaperId)
-                    ->update([ 'ans_opt_id' => $selectedOptions]);
+        if(isset($selectedOptions)){
+            $result = DB::table('emp_test_questions')
+                        ->where('sl_no', $qno)
+                        ->where('test_id', $TestPaperId)
+                        ->update([ 'ans_opt_id' => $selectedOptions, 'is_answred' => true]);
+        }else{
+
+            $result = DB::table('emp_test_questions')
+                        ->where('sl_no', $qno)
+                        ->where('test_id', $TestPaperId)
+                        ->update(['is_answred' => false]);
+        }
     }
     public function updateTestData( $TestPaperId, $qno){
         $result = DB::table('emp_tests')
@@ -60,8 +68,10 @@ class TestFactoryController extends Controller
     }
     public function getNextQuestion($questionId){
           $questions = Questions::where('id',$questionId )
+                       ->withTrashed()
                        ->with('options')
                        ->first();
+
           return $questions;
     }
 

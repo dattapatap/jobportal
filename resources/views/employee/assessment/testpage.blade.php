@@ -15,22 +15,20 @@
 
                         <div class="col-md-3">
                             <div class="col-md-12" style="test-align:right;">
-                                <span>This Question : </span>
-                                <span id="timeRemaining"> @php printf("%d:%d" ,session()->get('rem_time')/60,
-                                                                session()->get('rem_time')%60); @endphp </span>
+                                <span>This Question :  </span>
+                                <span id="currentRemaining"> </span>
                             </div>
                          </div>
                         <div class="col-md-3">
-                                <div class="col-md-12" style="test-align:right;">
-                                    <span>Time Remaining: </span>
-                                    <span id="timeRemaining"> @php printf("%d:%d" ,session()->get('rem_time')/60,
-                                                                    session()->get('rem_time')%60); @endphp </span>
-                                </div>
+                            <div class="col-md-12" style="test-align:right;">
+                                <span>Time Remaining: </span>
+                                <span id="timeRemaining"> @php printf("%d:%d" ,session()->get('rem_time')/60, session()->get('rem_time')%60); @endphp </span>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="col-md-12 mt-4" style="width:100%">
-                                <form method="POST" action="{{ route('employee.assessment.nextQuestion')}}">
+                                <form id="nxtqn" method="POST" action="{{ route('employee.assessment.nextQuestion')}}"   >
                                     @csrf
                                     <div class="testContent">
                                         <ol class="quest-list" start="{{ session()->get('currQNo')  }}" style="font-size: 15px;font-weight: 400;">
@@ -41,7 +39,7 @@
                                                 <ol class="alpha-list mt-3" style="list-style:none;" >
                                                    @foreach ($objQuest->options as $item)
                                                     <li class="mb-2">
-                                                        <input type="radio" style="margin-right: 10px;"     name="options" value="{{ $item->id}}" name="checked" />
+                                                        <input type="radio" style="margin-right: 10px;" name="options" value="{{ $item->id}}" name="checked" />
                                                         {{  html_entity_decode($item->options) }}
                                                     </li>
                                                    @endforeach
@@ -69,6 +67,11 @@
 <script src="{{asset('js/employee/assessment.js')}}" type="text/javascript"></script>
 <script>
         var remTime = {!! Session::get('rem_time') !!};
+
+        var currQRemTime  = 20;
         var timerID=startTimers(0.10);
+
+
+
 </script>
 @endsection

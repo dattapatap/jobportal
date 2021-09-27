@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\QuestionCategory;
 use App\Models\QuestionOptions;
 use App\Models\Questions;
+use App\Models\Skills;
 use Exception;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use \Illuminate\Support\Facades\DB;
+use App\Imports\QuestionsImport;
+use Excel;
 
 
 class QuestionsController extends Controller
@@ -31,7 +34,7 @@ class QuestionsController extends Controller
                       return $data->created_at->format('Y-m-d h:m:s');
                    })
                    ->editColumn('category', function ($data) {
-                      return $data->category->name;
+                      return $data->category->description;
                    })
                    ->editColumn('name', function ($data) {
                         return html_entity_decode($data->name);
@@ -48,10 +51,82 @@ class QuestionsController extends Controller
 
 
     public function create(){
-         $category = QuestionCategory::where('deleted_at', null)->get();
+         $category = Skills::where('deleted_at', null)->get();
          $type = DB::table('question_types')->get();
          return view('admin.assessment.questions.create', compact('category', 'type'));
     }
+
+    public function upload(){
+         $category = Skills::where('deleted_at', null)->get();
+         $type = DB::table('question_types')->get();
+         return view('admin.assessment.questions.upload', compact('category', 'type'));      
+    }
+    public function excelUpload(Request $request){
+
+       $this->validate($request, [
+        'file_question'  => 'required|mimes:xls,xlsx,csv',
+        'question_type'  => 'required|numeric',
+        'question_category'  => 'required|numeric',
+       ]);
+
+       $path = $request->file('file_question')->getRealPath();
+       $qimport = new QuestionsImport;
+       Excel::import($qimport, $path);
+       
+       if( count($qimport->data) > 0){
+          $questionsArray  = $qimport->data;
+
+          DB::beginTransaction();
+
+          try{
+              for( $ctr=0; $ctr < count($questionsArray); $ctr++){
+
+                  $qtype = $request->post('question_type');
+                  $qcategory = $request->post('question_category');
+                  $questionTExt = $questionsArray[$ctr]['question'];
+
+                  $totarr = (count($questionsArray[$ctr]) -2) / 2;
+
+                  $optArray = array();
+                  for($j=0; $j < $totarr; $j++){
+                      if(isset($questionsArray[$ctr]['option'.($j+1)])){
+                          array_push($optArray, [ 'option' => $questionsArray[$ctr]['option'.($j+1)], 
+                                             'marks'=> $questionsArray[$ctr]['marks'.($j+1)]
+                                           ]);
+                        }
+                  }
+
+                  $question  = new Questions;
+                  $question->qc_id = $qcategory;
+                  $question->q_type = $qtype;
+                  $question->name = $questionTExt;
+                  $question->tot_options = count($optArray);
+                  $question->save();
+                  $q_id = $question->id;
+                  
+                  for($k=0; $k < count($optArray); $k++){
+                    $ques_ops  = new QuestionOptions();
+                    $ques_ops->q_id  = $q_id;
+                    $ques_ops->options  = $optArray[$k]['option'];
+                    $ques_ops->marks  = $optArray[$k]['marks'];
+                    $ques_ops->save();
+                  }
+              
+              }
+              DB::commit();
+              $request->session()->flash('success',"Questions uploaded Successfully");
+              return redirect()->back();
+          }catch(Exception $ex){
+            DB::rollBack();
+            // echo $ex->getMessage();
+            return back()->with('error', "Invalid data found in file");
+          }
+
+        }else{
+            return back()->with('error', 'Empty file.');
+        }
+    }
+
 
     public function store(Request $request){
 
@@ -90,7 +165,7 @@ class QuestionsController extends Controller
     }
 
     public function edit($id){
-            $category = QuestionCategory::where('deleted_at', null)->get();
+            $category = Skills::where('deleted_at', null)->get();
             $type = DB::table('question_types')->get();
             $ques = Questions::where(['id' => $id])->with('options')->firstOrFail();
             return view('admin.assessment.questions.edit', compact('category', 'type', 'ques'));
