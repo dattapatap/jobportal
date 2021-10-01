@@ -27,7 +27,7 @@
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
+                        {{-- <div class="table-responsive"> --}}
                             <table id="reclist" class="responsive display nowrap">
                                 <thead>
                                     <tr>
@@ -46,7 +46,7 @@
 
                                 </tbody>
                             </table>
-                        </div>
+                        {{-- </div> --}}
                     </div>
                     <!-- table-wrapper -->
                 </div>

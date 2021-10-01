@@ -21,7 +21,7 @@ class CreatePaymentsTable extends Migration
             $table->decimal('payment_actual_amount', 9,2);
             $table->unsignedBigInteger('package_id');
             $table->foreign('package_id')->references('id')->on('packages');
-            $table->unsignedBigInteger('rec_id');
+            $table->integer('rec_id')->unsigned();
             $table->foreign('rec_id')->references('id')->on('recruiters');
             $table->string('status');
             $table->datetime('payment_date');
