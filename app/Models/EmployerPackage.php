@@ -15,4 +15,13 @@ class EmployerPackage extends Model
     public function package(){
         return $this->belongsTo(Package::class, 'package_id');
     }
+
+    public function payment(){
+        return $this->belongsTo(Payments::class, 'payment_id');
+    }
+
+    public function emp(){
+        return $this->belongsTo(Recruiter::class, 'rec_id');
+    }
+
 }

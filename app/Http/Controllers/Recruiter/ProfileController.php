@@ -19,7 +19,7 @@ class ProfileController extends Controller
 
    public function index(){
        $user = Auth::user();
-        
+
        $packages = EmployerPackage::where('rec_id', Auth::user()->recruiter->id)
                         ->where('package_status', 'Active')
                         ->orderBy('id', 'ASC')
@@ -33,7 +33,7 @@ class ProfileController extends Controller
        return view('recruiter.profile', compact('user', 'packages', 'points'));
 
 
-   }    
+   }
 
    public function editProfile(){
         $user = Auth::user()->recruiter;

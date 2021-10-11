@@ -113,7 +113,7 @@
                                     @if(Auth::user()->avatar)
                                         <img  src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="profile-img" class="avatar avatar-md brround" alt="img">
                                     @else
-                                        <img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="profile-img" class="avatar avatar-md brround" alt="img">
+                                        <img  src="{{ Avatar::create( Auth::user()->name )->toBase64();  }}" alt="profile-img" class="avatar avatar-md brround" alt="img">
                                     @endif
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
@@ -123,6 +123,11 @@
                                     <a class="dropdown-item" href="{{ url('admin/changepassword')}}">
                                         <i class="dropdown-icon  icon icon-settings"></i> Change Password
                                     </a>
+
+                                    <a class="dropdown-item" href="{{ url('admin/package/settings')}}">
+                                        <i class="dropdown-icon  icon icon-settings"></i> Points Setting
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <i class="dropdown-icon icon icon-power"></i> Log out
@@ -146,7 +151,7 @@
                         @if(Auth::user()->avatar)
                             <img  src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="user-img" class="avatar avatar-lg brround">
                         @else
-                            <img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="user-img" class="avatar avatar-lg brround">
+                            <img  src="{{ Avatar::create( Auth::user()->name )->toBase64();  }}" alt="user-img" class="avatar avatar-lg brround">
                         @endif
 
                         </div>

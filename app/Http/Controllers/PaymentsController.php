@@ -39,16 +39,16 @@ class PaymentsController extends Controller
                     }else{
                         return $data->status;
                     }
-                    
+
                    })
                    ->editColumn('created_at', function ($data) {
                     return $data->created_at->format('Y-m-d h:m:s');
                    })
                    ->editColumn('package_id', function ($data) {
-                         return $data->package->name;    
+                         return $data->package->name;
                    })
                    ->editColumn('rec_id', function ($data) {
-                         return $data->recruiter->company_name;    
+                         return $data->recruiter->company_name;
                    })
                   ->rawColumns(['action', 'status'])
                   ->make(true);
@@ -82,6 +82,7 @@ class PaymentsController extends Controller
 
                 $empPackage = new EmployerPackage();
                 $empPackage->package_id =   $request->pk_id;
+                $empPackage->payment_id =   $modelPayment->id;
                 $empPackage->rec_id = $recrId;
                 $empPackage->selected_date = Carbon::now();
                 $empPackage->expiry_date = Carbon::now()->addDays($packageInfo->maxdays);

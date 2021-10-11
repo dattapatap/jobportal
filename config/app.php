@@ -237,6 +237,8 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Msg91' => Craftsys\Msg91\Facade\Msg91::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Helper' => App\Helper\Helper::class,
+        'Carbon' => 'Carbon\Carbon',
     ],
 
 ];

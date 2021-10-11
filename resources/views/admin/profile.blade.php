@@ -6,6 +6,20 @@
         <div class="page-header">
             <h4 class="page-title">Profile</h4>
         </div>
+        @if (\Session::has('error'))
+            <div class="alert alert-danger">
+                <ul>
+                    <li>{!! \Session::get('error') !!}</li>
+                </ul>
+            </div>
+        @endif
+        @if (\Session::has('success'))
+            <div class="alert alert-success">
+                <ul>
+                    <li>{!! \Session::get('success') !!}</li>
+                </ul>
+            </div>
+        @endif
 
         <div class="row">
             <div class="col-lg-5 col-xl-4">
@@ -14,7 +28,7 @@
                         @if(Auth::user()->avatar)
                             <img class="card-profile-img" src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="img">
                         @else
-                            <img class="card-profile-img" src="{{ asset('assets/images/users/male/25.jpg')}}" alt="img">
+                            <img class="card-profile-img" src="{{ Avatar::create( Auth::user()->name )->toBase64();  }}" alt="img">
                         @endif
                         <h3 class="mb-1 text-info">{{ Auth::user()->name }}</h3>
                         <a href="#" class="btn btn-success btn-sm mt-2 btnProfilePic"><i class="fa fa-pencil" aria-hidden="true"></i> Edit profile</a>
@@ -28,10 +42,44 @@
                         <!-- media -->
                         <div class="media mt-1 pb-2">
                             <div class="mediaicon">
+                                <i class="fa fa-link" aria-hidden="true"></i>
+                            </div>
+                            <div class="card-body ml-5 p-1">
+                                <h6 class="mediafont text-dark">Websites</h6><a class="d-block" href="">{{ $user->website }}</a>
+                            </div>
+                            <!-- media-body -->
+                        </div>
+                        <!-- media -->
+
+                        <!-- media -->
+                        <div class="media mt-1 pb-2">
+                            <div class="mediaicon">
                                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
                             </div>
                             <div class="card-body p-1 ml-5">
-                                <h6 class="mediafont text-dark">Email </h6><span class="d-block">   {{ Auth::user()->email }} </span>
+                                <h6 class="mediafont text-dark">Email </h6><span class="d-block">   {{ $user->email }} </span>
+                            </div>
+                            <!-- media-body -->
+                        </div>
+
+                        <!-- media -->
+                        <div class="media mt-1 pb-2">
+                            <div class="mediaicon">
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </div>
+                            <div class="card-body p-1 ml-5">
+                                <h6 class="mediafont text-dark">Twitter</h6><a class="d-block" href="#">{{ $user->twiter}}</a>
+                            </div>
+                            <!-- media-body -->
+                        </div>
+
+                        <!-- media -->
+                        <div class="media mt-1 pb-2">
+                            <div class="mediaicon">
+                                <i class="fa fa-linkedin" aria-hidden="true"></i>
+                            </div>
+                            <div class="card-body p-1 ml-5">
+                                <h6 class="mediafont text-dark">LinkedIn</h6><a class="d-block" href="#">{{ $user->linkedin}}</a>
                             </div>
                             <!-- media-body -->
                         </div>
@@ -48,23 +96,53 @@
                                     <table class="table row table-borderless w-100 m-0 ">
                                         <tbody class="col-lg-12 col-xl-12 col-md-12 p5">
                                             <div class="col-12 p-1" style="text-align: center">
-                                                 <h2 class="text-info mt-2"> {{ Auth::user()->name }}</h2>
+                                                 <h2 class="text-info mt-2"> {{ $user->name }}</h2>
                                             </div>
                                         </tbody>
                                         <tbody class="col-lg-12 col-xl-6 p-2">
                                             <tr>
-                                                <td><strong>Email :</strong> {{ Auth::user()->email }}</td>
+                                                <td><strong>Company :</strong> {{ $user->company }}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Phone :</strong> {{ Auth::user()->mobile }} </td>
+                                                <td><strong>Location :</strong> {{ $user->location }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Billing Address :</strong> {{ $user->address }}</td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody class="col-lg-12 col-xl-6 p-2">
+                                            <tr>
+                                                <td><strong>GST :</strong> {{ $user->gst }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Email :</strong> {{ $user->email }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Phone :</strong> {{ $user->mobile }} </td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="row mt-5 profie-img">
+                                    <div class="col-md-12">
+                                        @if (isset($user->about))
+                                            <div class="media-heading">
+                                            <h5><strong>About Company</strong></h5>
+                                            <br>
+                                            <p>
+                                                {{ $user->about }}
+                                            </p>
+                                        </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
+                </div>
+                <div class="col-md-12">
+                    <a class="btn btn-success btn-sm pull-right"  href="{{ url('admin/editprofile') }}">Edit Profile</a>
                 </div>
             </div>
 

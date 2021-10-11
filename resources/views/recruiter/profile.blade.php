@@ -127,7 +127,7 @@
                                         <div class="media-heading">
                                              <h5><strong>Package Selected</strong></h5>
                                             <div class="col-md-12 text-center p-5">
-                                                @if(isset($packages))  
+                                                @if(isset($packages))
                                                      <h1><strong class="text-info">
                                                             {{ $packages->package->name }}
                                                         </strong>
@@ -157,10 +157,10 @@
                                         </div>
                                     </div>
                                      <div class="col-md-12 text-center p-2">
-                                        @if(isset($packages))  
+                                        @if(isset($packages))
                                             <a class="btn btn-warning btn-sm pull-right"  href="{{ url('recruiter/activeplan') }}">View Plan</a>
                                         @else
-                                           
+
                                         @endif
                                     </div>
                                 </div>
@@ -183,8 +183,6 @@
                 <div class="col-md-12">
                     <a class="btn btn-success btn-sm pull-right"  href="{{ url('recruiter/editprofile') }}">Edit Profile</a>
                 </div>
-
-
             </div>
 
         </div>

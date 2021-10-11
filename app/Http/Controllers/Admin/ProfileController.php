@@ -16,7 +16,63 @@ class ProfileController extends Controller
 {
 
    public function index(){
-       return view('admin.profile');
+
+       $userid = Auth::user();
+       $user = DB::table('users')
+                ->join('users_admin','users_admin.user_id','=','users.id')
+                ->where(['users.id'=>$userid->id])
+                ->get()->first();
+        return view('admin.profile', compact('user'));
+   }
+
+   public function editProfile(Request $request){
+            $userid = Auth::user();
+            $user = DB::table('users')
+                    ->join('users_admin','users_admin.user_id','=','users.id')
+                    ->where(['users.id'=>$userid->id])
+                    ->get()->first();
+            return view('admin.manageprofile', compact('user'));
+   }
+
+   public function manageProfile(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'gst' => 'required|string|max:15|min:15',
+            'email' => 'required|string|email|max:255|unique:users,email,'.Auth::user()->id,
+            'mobile' => 'required|digits:10|unique:users,mobile,'.Auth::user()->id,
+            'location' => 'required|string',
+            'address' => 'required|string',
+            'website' => 'required|string',
+            'twiter' => 'required|string',
+            'linkedin' => 'required|string',
+            'about' => 'required|string',
+        ]);
+
+        try{
+            $userid = Auth::user()->id;
+
+            DB ::beginTransaction();
+            $admin = DB::table('users_admin')->where('user_id', $userid )
+                        ->update(['company'=> $request->name, 'address'=> $request->address,
+                        'location'=> $request->location, 'gst'=>$request->gst,
+                        'twiter'=> $request->twiter, 'linkedin'=> $request->linkedin, 'website'=>$request->website,
+                        'about'=> $request->about
+                        ]);
+
+            User::where('id',$userid)
+                ->update(['mobile'=>$request->mobile, 'email'=>$request->email ]);
+
+            DB::commit();
+            session()->flash('success',"Profile Updated Successfully");
+            return redirect('/admin/profile');
+
+        }catch(Exception $e){
+            DB::rollBack();
+            echo $e->getMessage();
+            session()->flash('error',"Profile Not Updated, please try again");
+            return redirect()->back()->withInput();
+        }
+
    }
 
    public function uploadProfile(Request $request){

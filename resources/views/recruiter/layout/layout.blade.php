@@ -107,7 +107,7 @@
 										@if(Auth::user()->avatar)
 											<img  src="{{ asset('storage/images/profiles/'.Auth::user()->avatar) }}" alt="profile-img" class="avatar avatar-md brround" alt="img">
 										@else
-											<img  src="{{ asset('assets/images/users/male/25.jpg')}}" alt="profile-img" class="avatar avatar-md brround" alt="img">
+											<img  src="{{ Avatar::create(Auth::user()->name)->toBase64(); }}" alt="profile-img" class="avatar avatar-md brround" alt="img">
 										@endif
 									</a>
 									<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
@@ -163,7 +163,7 @@
 								<a class="side-menu__item" href="{{ url('recruiter/packages') }}"><i class="side-menu__icon fa fa-inr"></i><span class="side-menu__label">Packages</span></a>
 							</li>
 							<li>
-								<a class="side-menu__item" href="{{ url('recruiter/viewdcandidate') }}"><i class="side-menu__icon fa fa-user"></i><span class="side-menu__label">Candidates</span></a>
+								<a class="side-menu__item" href="{{ url('recruiter/viewdcandidate') }}"><i class="side-menu__icon fa fa-user"></i><span class="side-menu__label">Search Candidates</span></a>
 							</li>
 							<li>
 								<a class="side-menu__item" href="{{ url('recruiter/transactions') }}"><i class="side-menu__icon fa fa-inr"></i><span class="side-menu__label">Transaction History</span></a>

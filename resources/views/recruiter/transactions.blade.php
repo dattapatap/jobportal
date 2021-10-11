@@ -54,6 +54,7 @@
                                         <th>Status</th>
                                         <th>Activated</th>
                                         <th>Expire Date</th>
+                                        <th>Invoice</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -78,6 +79,7 @@
                                         </td>
                                         <td>{{ Carbon\Carbon::parse($item->selected_date)->format('d-m-Y H:m') }}</td>
                                         <td>{{ Carbon\Carbon::parse($item->expiry_date)->format('d-m-Y H:s') }}</td>
+                                        <td><a href="{{ url('recruiter/transactions/'. $item->id .'/details') }}"> view </a></td>
                                     </tr>
                                 @empty
                                     <tr>

@@ -79,7 +79,8 @@ Route::get('job/{id}/save', [App\Http\Controllers\Employee\EmpJobSavedController
 
 Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(){
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-
+    Route::get('editprofile', [App\Http\Controllers\Admin\ProfileController::class, 'editProfile']);
+    Route::post('profile/manageprofile', [App\Http\Controllers\Admin\ProfileController::class, 'manageProfile'])->name('profile.manageprofile');
 
     Route::get('employee', [App\Http\Controllers\Admin\AdminEmployee::class, 'index'])->name('employee');
     Route::get('employee/view/{id}', [App\Http\Controllers\Admin\AdminEmployee::class, 'view']);
@@ -160,21 +161,21 @@ Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'adm
     Route::get('packages/status/{id}', [App\Http\Controllers\PackageController::class, 'changeStatus']);
     Route::resource('packages', App\Http\Controllers\PackageController::class);
 
-
     Route::get('payments', [App\Http\Controllers\PaymentsController::class, 'index'])->name('payments');
-
 
     Route::get('notifications', [App\Http\Controllers\Admin\NotificationController::class, 'index']);
     Route::post('notification/read', [App\Http\Controllers\Admin\NotificationController::class, 'markAsRead'])->name('markNotification');
-
-
-
 
     Route::get('profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile');
     // Admin Profile
     Route::post('profile/upload', [App\Http\Controllers\Admin\ProfileController::class, 'uploadProfile'])->name('profile.upload');
     Route::get('changepassword', [App\Http\Controllers\Admin\ProfileController::class, 'changepassword']);
     Route::post('profile/changepassword', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('change.password');
+
+    Route::get('package/settings', [App\Http\Controllers\PaymentSettingController::class, 'index'])->name('package_settings');
+    Route::post('package/setting/update', [App\Http\Controllers\PaymentSettingController::class, 'update'])->name('packagesetting.update');
+
+
 });
 
 Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruiter', 'middleware' => ['auth', 'recruiter']], function(){
@@ -210,6 +211,7 @@ Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruit
     Route::post('payment', [App\Http\Controllers\PaymentsController::class, 'payment'])->name('payment.pay_now');
     Route::get('activeplan/', [App\Http\Controllers\Recruiter\EmployerPackageController::class, 'index']);
     Route::get('transactions/', [App\Http\Controllers\Recruiter\EmployerPackageController::class, 'transactions']);
+    Route::get('transactions/{id}/details', [App\Http\Controllers\Recruiter\EmployerPackageController::class, 'viewinvoice']);
 
 
 });
@@ -223,7 +225,7 @@ Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee'
     Route::get('assessment/instructions',function(){ return view('employee/assessment/testwelcome'); });
     Route::get('assessment/start', [App\Http\Controllers\Employee\Assessment::class, 'startTest']);
 
-    
+
     Route::get('profile', [App\Http\Controllers\Employee\ProfileController::class, 'index'])->name('profile');
     Route::get('jobs', [App\Http\Controllers\Employee\EmpJobAppliedController::class, 'index'])->name('savedjobs');
     Route::post('jobs/delete', [App\Http\Controllers\Employee\EmpJobSavedController::class, 'delete'])->name('savedjob.delete');
