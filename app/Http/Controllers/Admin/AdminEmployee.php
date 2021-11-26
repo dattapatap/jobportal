@@ -8,6 +8,7 @@ use App\Models\Employee\EmpTest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use App\Models\User;
 
 class AdminEmployee extends Controller
 {
@@ -39,6 +40,10 @@ class AdminEmployee extends Controller
     }
 
     public function view($id){
+
+        //$user = User::find(1);
+        //$user = User::where('id', 180)->first();
+                //dd($user);
         $user = Employee::where('id', $id)
                     ->with('user', 'userskills', 'experience', 'careers', 'educations', 'empAudits.audits', 'empOrgnisations' )
                     ->first();

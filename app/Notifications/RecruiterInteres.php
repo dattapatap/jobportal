@@ -41,23 +41,21 @@ class RecruiterInteres extends Notification
                 ->line($this->recruiter)
                 ->line('Recruiter showed interest on Employee.')
                 ->line('Employee - '.$this->employee)
-                ->action('View', url(base_path().'/admin/notifications'));
+                ->action('View', url(base_path().'/employee/notifications'));
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'data' => $this->recruiter.' Recruiter showed interest on Employee- '.$this->employee,
+            'data' => $this->recruiter.' Recruiter showed interest your profile',
             'employee' => $this->employee,
             'recruiter' => $this->recruiter,
-            'link'=> base_path().'/admin/notifications',
+            'link'=> base_path().'/employee/notifications',
         ];
     }
 
     public function toArray($notifiable)
     {
-        return [
-
-        ];
+        return [  ];
     }
 }

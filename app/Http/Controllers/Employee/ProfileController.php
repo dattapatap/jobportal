@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 use Image;
 
 class ProfileController extends Controller
@@ -83,11 +84,11 @@ class ProfileController extends Controller
                     ->update(['first_name'=> $request->first_name,'last_name'=> $request->last_name, 'dob'=> $request->dob, 'gender'=> $request->gender, 'address'=>$request->address ]);
                     $userid = Auth::user()->id;
                     User::where('id',$userid)
-                          ->update(['mobile'=>$request->mobile, 'email'=>$request->email ]);
+                          ->update(['mobile'=>$request->mobile, 'email'=>$request->email, 'name'=> $request->first_name.' '.$request->last_name ]);
 
                     DB::commit();
-                    $request->session()->flash('success',"Profile updated successfully");
-                    return response()->json(['code'=>200, 'message'=>'Profile updated successfully','data' => $employee], 200);
+                    $request->session()->flash('success',"Personal Details updated successfully");
+                    return response()->json(['code'=>200, 'message'=>'Personal Details updated successfully','data' => $employee], 200);
         }catch(Exception $e){
             DB::rollBack();
             return response()->json(['code'=>202, 'message'=>'Profile not updated, please try again','data' => $employee], 202);
@@ -326,7 +327,7 @@ class ProfileController extends Controller
 //Upload Resume
     public function uploadResume(Request $request){
         $validation = $request->validate([
-            'empresume'=> 'required|mimes:pdf,doc,docs|max:1048',
+            'empresume'=> 'required|mimes:pdf|max:2048',
         ]);
         if($request->hasFile('empresume')){
 
@@ -373,6 +374,18 @@ class ProfileController extends Controller
             }
             return response()->json(['error' => 'Your profile not Uploaded']);
         }
+    }
+
+
+    public function deleteprofile(Request $request){
+
+      $empId = $request->id;
+      $employee = Employee::where('id',$request->id)->first();
+      $user = User::where('id',$employee->user_id)->first();
+      $employee->delete();
+      $user->delete();
+      Auth::logout();
+      return redirect()->route('login')->with('success','Your Profile Deleted');
     }
 
 }

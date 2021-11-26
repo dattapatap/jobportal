@@ -29,6 +29,22 @@ class Helper
         return (int) (log($num, 10) + 1);
     }
 
+    function getPercent2($percentToGet, $myNumber)
+    {
+        $percentInDecimal = $percentToGet / 100;
+        $percent = $percentInDecimal * $myNumber;
+        return round($percent,2);
+    }
+
+    //Differntiate Inclusive Tax Amount
+    function getActualPrice($percentToGet, $amount)
+    {
+        $taxPriceCal = 118;
+        $totalTax = ($amount/$taxPriceCal)*$percentToGet;
+        return round(($amount - $totalTax), 2);
+    }
+
+
 
 }
 ?>

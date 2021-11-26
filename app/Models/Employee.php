@@ -10,11 +10,12 @@ use App\Models\Employee\EmpTest;
 use App\Models\Employee\Interest;
 use App\Models\Experience;
 use App\Models\Userskills;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     public $table = "employee";
     protected $guarded = [];
 

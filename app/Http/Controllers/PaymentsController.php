@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmployerPackage;
+use App\Models\EmployerPoints;
 use App\Models\Package;
 use App\Models\Payments;
 use Carbon\Carbon;
@@ -89,6 +90,19 @@ class PaymentsController extends Controller
                 $empPackage->avl_points = round($payment->amount /100, 2);
                 $empPackage->package_status = 'Active';
                 $empPackage->save();
+
+
+                $empPoints = EmployerPoints::find( $recrId );
+                if($empPoints){
+                    $empPoints->wallet_points += round($payment->amount /100, 2);
+                    $empPoints->save();
+                }else{
+                    $empPoints = new EmployerPoints();
+                    $empPoints->rec_id = $recrId;
+                    $empPoints->wallet_points = round($payment->amount /100, 2);
+                    $empPoints->save();
+                }
+
                 DB::commit();
 
                 $request->session()->flash('success','Payment Successfull');

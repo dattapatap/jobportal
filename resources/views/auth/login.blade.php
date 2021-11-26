@@ -26,6 +26,13 @@
                                 </ul>
                             </div>
                         @endif
+                        @if (\Session::has('success'))
+                            <div class="alert alert-success">
+                                <ul>
+                                    <li style="font-size: 12px;">{!! \Session::get('success') !!}</li>
+                                </ul>
+                            </div>
+                        @endif
                         <form method="POST" id="login" class="card-body" tabindex="500" action="{{ route('login-employee') }}" >
                         @csrf
 

@@ -353,7 +353,7 @@
                 <div class="card" style="margin-bottom:20px;margin-top:30px">
                     <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
                     <div class="card-header ">
-                        <h3 class="card-title"> Regulatory Audits Faced  </h3>
+                        <h3 class="card-title"> Regulatory Audits Faced*  </h3>
                     </div>
                     <div class="card-body">
                         @if(isset($user->empAudits))

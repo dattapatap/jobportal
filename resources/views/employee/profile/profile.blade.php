@@ -1,6 +1,9 @@
 @extends('website.layout')
 @section('content')
 <section class="sptb">
+    <head>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+    </head>
     <style>
        .select2-results__option[aria-selected=true] {
         display: none;
@@ -54,7 +57,7 @@
                     <div class="card dropify-image-avatar">
                         <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
                             <div class="card-header ">
-                                <h3 class="card-title">Personal Details</h3>
+                                <h3 class="card-title">Personal Details*</h3>
                                 <div class="card-options">
                                     <a class="editPersonal btn" id="{{$user->employee->id}}" ><i class="fe fe-edit "></i></a>
                                 </div>
@@ -132,7 +135,7 @@
                         <div class="card-header ">
                             <h3 class="card-title">Career Details</h3>
                             <div class="card-options">
-                                @if(!$emp->careers))
+                                @if(!$emp->careers)
 							      <a class="btn btn-success btn-sm btn-addCareer"><i class="fa fa-plus"></i> Add </a>
                                 @else
                                   <a class="editCareer btn" id="{{$emp->careers->id}}" ><i class="fe fe-edit "></i></a>
@@ -309,7 +312,7 @@
                     </div>
 
                     <!-- Audit Faced Details  -->
-                    <div class="card" style="margin-bottom:20px;margin-top:30px">
+                    <!-- <div class="card" style="margin-bottom:20px;margin-top:30px">
                         <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
                         <div class="card-header ">
                             <h3 class="card-title"> Regulatory Audits Faced  </h3>
@@ -328,11 +331,11 @@
                                 @endforeach
                             @endif
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <!-- Organisations Faced Details  -->
-                    <div class="card" style="margin-bottom:20px;margin-top:30px">
+                    <!-- <div class="card" style="margin-bottom:20px;margin-top:30px">
                         <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
                         <div class="card-header ">
                             <h3 class="card-title"> Organisations Attended </h3>
@@ -351,7 +354,7 @@
                                 @endforeach
                             @endif
                         </div>
-                    </div>
+                    </div> -->
 
 
 
@@ -362,24 +365,37 @@
                         <div class="card-header ">
                             <h3 class="card-title"> Resume </h3>
                             <div class="card-options">
-                                @if(!$emp->careers->resume))
-                                   <a class="btn btn-success btn-sm btn-addResume"><i class="fa fa-plus"></i> Add </a>
+                                @if (isset($emp->careers->resume))
+                                    @if(!$emp->careers->resume)
+                                        <a class="btn btn-success btn-sm btn-addResume"><i class="fa fa-plus"></i> Add </a>
+                                    @else
+                                        <a class="btn btn-success btn-sm btn-addResume" ><i class="fa fa-plus"></i>Add New</a>
+                                    @endif
                                 @else
-                                   <a class="btn btn-success btn-sm btn-addResume" ><i class="fa fa-plus"></i> Add New</a>
+                                    <a class="btn btn-success btn-sm btn-addResume"><i class="fa fa-plus"></i> Add </a>
                                 @endif
+
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="form-group resume-upload">
                                 @if(isset($emp->careers->resume))
                                    <a class="fa fa-user"> {{ "Resume"}}</a>
-                                   <a href="{{URL::to('storage/files/resumes/'.$emp->careers->resume)}}" target="_blank" class="float-right" >
+                                   <a href="{{ url('storage/files/resumes/'.$emp->careers->resume)}}" target="_blank" class="float-right" >
                                         <button class="btn"><i class="fa fa-download"></i> Download Resume</button>
                                     </a>
                                 @endif
                             </div>
                         </div>
                     </div>
+
+                    <a class="btn btn-danger btn-sm btn-addDelete btn-red" id="{{$user->employee->id}}" style="float:right; color: white; float-right;">
+                        <i class="fa fa-close"></i> Delete My Profile</a>
+                    <form id="delete-form" action="{{ route('employee.delete.profile') }}" method="POST" class="d-none">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $user->employee->id }}" class="form-control">
+                    </form>
+
             </div>
         </div>
     </div>
@@ -953,7 +969,8 @@
                         <div class="form-group col-md-12">
                             <div class="form-group">
                                 <label class="form-label text-dark">Resume</label>
-                                <input type="file" name="empresume" id="empresume" class="form-control" required>
+                                <input type="file" name="empresume" id="empresume" class="form-control" required accept=".pdf" >
+
                                 <span class="invalid-feedback" role="alert" id="empresumeError">
                                     <strong></strong>
                                 </span>
@@ -964,6 +981,41 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary"> Upload </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Profile -->
+<div class="modal fade" id="deleteModel" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" role="document" style="min-width: 650px !important;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="example-Modal3">Delete Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frmDelete" method="POST" enctype="multipart/form-data">
+                {{csrf_field()}}
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <div class="form-group">
+                                <label class="form-label text-dark">Delete</label>
+                                <p>Are you sure to Delete the profile</p>
+                                <input type="text" name="profileId" id="profileId" value="{{$user->employee->id}}">
+                                <span class="invalid-feedback" role="alert" id="empdeleteError">
+                                    <strong></strong>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit"  class="btn btn-secondary"> {{$user->employee->id}} Delete </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                 </div>
 
             </form>

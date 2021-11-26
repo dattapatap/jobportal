@@ -29,7 +29,8 @@
     <link href="{{ asset('assets/plugins/fileuploads/css/dropify.css') }}" rel="stylesheet" />
     <!--Select2 Plugin -->
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/js/formelements.js') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/js/formelements.js') }}" />
     <!-- Cookie css -->
     <link href="{{ asset('assets/plugins/cookie/cookie.css') }}" rel="stylesheet">
     <!-- Owl Theme css-->
@@ -164,6 +165,57 @@
                                         </li>
                                     @endif
                                 @else
+                                <!-- ***************************************************************** -->
+                                <div class="dropdown d-none d-md-flex">
+                                    <a class="nav-link icon" data-toggle="dropdown">
+                                            <i class="fa fa-bell-o"></i>
+                                            @if($unreadNotf)
+                                                @if($unreadNotf > 9)
+                                                    <span class=" nav-unread badge badge-danger badge-pill" style="padding: 0.2rem 0.25rem;" > {{9}}+</span>
+                                                @else
+                                                    <span class=" nav-unread badge badge-danger  badge-pill"> {{ $unreadNotf }}</span>
+                                                @endif
+                                            @endif
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+
+                                            <a href="#" class="dropdown-item text-center">You have {{$unreadNotf}} notification</a>
+                                            <div class="dropdown-divider"></div>
+
+                                            @foreach ($notifications as $item)
+                                                @if ( $item->read_at==null)
+                                                <div class="row">
+                                                    <a href="{{ url('employee/notifications') }}" class="dropdown-item d-flex pb-3" data-id="{{ $item->id }}" style="background-color:#164bce26">
+                                                        <div class="col-md-3">
+                                                            <div class="notifyimg">
+                                                                <i class="fa fa-bell-o"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <strong>{{ $item->data['data']}}</strong>
+                                                            <div class="small text-muted"> {{ $item->created_at }}  </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                @else
+                                                    <a href="{{ url('employee/notifications') }}" class="dropdown-item d-flex pb-3">
+                                                        <div class="notifyimg">
+                                                            <i class="fa fa-bell-o"></i>
+                                                        </div>
+                                                        <div>
+                                                            <strong>{{$item->data['data']}}</strong>
+                                                            <div class="small text-muted"> {{ $item->created_at }}  </div>
+                                                        </div>
+                                                    </a>
+                                                @endif
+
+                                            @endforeach
+                                            <div class="dropdown-divider"></div>
+                                            <a  href="{{ url('employee/notifications') }}" class="dropdown-item text-center">See all Notification</a>
+
+                                    </div>
+                                </div>
+                                <!-- ***************************************************************** -->
                                     <li class="dropdown">
                                         <a href="#" class="" data-toggle="dropdown"><i
                                                 class="fa fa-home mr-1"></i><span> My Dashboard</span></a>
@@ -196,6 +248,7 @@
                                 @endguest
                             </ul>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -457,6 +510,7 @@
     <script src="{{ asset('assets/plugins/fileuploads/js/dropify.js') }}"></script>
     <script src="{{ asset('assets/plugins/fileuploads/js/dropfy-custom.js') }}"></script>
     <script src="{{ asset('js/toastr.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- Scripts Js-->
     <script src="{{ asset('assets/js/scripts2.js') }}"></script>
     <!-- Custom Js-->

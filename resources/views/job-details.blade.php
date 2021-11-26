@@ -44,9 +44,9 @@
                         <div class="card-body ">
                             <div class="row">
                                 <div class="col">
-                                    <div class="profile-pic mb-0">
-                                        <div class="d-md-flex">
-                                            <img src="{{ asset('assets/images/products/logo/img1.jpg') }}" class="w-20 h-20" alt="user">
+                                    <div class=" mb-0">
+                                        {{-- <div class="d-md-flex"> --}}
+                                            {{-- <img src="{{ asset('assets/images/products/logo/img1.jpg') }}" class="w-20 h-20" alt="user"> --}}
                                             <div class="ml-4">
                                                 <a class="text-dark">
                                                     <h4 class="mt-3 mb-1 fs-20 font-weight-bold">{{ $job->job_title}} </h4>
@@ -54,7 +54,7 @@
                                                 <div class="" style="margin-bottom: 20px">
                                                     <ul class="mb-0 d-flex">
                                                         <li class="mr-3"><a class="icons"><i
-                                                                    class="si si-briefcase text-muted mr-1"></i> XXXXXXXXXXXXX </a></li>
+                                                                    class="si si-briefcase text-muted mr-1"></i> {{ $job->recruiter->company_name }} </a></li>
                                                         <li class="mr-3">
                                                             <a class="icons"><i class="si si-location-pin text-muted mr-1"></i>{{ $job->location->name }}
                                                             </a>
@@ -77,7 +77,7 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                        </div>
+                                        {{-- </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                                         <a class="mb-0">Job ID : ##{{ $job->id }}</a>
                                     </div>
                                     <div class="col col-auto">
-                                        Posted By <a class="mb-0 font-weight-bold">XXXXXXXXXX</a> /  {{ \Carbon\Carbon::parse($job->created_at)->format('d-M-Y')}}
+                                        Posted By <a class="mb-0 font-weight-bold"> {{ $job->recruiter->company_name }} </a> /  {{ \Carbon\Carbon::parse($job->created_at)->format('d-M-Y')}}
                                     </div>
                                 </div>
                             </div>

@@ -18,6 +18,7 @@
         <div class="page-header">
             <h4 class="page-title">Recruiter</h4>
             <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('admin.recruiter-export') }}" class="btn btn-success btn-md text-white" style="float-right"> Export </a></li>
                 <li class="breadcrumb-item"><a href="#">Recruiter</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Recruiter List</li>
             </ol>

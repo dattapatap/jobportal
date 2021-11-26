@@ -180,6 +180,8 @@ return [
         Craftsys\Msg91\Msg91LaravelServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
 
     /*
@@ -238,6 +240,7 @@ return [
         'Msg91' => Craftsys\Msg91\Facade\Msg91::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Helper' => App\Helper\Helper::class,
+         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Carbon' => 'Carbon\Carbon',
     ],
 

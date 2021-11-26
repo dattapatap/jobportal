@@ -17,7 +17,9 @@
     <div class="side-app">
         <div class="page-header">
             <h4 class="page-title">Employee</h4>
+
             <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('admin.employee-export') }}" class="btn btn-success btn-md text-white" style="float-right"> Export </a></li>
                 <li class="breadcrumb-item"><a href="#">Employee</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Employee List</li>
             </ol>

@@ -42,21 +42,24 @@ class LoginController extends Controller
             'email' => 'required|string',
             'password' => 'required|string'
          ]);
-
-         if (Auth::attempt($validator)) {
-            if(Auth::user()->role_id == 3){
-                if(session()->has('url.intended')){
-                    return redirect()->intended(session('url.intended'));
+         $user = DB::table('users')->where('email',$request->email)->first();
+         if ($user == null || $user->deleted_at == null){
+            if (Auth::attempt($validator)) {
+                if(Auth::user()->role_id == 3){
+                    if(session()->has('url.intended')){
+                        return redirect()->intended(session('url.intended'));
+                    }
+                    return redirect()->route('employee.dashboard');
+                }else{
+                    $this->guard()->logout();
+                    return redirect()->back()->with('error', 'Oppes! You you login as Employer')->withInput();
                 }
-                return redirect()->route('employee.dashboard');
             }else{
-
-                $this->guard()->logout();
-                return redirect()->back()->with('error', 'Oppes! You you login as Employer')->withInput();
+                return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
             }
-         }else{
-            return redirect()->back()->with('error', 'Oppes! You have entered invalid credentials')->withInput();
-         }
+        }else{
+            return redirect()->back()->with('error', 'Oppes! Your account is deleted')->withInput();
+        }
     }
 
 

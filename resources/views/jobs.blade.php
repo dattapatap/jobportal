@@ -209,27 +209,21 @@
                                     @forelse ($jobs as $items)
                                             <div class="card overflow-hidden br-0 overflow-hidden">
                                                 <div class="d-md-flex">
-                                                    <div class="p-0 m-0 item-card9-img">
-                                                        <div class="item-card9-imgs">
-                                                            <a href="jobs-detail.html"></a>
-                                                            <img src="http://digitalnock.com/images/logo1.png" alt="img"
-                                                                class="">
-                                                        </div>
-                                                    </div>
                                                     <div
                                                         class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
                                                         <div class="card-body pt-0 pt-md-5">
                                                             <div class="item-card9">
-                                                                <a href="jobs-detail.html" class="text-dark">
+                                                                <a href="javascript::void(0);" class="text-dark">
                                                                     <h4 class="font-weight-semibold mt-1"> {{$items->job_title }}</h4>
                                                                 </a>
                                                                 <div class="mt-2 mb-2">
-                                                                    <a href="#" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i> XXXXXX</span></a>
-                                                                    <a href="#" class="mr-4"><span><i class="fa fa-map-marker text-muted mr-1"></i>  {{$items->location->name }} </span></a>
-                                                                    <a href="#" class="mr-4"><span><i class="fa fa fa-inr text-muted mr-1"></i>  {{$items->min_salary.'-'.$items->max_salary }} </span></a>
-                                                                    <a href="#" class="mr-4"><span><i class="fa fa-clock-o text-muted mr-1"></i> {{$items->job_type}}</span></a>
-                                                                    <a href="#" class="mr-4"><span><i class="fa fa-briefcase text-muted mr-1"></i> {{$items->min_exp .'-'. $items->max_exp }} Years</span></a>
+                                                                    <a href="javascript::void(0);" class="mr-4"><span><i class="fa fa-building-o text-muted mr-1"></i>{{ $items->recruiter->company_name }}   </span></a>
+                                                                    <a href="javascript::void(0);" class="mr-4"><span><i class="fa fa-map-marker text-muted mr-1"></i>  {{$items->location->name }} </span></a>
+                                                                    <a href="javascript::void(0);" class="mr-4"><span><i class="fa fa fa-inr text-muted mr-1"></i>  {{$items->min_salary.'-'.$items->max_salary }} </span></a>
+                                                                    <a href="javascript::void(0);" class="mr-4"><span><i class="fa fa-clock-o text-muted mr-1"></i> {{$items->job_type}}</span></a>
+                                                                    <a href="javascript::void(0);" class="mr-4"><span><i class="fa fa-briefcase text-muted mr-1"></i> {{$items->min_exp .'-'. $items->max_exp }} Years</span></a>
                                                                 </div>
+                                                                <p style="border-bottom: solid 1px #8080803d;"></p>
                                                                 <p class="mb-0 leading-tight">
                                                                     {!!  Str::limit($items->job_desc, 150 ) !!}
                                                                 </p>
@@ -252,7 +246,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>\
+                                                    </div>
                                                 </div>
                                             </div>
                                     @empty

@@ -32,15 +32,21 @@ class EmployerPackageController extends Controller
     }
 
     public function viewinvoice(Request $request, $id){
-        $selPackage = EmployerPackage::where('deleted_at', null)
+        $selPackage = EmployerPackage::where('deleted_at', null)->where('id', $id )
                                         ->with('package')
                                         ->with('emp')
                                         ->with('payment')
                                         ->get()->firstOrFail();
 
-        $billAddress = DB::table('users')->join('users_admin','users_admin.user_id','=','users.id')->where(['users.id'=>1])->get()->first();
+        $billAddress = DB::table('users')
+                        ->join('users_admin','users_admin.user_id','=','users.id')
+                        ->where(['users.id'=>1])->get()->first();
 
-        return view('recruiter.invoice', compact('selPackage', 'billAddress') );
+        $payments = DB::table('payments')
+                    ->where('id', $id)
+                    ->get()
+                    ->firstOrFail();
+        return view('recruiter.invoice', compact('selPackage', 'billAddress','payments') );
     }
 
 

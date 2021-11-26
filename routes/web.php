@@ -6,10 +6,14 @@ use Craftsys\Msg91\Facade\Msg91;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\UserController;
 
 // Website
 Route::get('/dddd', function(){
 
+Route::get('file-import-export', [UserController::class, 'fileImportExport']);
+Route::post('file-import', [UserController::class, 'fileImport'])->name('file-import');
+//Route::get('/file-export', [UserController::class, 'fileExport'])->name('file-export');
 
 
 //    $xyz = Msg91::sms()->to(7620297516)->flow('6062fb8cd4d3613a7132a18e')->variable('name', 'Dattatray')->send();
@@ -36,15 +40,13 @@ Route::get('job-submit', function(){
         return redirect('/recr/login');
 
 });
-Route::get('emp-resume', function(){
-    if(Auth::check() && Auth::user()->role_id == 3)
+Route::get('emp-resume', function(){    if(Auth::check() && Auth::user()->role_id == 3)
         return redirect('employee/profile/profile');
     else
         return redirect('/login');
 
 });
-Route::get('/user-register', function(){
-    if(Auth::user() && Auth::user()->role_id === 3)
+Route::get('/user-register', function(){    if(Auth::user() && Auth::user()->role_id === 3)
         return redirect('employee/profile/profile');
     else
         return redirect('/register');
@@ -78,12 +80,16 @@ Route::get('job/{id}/apply', [App\Http\Controllers\Employee\EmpJobAppliedControl
 Route::get('job/{id}/save', [App\Http\Controllers\Employee\EmpJobSavedController::class, 'save']);
 
 Route::group(['as'=>'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(){
+    Route::get('employee-export', [UserController::class, 'employeeExport'])->name('employee-export');
+    Route::get('recruiter-export', [UserController::class, 'recruiterExport'])->name('recruiter-export');
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::get('editprofile', [App\Http\Controllers\Admin\ProfileController::class, 'editProfile']);
     Route::post('profile/manageprofile', [App\Http\Controllers\Admin\ProfileController::class, 'manageProfile'])->name('profile.manageprofile');
 
     Route::get('employee', [App\Http\Controllers\Admin\AdminEmployee::class, 'index'])->name('employee');
     Route::get('employee/view/{id}', [App\Http\Controllers\Admin\AdminEmployee::class, 'view']);
+
+
 
     Route::get('recruiter', [App\Http\Controllers\Admin\AdminRecruiter::class, 'index'])->name('recruiter');
     Route::get('recruiter/view/{id}', [App\Http\Controllers\Admin\AdminRecruiter::class, 'view']);
@@ -193,6 +199,10 @@ Route::group(['as'=>'recruiter.', 'prefix' => 'recruiter', 'namespace'=>'Recruit
     Route::get('viewdcandidate', [App\Http\Controllers\Recruiter\CandidatesController::class, 'index']);
     Route::get('employee/search', [App\Http\Controllers\Recruiter\CandidatesController::class, 'search']);
     Route::post('emp/showinterest', [App\Http\Controllers\Recruiter\CandidatesController::class, 'showInterest']);
+    Route::get('candidate/view/{id}', [App\Http\Controllers\Recruiter\CandidatesController::class, 'view']);
+    Route::get('candidate/download/{id}', [App\Http\Controllers\Recruiter\CandidatesController::class, 'downloadResume']);
+
+    // Route::get('employee/view/{id}', [App\Http\Controllers\Admin\AdminEmployee::class, 'view']);
 
 
     Route::get('notifications', [App\Http\Controllers\Recruiter\NotificationController::class, 'index']);
@@ -230,6 +240,9 @@ Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee'
     Route::get('jobs', [App\Http\Controllers\Employee\EmpJobAppliedController::class, 'index'])->name('savedjobs');
     Route::post('jobs/delete', [App\Http\Controllers\Employee\EmpJobSavedController::class, 'delete'])->name('savedjob.delete');
 
+    Route::get('notifications', [App\Http\Controllers\Employee\NotificationController::class, 'index']);
+    Route::post('notification/read', [App\Http\Controllers\Employee\NotificationController::class, 'markAsRead'])->name('markNotification');
+
     Route::post('profile/updateprofile', [App\Http\Controllers\Employee\ProfileController::class, 'updateProfile']);
     Route::get('profile/editprofile/{id}', [App\Http\Controllers\Employee\ProfileController::class, 'editprofile']);
     Route::get('profile/editCareer/{id}', [App\Http\Controllers\Employee\ProfileController::class, 'editcareer']);
@@ -244,6 +257,8 @@ Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee'
     Route::post('profile/deleteaudit', [App\Http\Controllers\Employee\ProfileController::class, 'deleteAudit']);
     Route::post('profile/addOrganisations', [App\Http\Controllers\Employee\ProfileController::class, 'addorganisation']);
     Route::post('profile/deleteOrgs', [App\Http\Controllers\Employee\ProfileController::class, 'deleteorganisation']);
+    Route::post('profile/deleteUser', [App\Http\Controllers\Employee\ProfileController::class,'deleteprofile']);
+
 
     Route::post('profile/uploadResume', [App\Http\Controllers\Employee\ProfileController::class, 'uploadResume']);
 
@@ -251,6 +266,8 @@ Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee'
     Route::get('profile/getAllCoursesByEducation', [App\Http\Controllers\CoursesController::class, 'getAllByEducation']);
     Route::get('profile/getAllSpecByCourses', [App\Http\Controllers\CourseSpecificationsController::class, 'getAllBySpecifications']);
 
+    // Delete Profile
+    Route::post('profile/delete', [App\Http\Controllers\Employee\ProfileController::class, 'deleteprofile'])->name('delete.profile');
 
     //Assessment
     Route::get('assessment', [App\Http\Controllers\Employee\Assessment::class, 'index']);
