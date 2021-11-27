@@ -16,18 +16,21 @@
 <div class="app-content">
     <div class="side-app">
         <div class="page-header">
-            <h4 class="page-title">Employee</h4>
+            <h4 class="page-title">Candidates</h4>
 
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.employee-export') }}" class="btn btn-success btn-md text-white" style="float-right"> Export </a></li>
-                <li class="breadcrumb-item"><a href="#">Employee</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Employee List</li>
+                <li class="breadcrumb-item"><a href="#">Candidates</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Candidate List</li>
             </ol>
         </div>
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="col-md-12 mb-2">
+                            <a href="{{ route('admin.employee-export') }}" class="btn btn-success btn-md text-white" style="float-right"> Excel Export </a>
+                        </div>
+
                         <div class="table-responsive">
                             <table id="emplist" class="responsive display nowrap" cellspacing="0" width="100%">
                                 <thead>

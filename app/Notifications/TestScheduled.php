@@ -33,7 +33,7 @@ class TestScheduled extends Notification
 
     public function toMail($notifiable)
     {
-        $subject = sprintf('%s: You\'ve got a new message from %s!', config('app.name'), $notifiable->name);
+        $subject = sprintf('%s: You\'ve got a new message', config('app.name'));
         $greeting = sprintf('Hello %s!', $notifiable->name);
         return (new MailMessage)
                 ->subject($subject)
@@ -48,7 +48,7 @@ class TestScheduled extends Notification
     public function toDatabase($notifiable)
     {
         return ([
-            'data' => "Your Test Scheduled Successfully The test time slot is ".$this->testSlot->test_sheduled." ".Carbon::parse($this->slottime->to)->format('h:m A')."-".Carbon::parse($this->slottime->to)->format('h:m A')
+            'data' => "Your Test Scheduled Successfully. The test time slot is ".$this->testSlot->test_sheduled." ".Carbon::parse($this->slottime->from)->format('h:m A')."-".Carbon::parse($this->slottime->to)->format('h:m A')
         ]);
     }
     /**

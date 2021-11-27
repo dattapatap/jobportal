@@ -172,7 +172,7 @@
                     </li>
                     <li>
                         <a class="side-menu__item" href="{{ route('admin.employee')}}"><i class="side-menu__icon fa fa-user"></i><span
-                                class="side-menu__label">Employees</span></a>
+                                class="side-menu__label">Candidates</span></a>
                     </li>
                     <li>
                         <a class="side-menu__item" href="{{ url('admin/postedjobs')}}"><i class="side-menu__icon fa fa-user"></i><span
@@ -249,12 +249,12 @@
                             <li>
                                 <a href="{{ url('admin/jobpositions')}}" class="slide-item">Job Positions</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="{{ url('admin/audit')}}" class="slide-item">Audits</a>
                             </li>
                             <li>
                                 <a href="{{ url('admin/organisation')}}" class="slide-item">Organisations</a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
 

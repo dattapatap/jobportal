@@ -88,7 +88,7 @@
                                   <div class="col-sm-6 col-md-4">
                                       <div class="form-group">
                                           <label class="form-label">Job Type</label>
-                                          <select name="job_type" id="job_type" class="form-control">
+                                          <select name="job_type" id="job_type" class="form-control select2">
                                                 <option value="" selected> select  </option>
                                                 <option value="Full Time" {{ old('job_type') == 'Full Time' ? 'selected' : '' }}> Full Time  </option>
                                                 <option value="Part Time" {{ old('job_type') == 'Part Time' ? 'selected' : '' }}> Part Time  </option>
@@ -145,7 +145,7 @@
                                         <label class="form-label text-dark">Experiance Required (Min/Max)</label>
                                         <div class="row gutters-xs">
                                             <div class="col-6">
-                                                <select class="form-control" name="min_exp" value={{ old('min_exp')}}  data-placeholder="Choose one (with searchbox)">
+                                                <select class="form-control select2" name="min_exp" value={{ old('min_exp')}}  data-placeholder="Choose one (with searchbox)">
                                                     <option value="-1" selected>Year</option>
                                                     <option value="0" {{ old('min_exp') == 0 ? 'selected' : '' }}>0 Year</option>
                                                     <option value="1" {{ old('min_exp') == 1 ? 'selected' : '' }}>1 Year</option>
@@ -167,7 +167,7 @@
 
                                             </div>
                                             <div class="col-6">
-                                                <select class="form-control" name="max_exp" value={{old('max_exp')}} data-placeholder="Choose one (with searchbox)">
+                                                <select class="form-control select2" name="max_exp" value={{old('max_exp')}} data-placeholder="Choose one (with searchbox)">
                                                     <option value="-1" selected>Year</option>
                                                     <option value="1" {{ old('max_exp') == 1 ? 'selected' : '' }}>1 Year</option>
                                                     <option value="2" {{ old('max_exp') == 2 ? 'selected' : '' }}>2 Year</option>
@@ -264,5 +264,8 @@
 <script type="text/javascript">
       CKEDITOR.replace('job_desc');
       CKEDITOR.instances['job_desc'].updateElement();
+
+
+      $('.select2').select2();
 </script>
 @endsection

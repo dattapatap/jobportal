@@ -327,7 +327,7 @@ class ProfileController extends Controller
 //Upload Resume
     public function uploadResume(Request $request){
         $validation = $request->validate([
-            'empresume'=> 'required|mimes:pdf|max:2048',
+            'empresume'=> 'required|mimes:pdf|max:1024',
         ]);
         if($request->hasFile('empresume')){
 

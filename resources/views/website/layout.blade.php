@@ -177,42 +177,53 @@
                                                 @endif
                                             @endif
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-
-                                            <a href="#" class="dropdown-item text-center">You have {{$unreadNotf}} notification</a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="overflow-x: hidden;width:400px;">
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <a href="#" class="dropdown-item text-center">You have {{$unreadNotf}} notification</a>
+                                            </div>
                                             <div class="dropdown-divider"></div>
 
                                             @foreach ($notifications as $item)
                                                 @if ( $item->read_at==null)
-                                                <div class="row">
-                                                    <a href="{{ url('employee/notifications') }}" class="dropdown-item d-flex pb-3" data-id="{{ $item->id }}" style="background-color:#164bce26">
-                                                        <div class="col-md-3">
+                                                <div class="row p-2" style="background: #2b4edc38;">
+                                                            <div class="col-md-2">
+                                                                <div class="notifyimg">
+                                                                    <i class="fa fa-bell-o"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-10">
+                                                                <a href="{{ url('employee/notifications') }}"
+                                                                    data-id="{{ $item->id }}">
+                                                                   <strong style="color: #343a40;">{{ $item->data['data']}}</strong>
+                                                                    <div class="small text-muted"> {{ $item->created_at->diffForHumans() }}  </div>
+                                                                </a>
+                                                            </div>
+                                                </div>
+                                                @else
+                                                    <div class="row p-2">
+                                                        <div class="col-md-2">
                                                             <div class="notifyimg">
                                                                 <i class="fa fa-bell-o"></i>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-9">
-                                                            <strong>{{ $item->data['data']}}</strong>
-                                                            <div class="small text-muted"> {{ $item->created_at }}  </div>
+                                                        <div class="col-md-10">
+                                                            <a href="{{ url('employee/notifications') }}"
+                                                                data-id="{{ $item->id }}">
+                                                            <strong style="color: #343a40;">{{ $item->data['data']}}</strong>
+                                                                <div class="small text-muted"> {{ $item->created_at->diffForHumans() }}  </div>
+                                                            </a>
                                                         </div>
-                                                    </a>
-                                                </div>
-                                                @else
-                                                    <a href="{{ url('employee/notifications') }}" class="dropdown-item d-flex pb-3">
-                                                        <div class="notifyimg">
-                                                            <i class="fa fa-bell-o"></i>
-                                                        </div>
-                                                        <div>
-                                                            <strong>{{$item->data['data']}}</strong>
-                                                            <div class="small text-muted"> {{ $item->created_at }}  </div>
-                                                        </div>
-                                                    </a>
+                                                    </div>
                                                 @endif
 
                                             @endforeach
-                                            <div class="dropdown-divider"></div>
-                                            <a  href="{{ url('employee/notifications') }}" class="dropdown-item text-center">See all Notification</a>
 
+                                            <div class="dropdown-divider"></div>
+                                            <div class="row">
+                                                <a  href="{{ url('employee/notifications') }}" class="dropdown-item text-center">See all Notification</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- ***************************************************************** -->

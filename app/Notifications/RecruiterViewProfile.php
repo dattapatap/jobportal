@@ -32,22 +32,21 @@ class RecruiterViewProfile extends Notification
 
     public function toMail($notifiable)
     {
-        $subject = sprintf('%s: You\'ve got a new message from %s!', config('app.name'), $notifiable->name);
+        $subject = sprintf('You\'ve got a new message from %s', config('app.name'));
         $greeting = sprintf('Hello %s!', $notifiable->name);
         return (new MailMessage)
                 ->subject($subject)
                 ->greeting($greeting)
                 ->salutation('Yours Faithfully')
                 ->line($this->recruiter)
-                ->line('Recruiter showed interest on Employee.')
-                ->line('Employee - '.$this->employee)
+                ->line('Recruiter viewd your profile.')
                 ->action('View', url(base_path().'/employee/notifications'));
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'data' => 'Recruiter '.$this->recruiter.' just viewed your profile - '.$this->employee,
+            'data' => 'Recruiter '.$this->recruiter.' just viewed your profile',
             'employee' => $this->employee,
             'recruiter' => $this->recruiter,
             'link'=> base_path().'/employee/notifications',

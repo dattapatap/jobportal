@@ -41,7 +41,7 @@ class UserRegistration extends Notification
      */
     public function toMail($notifiable)
     {
-        $subject = sprintf('%s: You\'ve got a new message from %s!', config('app.name'), $this->user->name);
+        $subject = sprintf('You\'ve got a new message from %s', config('app.name'));
         $greeting = sprintf('Hello %s!', $this->user->name);
         if($this->user->role_id == 2){
             return (new MailMessage)
@@ -60,8 +60,8 @@ class UserRegistration extends Notification
                 ->salutation('Yours Faithfully')
                 ->line('Your Registration is done successfully.')
                 ->line('Your User Id is - '.$this->user->email)
-                ->line('Please update your profile, and take self assessment test for skills vefifications for further process.')
-                ->line('Please take a test within 7 days, if not given test your profile should be disqualified , for next process')
+                ->line('Please update your profile, and take self assessment test for skills verifications for further process.')
+                ->line('Please take a test within 7 days, The limit of the test should be within 7 days only after registration, if not given test your profile should be disqualified ,for next process')
                 ->action('Mail Action', url(env('APP_URL').'login'))
                 ->line('Thank you for using our application!');
         }

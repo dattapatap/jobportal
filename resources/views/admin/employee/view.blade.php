@@ -350,7 +350,7 @@
                 </div>
 
                 <!-- Audit Faced Details  -->
-                <div class="card" style="margin-bottom:20px;margin-top:30px">
+                {{-- <div class="card" style="margin-bottom:20px;margin-top:30px">
                     <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
                     <div class="card-header ">
                         <h3 class="card-title"> Regulatory Audits Faced*  </h3>
@@ -362,11 +362,11 @@
                             @endforeach
                         @endif
                     </div>
-                </div>
+                </div> --}}
 
 
                 <!-- Organisations Faced Details  -->
-                <div class="card" style="margin-bottom:20px;margin-top:30px">
+                {{-- <div class="card" style="margin-bottom:20px;margin-top:30px">
                     <div class="card-status bg-blue br-tr-7 br-tl-7"></div>
                     <div class="card-header ">
                         <h3 class="card-title"> Organisations Attended </h3>
@@ -378,7 +378,7 @@
                             @endforeach
                         @endif
                     </div>
-                </div>
+                </div> --}}
 
                 {{-- Resume Upload --}}
                 <div class="card" style="margin-bottom:20px;margin-top:30px">

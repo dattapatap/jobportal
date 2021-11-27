@@ -148,7 +148,7 @@
                                                                     @isset($item->avatar)
                                                                         <img src="
                                                                             {{ URL::asset('storage/images/profiles/' . $item->avatar) }}"
-                                                                            alt="img" class="w-9 h-9">
+                                                                            alt="img" style="border-radius: 100%;" class="w-9 h-9">
                                                                     @else
                                                                         <img src="{{ Avatar::create($item->first_name)->toBase64() }}"
                                                                             alt="img" class="w-9 h-9">

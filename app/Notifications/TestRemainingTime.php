@@ -31,7 +31,7 @@ class TestRemainingTime extends Notification
 
     public function toMail($notifiable)
     {
-        $subject = sprintf('%s: You\'ve got a new message from %s!', config('app.name'), $notifiable->name);
+        $subject = sprintf('You\'ve got a new message from %s', config('app.name'));
         $greeting = sprintf('Hello %s!', $notifiable->name);
         return (new MailMessage)
                 ->subject($subject)

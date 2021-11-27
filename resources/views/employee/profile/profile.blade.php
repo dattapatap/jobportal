@@ -968,7 +968,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <div class="form-group">
-                                <label class="form-label text-dark">Resume</label>
+                                <label class="form-label text-dark">Resume [Max 1 MB]</label>
                                 <input type="file" name="empresume" id="empresume" class="form-control" required accept=".pdf" >
 
                                 <span class="invalid-feedback" role="alert" id="empresumeError">
@@ -987,41 +987,7 @@
         </div>
     </div>
 </div>
-<!-- Delete Profile -->
-<div class="modal fade" id="deleteModel" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog" role="document" style="min-width: 650px !important;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="example-Modal3">Delete Profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="frmDelete" method="POST" enctype="multipart/form-data">
-                {{csrf_field()}}
-                <div class="modal-body">
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <div class="form-group">
-                                <label class="form-label text-dark">Delete</label>
-                                <p>Are you sure to Delete the profile</p>
-                                <input type="text" name="profileId" id="profileId" value="{{$user->employee->id}}">
-                                <span class="invalid-feedback" role="alert" id="empdeleteError">
-                                    <strong></strong>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit"  class="btn btn-secondary"> {{$user->employee->id}} Delete </button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                </div>
 
-            </form>
-        </div>
-    </div>
-</div>
 <!-- Profile Pic -->
 <div class="modal fade" id="profilepic" tabindex="-1" role="dialog"  aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 350px !important;min-width:300px!important;">

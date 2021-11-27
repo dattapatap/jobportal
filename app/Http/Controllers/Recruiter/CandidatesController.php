@@ -137,7 +137,8 @@ class CandidatesController extends Controller
                     $decrement->decrement('wallet_points', round($prof_amt,2));
 
                     $user = User::where('id', $employee->user_id)->first();
-                    $user->notify(new RecruiterViewProfile($recruiter->name, $employee->first_name . ' ' . $employee->last_name));
+                    $user->notify(new RecruiterViewProfile($recruiter->company_name, $employee->first_name . ' ' . $employee->last_name));
+
                 }else{
                     return redirect()->back()->with('error', 'Low balance please recharge your account to open candidate');
                 }
@@ -186,7 +187,7 @@ class CandidatesController extends Controller
                     $decrement->decrement('wallet_points', round($prof_amt,2));
 
                     $user = User::where('id', $employee->user_id)->first();
-                    $user->notify(new ResumeDownload($recruiter->name, $employee->first_name . ' ' . $employee->last_name));
+                    $user->notify(new ResumeDownload($recruiter->company_name, $employee->first_name . ' ' . $employee->last_name));
                     if(Storage::disk('public')->exists('files/resumes/'.$resume)){
                         $filePath = Storage::disk('public')->path('files/resumes/'.$resume);
                         $headers = ['Content-Type: application/pdf'];
