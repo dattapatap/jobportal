@@ -6,7 +6,7 @@
         </div>
     </div>
    @foreach($opt as $opts)
-        <div class="col-md-12 row" wire:key="delete({{ $loop->index }})">
+        <div class="col-md-12 row mt-2" wire:key="delete({{ $loop->index }})">
             <div class="col-md-8">
                 <div class="form-group">
                     <input type="text" class="form-control" name="opt[]"

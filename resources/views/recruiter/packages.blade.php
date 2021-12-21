@@ -51,7 +51,6 @@
                     </div>
                     <ul class="list-group list-group-flush text-center">
                         <li class="list-group-item"><span class="font-weight-semibold"> Featured</span> Ad Posting</li>
-                        <li class="list-group-item"><span class="font-weight-semibold"> {{ $item->maxads}} </span> Featured Posts</li>
                         <li class="list-group-item"><span class="font-weight-semibold"> {{ $item->maxdays}} </span> Days </li>
                         <li class="list-group-item"><span class="font-weight-semibold"> 100% </span> Secure</li>
                         <li class="list-group-item"><span class="font-weight-semibold"> Custom </span> Reviews</li>
@@ -81,7 +80,6 @@
         var package = $(this).attr('package');
         var total_amount = amount * 100;
         var options = {
-            // "key": "rzp_test_1t3Gb4gH9YfNak", // Enter the Key ID generated from the Dashboard
             "key": "{{ env('RAZORPAY_KEY') }}", // Enter the Key ID generated from the Dashboard
             "amount": total_amount,
             "currency": "INR",
@@ -117,11 +115,11 @@
                     }
                 });
             },
-            // "prefill": {
-            //     "name": "{{ Auth::user()->name }}",
-            //     "email": "{{ Auth::user()->email }}",
-            //     "contact":"{{ Auth::user()->mobile }}"
-            // },
+            "prefill": {
+                "name": "{{ Auth::user()->name }}",
+                "email": "{{ Auth::user()->email }}",
+                "contact":"{{ Auth::user()->mobile }}"
+            },
             "theme": {
                 "color": "#1da0df"
             }

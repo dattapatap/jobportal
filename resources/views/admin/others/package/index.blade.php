@@ -39,7 +39,6 @@
                                         <th>Package Name</th>
                                         <th>Package Amount</th>
                                         <th>Validity(days)</th>
-                                        <th>Tot Adds</th>
                                         <th>Created Date</th>
                                     </tr>
                                 </thead>
@@ -67,7 +66,6 @@
                                         <td>{{$items->name}}</td>
                                         <td>{{$items->amount}}</td>
                                         <td>{{$items->maxdays}}</td>
-                                        <td>{{$items->maxads}}</td>
                                         <td>{{$items->created_at}}</td>
 
                                     </tr>

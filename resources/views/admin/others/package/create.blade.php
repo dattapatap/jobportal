@@ -58,22 +58,9 @@
 
                                 <div class="col-md-12">
                                     <div class="form-group pb-3">
-                                        <label class="form-label">Package Valifity(Days)</label>
+                                        <label class="form-label">Package Validity(Days)</label>
                                         <input type="number" class="form-control" value="{{ old('validity') }}" name="validity"  placeholder="Package Validity">
                                         @error('validity')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-12">
-                                    <div class="form-group pb-3">
-                                        <label class="form-label">Total Adds(Posts)</label>
-                                        <input type="number" class="form-control" value="{{ old('adds') }}" name="adds"  placeholder="Total Adds">
-                                        @error('adds')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

@@ -91,14 +91,18 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <strong>Question</strong>
-                                        <textarea type="textarea" class="form-control" id="question" name="question"  placeholder="Question Detail" rows="2">{{old("old_question")}}</textarea>
+                                        <textarea type="textarea" class="form-control" id="question" name="question"  placeholder="Question Detail" rows="2">
+                                            {{old("old_question")}}
+                                        </textarea>
                                         @error('question')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
+                                    <br>
                                 </div>
+
                                 @livewire('counter')
                                 <input type="hidden" name="question_id" id="question_id" value="-1">
                             </div>
@@ -117,5 +121,10 @@
 @endsection
 @section('scripts')
 @livewireScripts
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script type="text/javascript">
+      CKEDITOR.replace('question');
+      CKEDITOR.instances['question'].updateElement();
+</script>
 <script src="{{ asset('js/admin/question.js')}}"></script>
 @endsection

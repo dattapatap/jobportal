@@ -9,16 +9,10 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\UserController;
 
 // Website
-Route::get('/dddd', function(){
 
 Route::get('file-import-export', [UserController::class, 'fileImportExport']);
 Route::post('file-import', [UserController::class, 'fileImport'])->name('file-import');
-//Route::get('/file-export', [UserController::class, 'fileExport'])->name('file-export');
 
-
-//    $xyz = Msg91::sms()->to(7620297516)->flow('6062fb8cd4d3613a7132a18e')->variable('name', 'Dattatray')->send();
-//    Msg91::otp()->to(7620297516)->send();
-});
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/index', [HomeController::class, 'index']);
 Route::get('/job/search/{id}/details', [HomeController::class, 'jobView']);
@@ -30,6 +24,12 @@ Route::get('/jobs/category/{jobcategory}/', [HomeController::class, 'searchByCat
 
 Route::get('/about-us', function(){  return view('about-us'); });
 Route::get('/contact-us', function(){  return view('contact-us'); });
+Route::post('/enquiry', [HomeController::class, 'contact_form'])->name('enquiry.contact');
+
+Route::get('/privacy-policy', function(){  return view('privacy-policy'); });
+Route::get('/terms-condition', function(){  return view('terms-condition'); });
+Route::get('/faq', function(){  return view('faq'); });
+
 Route::get('/blogs', [BlogController::class, 'blogs']);
 Route::get('/blog/{id}/details', [BlogController::class, 'blogView']);
 
@@ -44,14 +44,13 @@ Route::get('emp-resume', function(){    if(Auth::check() && Auth::user()->role_i
         return redirect('employee/profile/profile');
     else
         return redirect('/login');
-
 });
 Route::get('/user-register', function(){    if(Auth::user() && Auth::user()->role_id === 3)
         return redirect('employee/profile/profile');
     else
         return redirect('/register');
-
 });
+
 Route::get('/upload-web-resume', function(){
     if(Auth::user() && Auth::user()->role_id == 3)
         return redirect('employee/profile/profile');
@@ -59,8 +58,9 @@ Route::get('/upload-web-resume', function(){
         return redirect('recruiter/dashboard');
     else
         return redirect('/login');
-
 });
+
+
 
 Auth::routes();
 Route::post('/emp/login', [App\Http\Controllers\Auth\LoginController::class, 'empLogin'])->name('login-employee');
@@ -280,6 +280,8 @@ Route::group(['as'=>'employee.', 'prefix' => 'employee', 'namespace'=>'Employee'
 
     Route::get('assessment/testpage', function(){ return view('employee.assessment.testpage'); });
     Route::get('assessment/testTaken', function(){ return view('employee.assessment.testTaken');  });
+
+    Route::get('viewrecruiter/{id}', [App\Http\Controllers\Employee\EmployeeViewRecruiterController::class, 'view']);
 });
 
 

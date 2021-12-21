@@ -38,7 +38,7 @@ class RecruiterViewProfile extends Notification
                 ->subject($subject)
                 ->greeting($greeting)
                 ->salutation('Yours Faithfully')
-                ->line($this->recruiter)
+                ->line($this->recruiter->company_name)
                 ->line('Recruiter viewd your profile.')
                 ->action('View', url(base_path().'/employee/notifications'));
     }
@@ -46,10 +46,11 @@ class RecruiterViewProfile extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'data' => 'Recruiter '.$this->recruiter.' just viewed your profile',
+            'data' => 'Recruiter '.$this->recruiter->company_name.' just viewed your profile',
             'employee' => $this->employee,
-            'recruiter' => $this->recruiter,
-            'link'=> base_path().'/employee/notifications',
+            'recruiter' => $this->recruiter->company_name,
+            'recruiter_id' => $this->recruiter->id,
+            'link'=> '/employee/notifications',
         ];
     }
 

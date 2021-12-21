@@ -126,7 +126,7 @@
                                         @forelse ($jobs->applied as $item)
                                         <tr>
                                             <th scope="row"> {{ $ctr }}</th>
-                                            <td> <a href="javascript:void(0);">{{ $item->employee->first_name.' '. $item->employee->last_name }} </a></td>
+                                            <td> <a href="{{ url('recruiter/candidate/view/'.$item->employee->id)}}">{{ $item->employee->first_name.' '. $item->employee->last_name }} </a></td>
                                             <td>{{ $item->created_at }}</td>
                                             @php $ctr++; @endphp
                                         </tr>

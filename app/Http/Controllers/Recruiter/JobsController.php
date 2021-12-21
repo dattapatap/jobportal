@@ -138,11 +138,11 @@ class JobsController extends Controller
                         return back()->with('error', 'Job not posted, please try again!')->withInput();
                     }
                 }else{
-                    $msg  = '<a href="'. url('recruiter/packages') . '" style="color:#000206;"> click here  </a>';
+                    $msg  = '<a href="'. url('recruiter/packages') . '" style="color:#000206;" target="_new"> click here  </a>';
                     return back()->with('error', 'Dont have enough points, select new package'.$msg )->withInput();
                 }
             }else{
-               $msg  = '<a href="'. url('recruiter/packages') . '" style="color:#000206;" > click here  </a>';
+               $msg  = '<a href="'. url('recruiter/packages') . '" style="color:#000206;" target="_new" > click here  </a>';
                return back()->with('error', 'Dont have enough points, select new package'.$msg )->withInput();
             }
 

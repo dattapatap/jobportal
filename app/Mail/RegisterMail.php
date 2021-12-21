@@ -33,7 +33,7 @@ class RegisterMail extends Mailable
         $address = 'janeexampexample@example.com';
         $subject = 'This is a demo!';
         $name = 'Jane Doe';
-        
+
         return $this->view('emails.test')
                     ->from($address, $name)
                     ->cc($address, $name)
@@ -41,7 +41,6 @@ class RegisterMail extends Mailable
                     ->replyTo($address, $name)
                     ->subject($subject)
                     ->with([ 'message' => $this->data['message'] ]);
-    
-        // return $this->view('view.name');
+
     }
 }

@@ -6,8 +6,11 @@ use App\Models\Employee;
 use App\Models\Employee\EmpJobApplied;
 use App\Models\Employee\EmpJobSaved;
 use App\Models\Jobs;
+use App\Models\User;
+use App\Notifications\JobApplied;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EmpJobAppliedController extends Controller
 {
@@ -38,12 +41,11 @@ class EmpJobAppliedController extends Controller
                 ->with('test')
                 ->first();
 
-                // dd($employee);
                 if(!$employee->careers || $employee->userskills->isEmpty() || $employee->educations->isEmpty()|| $employee->experience->isEmpty()){
                     $request->session()->flash('error',"Please update your profile before apply");
                     return redirect()->back();
                 }else{
-                    
+
                     $jobid = $id;
                     $appJob = new EmpJobApplied();
                     $appJob->emp_id = $employee->id;
@@ -54,6 +56,13 @@ class EmpJobAppliedController extends Controller
                             if($savedJob)
                                 $savedJob->delete();
                     }
+
+                    $jobRec = DB::table('jobs')->where('id', $jobid)->first();
+                    $recruiter = DB::table('recruiters')->where('id', $jobRec->rec_id)->first();
+                    $user = User::find($recruiter->user_id);
+                    $user->notify(new JobApplied( $employee , $jobid));
+
+
                     $request->session()->flash('success',"Applied Successfully");
                     return redirect()->back();
                 }

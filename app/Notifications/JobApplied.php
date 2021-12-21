@@ -7,22 +7,15 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ResumeDownload extends Notification
+class JobApplied extends Notification
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-
-    public $user, $recruiter, $employee;
-
-    public function __construct( $recruiter, $employee )
+    public $employee, $jobid;
+    public function __construct($employee, $jobid)
     {
-        $this->recruiter = $recruiter;
         $this->employee = $employee;
+        $this->jobid = $jobid;
     }
 
     /**
@@ -50,31 +43,17 @@ class ResumeDownload extends Notification
                 ->subject($subject)
                 ->greeting($greeting)
                 ->salutation('Yours Faithfully')
-                ->line('Recruiter downloaded your Resume.')
-                ->action('View', url(base_path().'/employee/notifications'));
+                ->line($this->employee->first_name)
+                ->line('Candidate applied for job')
+                ->action('View', url(base_path().'/recruiter/notifications'));
     }
 
-    public function toDatabase($notifiable)
-    {
-        return [
-            'data' => 'Recruiter downloaded your resume',
-            'employee' => $this->employee,
-            'recruiter' => $this->recruiter->company_name,
-            'recruiter_id' => $this->recruiter->id,
-            'link'=> '/employee/notifications',
-        ];
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
     public function toArray($notifiable)
     {
         return [
-            //
+            'data' => 'Candidate applied for job',
+            'employee' => $this->employee->first_name,
+            'link'=> '/recruiter/postedjobs/view/'. $this->jobid.'/',
         ];
     }
 }

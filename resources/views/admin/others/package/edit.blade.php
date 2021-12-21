@@ -69,19 +69,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
-
-                                <div class="col-md-12">
-                                    <div class="form-group pb-3">
-                                        <label class="form-label">Total Adds(Posts)</label>
-                                        <input type="number" class="form-control" value="{{ old('adds',$package->maxads) }}" name="adds"  placeholder="Total Adds">
-                                        @error('adds')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="card-footer text-right">

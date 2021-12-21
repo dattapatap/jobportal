@@ -27,14 +27,12 @@ class PackageController extends Controller
             'name' => 'required|max:50|string|unique:packages,name,NULL,id,deleted_at,NULL',
             'amount' => 'required',
             'validity' => 'required',
-            'adds' => 'required'
         ]);
         try{
             $package = new Package();
             $package->name = ucfirst($request->post('name'));
             $package->amount = $request->post('amount');
             $package->maxdays = $request->post('validity');
-            $package->maxads = $request->post('adds');
             $package->status = "Active";
             $package->save();
             return redirect()->route('admin.packages.index')->with('success', 'Package Added successfully');
@@ -76,13 +74,11 @@ class PackageController extends Controller
             'name' => 'required|max:50|string|unique:packages,name,'.$request->post('id').',id,deleted_at,NULL',
             'amount' => 'required|numeric',
             'validity' => 'required|numeric',
-            'adds' => 'required|numeric'
         ]);
 
         $package->name = ucfirst($request->post('name'));
         $package->amount = $request->post('amount');
         $package->maxdays = $request->post('validity');
-        $package->maxads = $request->post('adds');
         $package->save();
         return redirect()->route('admin.packages.index')->with('success', 'Package updated successfully');
     }

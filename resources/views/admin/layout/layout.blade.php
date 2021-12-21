@@ -75,39 +75,55 @@
                                         @endif
                                     @endif
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                    <a href="#" class="dropdown-item text-center">You have {{$unreadNotf}} notification</a>
-                                    <div class="dropdown-divider"></div>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="overflow-x: hidden;width:400px;">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <a href="#" class="dropdown-item text-center">You have {{$unreadNotf}} notification</a>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
 
-                                    @foreach ($notifications as $item)
-                                        @if ( $item->read_at==null)
-                                            <a href="{{ url('admin/notifications') }}" class="dropdown-item d-flex pb-3" data-id="{{ $item->id }}" style="background-color:#164bce26">
-                                                <div class="notifyimg">
-                                                    <i class="fa fa-bell-o"></i>
+                                        @foreach ($notifications as $item)
+                                            @if ( $item->read_at==null)
+                                            <div class="row p-2" style="background: #2b4edc38;">
+                                                        <div class="col-md-2">
+                                                            <div class="notifyimg">
+                                                                <i class="fa fa-bell-o"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <a href="{{ url('admin/notifications') }}"
+                                                                data-id="{{ $item->id }}">
+                                                               <strong style="color: #343a40;">{{ $item->data['data']}}</strong>
+                                                                <div class="small text-muted"> {{ $item->created_at->diffForHumans() }}  </div>
+                                                            </a>
+                                                        </div>
+                                            </div>
+                                            @else
+                                                <div class="row p-2">
+                                                    <div class="col-md-2">
+                                                        <div class="notifyimg">
+                                                            <i class="fa fa-bell-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <a href="{{ url('admin/notifications') }}"
+                                                            data-id="{{ $item->id }}">
+                                                        <strong style="color: #343a40;">{{ $item->data['data']}}</strong>
+                                                            <div class="small text-muted"> {{ $item->created_at->diffForHumans() }}  </div>
+                                                        </a>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <strong>{{ $item->data['data']}}</strong>
-                                                    <div class="small text-muted"> {{ $item->created_at }}  </div>
-                                                </div>
-                                            </a>
-                                        @else
-                                            <a href="{{ url('admin/notifications') }}" class="dropdown-item d-flex pb-3">
-                                                <div class="notifyimg">
-                                                    <i class="fa fa-bell-o"></i>
-                                                </div>
-                                                <div>
-                                                    <strong>{{$item->data['data']}}</strong>
-                                                    <div class="small text-muted"> {{ $item->created_at }}  </div>
-                                                </div>
-                                            </a>
-                                        @endif
-                                    @endforeach
-                                    <div class="dropdown-divider"></div>
-                                    <a  href="{{ url('admin/notifications') }}" class="dropdown-item text-center">See all Notification</a>
+                                            @endif
+
+                                        @endforeach
+
+                                        <div class="dropdown-divider"></div>
+                                        <div class="row">
+                                            <a  href="{{ url('admin/notifications') }}" class="dropdown-item text-center">See all Notification</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-
                             <div class="dropdown ">
                                 <a href="#" class="nav-link pr-0 leading-none user-img" data-toggle="dropdown">
                                     @if(Auth::user()->avatar)

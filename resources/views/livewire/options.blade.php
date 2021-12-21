@@ -5,7 +5,7 @@
             <a href="javascript:void(0)" class="btn btn-info btn-sm float-right" wire:click="increment"><i class="fa fa-plus"></i> Add More</a>
         </div>
     </div>
-    <div class="col-md-12 row">
+    <div class="col-md-12 row mt-2">
         <div class="col-md-8">
             <div class="form-group">
                 <input type="text" class="form-control" name="opt[]" placeholder="{{ 'option' }}">
@@ -19,7 +19,7 @@
         </div>
    </div>
    @foreach($options  as $opts)
-        <div class="col-md-12 row" wire:key="{{ $opts}}">
+        <div class="col-md-12 row mt-2" wire:key="{{ $opts}}">
             <div class="col-md-8">
                 <div class="form-group">
                     <input type="text" class="form-control" name="opt[]"  placeholder="{{ 'option' }}">

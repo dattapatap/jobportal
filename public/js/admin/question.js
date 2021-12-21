@@ -1,5 +1,4 @@
-
-$(document).ready(function(){
+$(document).ready(function() {
     $('#question_category').select2();
 
     $.ajaxSetup({
@@ -19,28 +18,32 @@ $(document).ready(function(){
         }
     });
 
-    $('#questions').submit(function(e){
+    $('#questions').submit(function(e) {
         e.preventDefault();
+
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
         var category = $('#question_category').val();
         var question_type = $('#question_type').val();
-        var questions  = $('#question').val();
-        var id  = $('#question_id').val();
+        var questions = $('#question').val();
+        var id = $('#question_id').val();
 
         var arrayOpt = [];
-        $('input[name^="opt"]').each(function(){
+        $('input[name^="opt"]').each(function() {
             arrayOpt.push($(this).val());
         })
 
         var opt_Ids = [];
-        $('input[name^="optionsId"]').each(function(){
+        $('input[name^="optionsId"]').each(function() {
             opt_Ids.push($(this).val());
         })
         var arrayScores = [];
-        $('input[name^="marks"]').each(function(){
-            if($(this).prop("checked")){
+        $('input[name^="marks"]').each(function() {
+            if ($(this).prop("checked")) {
                 isCheked = 1;
-            }else{
-                isCheked= 0;
+            } else {
+                isCheked = 0;
             }
             arrayScores.push(isCheked);
         })
@@ -50,49 +53,52 @@ $(document).ready(function(){
         $.ajax({
             url: "/admin/questions/create/new",
             type: "POST",
-            data: {q_id:id, cat:category, quest:question_type, question:questions, option:options , ans:nasweres, opts:options_ids } ,
+            data: { q_id: id, cat: category, quest: question_type, question: questions, option: options, ans: nasweres, opts: options_ids },
             dataType: "json",
             success: function(data) {
-              console.log(data);
-              if(data.code == 200) {
+                console.log(data);
+                if (data.code == 200) {
                     location.reload();
-                }else{
-                    if(data.code ==202){
+                } else {
+                    if (data.code == 202) {
                         toastr.warning(data.message);
-                    }else{
+                    } else {
                         toastr.warning(data.message);
                     }
                 }
             },
-            error:function(errors){
+            error: function(errors) {
                 console.log(errors.responseText);
             }
         });
     });
 
-    $('#questionsupdate').submit(function(e){
+    $('#questionsupdate').submit(function(e) {
         e.preventDefault();
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
         var category = $('#question_category').val();
         var question_type = $('#question_type').val();
-        var questions  = $('#question').val();
-        var id  = $('#question_id').val();
+        var questions = $('#question').val();
+        var id = $('#question_id').val();
 
         var arrayOpt = [];
-        $('input[name^="opt"]').each(function(){
+        $('input[name^="opt"]').each(function() {
             console.log($(this).val());
             arrayOpt.push($(this).val());
         })
         var opt_Ids = [];
-        $('input[name^="uniqueId"]').each(function(){
+        $('input[name^="uniqueId"]').each(function() {
             opt_Ids.push($(this).val());
         })
 
         var arrayScores = [];
-        $('input[name^="marks"]').each(function(){
-            if($(this).prop("checked")){
+        $('input[name^="marks"]').each(function() {
+            if ($(this).prop("checked")) {
                 isCheked = 1;
-            }else{
-                isCheked= 0;
+            } else {
+                isCheked = 0;
             }
             arrayScores.push(isCheked);
         })
@@ -103,21 +109,21 @@ $(document).ready(function(){
         $.ajax({
             url: "/admin/questions/update",
             type: "POST",
-            data: {q_id:id, cat:category, quest:question_type, question:questions, option:options , ans:nasweres, opts:options_ids } ,
+            data: { q_id: id, cat: category, quest: question_type, question: questions, option: options, ans: nasweres, opts: options_ids },
             dataType: "json",
             success: function(data) {
-              console.log(data);
-              if(data.code == 200) {
+                console.log(data);
+                if (data.code == 200) {
                     location.reload();
-                }else{
-                    if(data.code ==202){
+                } else {
+                    if (data.code == 202) {
                         toastr.warning(data.message);
-                    }else{
+                    } else {
                         toastr.warning(data.message);
                     }
                 }
             },
-            error:function(errors){
+            error: function(errors) {
                 console.log(errors.responseText);
             }
         });

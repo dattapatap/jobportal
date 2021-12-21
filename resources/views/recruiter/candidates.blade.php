@@ -223,7 +223,7 @@
                                                                 @endforeach
                                                                 <div class="row mt-3">
                                                                     <div class="col-md-4">
-                                                                        <a href="candidate/view/{{ $item->id }}"
+                                                                        <a href="{{ url('recruiter/candidate/view/'.$item->id) }}"
                                                                             class="text-dark">
                                                                             <button class="btn btn-default mt-1 mb-1 float-left">
                                                                                 @php

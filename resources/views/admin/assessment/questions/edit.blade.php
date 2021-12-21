@@ -85,11 +85,12 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <strong>Question</strong>
-                                        <textarea type="textarea" class="form-control" name="question" id="question"  placeholder="Question Detail" rows="2">{{$ques->name }}  </textarea>
+                                        <textarea type="textarea" class="form-control" name="question" id="question"
+                                        placeholder="Question Detail" rows="2">{{$ques->name }}  </textarea>
                                     </div>
+                                    <br>
                                 </div>
                                 @livewire('counteredit' ,['options' => $ques->options ])
-
                                 <input type="hidden" name="question_id" id="question_id"  value="{{$ques->id}}">
                             </div>
                         </div>
@@ -107,5 +108,10 @@
 @endsection
 @section('scripts')
 @livewireScripts
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script type="text/javascript">
+      CKEDITOR.replace('question');
+      CKEDITOR.instances['question'].updateElement();
+</script>
 <script src="{{ asset('js/admin/question.js')}}"></script>
 @endsection

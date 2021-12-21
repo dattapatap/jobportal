@@ -23,10 +23,12 @@ class NotificationController extends Controller
     {
         if($request->post('id')){
             auth()->user()->unreadNotifications->where('id', $request->post('id'))->markAsRead();
-            return response()->json(["success", "Marked as read"]);
+            $tot = auth()->user()->unreadNotifications->count();
+            return response()->json(["success", "Marked as read", 'tot'=> $tot-1 ]);
         }else{
             auth()->user()->unreadNotifications->markAsRead();
-            return response()->json(["success", "Marked as read"]);
+            $tot = auth()->user()->unreadNotifications->count();
+            return response()->json(["success", "Marked as read", 'tot'=> 0]);
         }
     }
 

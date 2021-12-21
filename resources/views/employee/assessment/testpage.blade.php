@@ -34,7 +34,7 @@
                                         <ol class="quest-list" start="{{ session()->get('currQNo')  }}" style="font-size: 15px;font-weight: 400;">
                                             <li>
                                                 <input type="hidden" name="QNO" value="{{ session()->get('currQNo')  }}">
-                                                <span style="margin-bottom:10px;font-size: 15px;font-weight: 500;">{{ html_entity_decode($objQuest->name) }}</span>
+                                                <span style="margin-bottom:10px;font-size: 15px;font-weight: 500;">{!! $objQuest->name !!}</span>
 
                                                 <ol class="alpha-list mt-3" style="list-style:none;" >
                                                    @foreach ($objQuest->options as $item)
@@ -67,11 +67,7 @@
 <script src="{{asset('js/employee/assessment.js')}}" type="text/javascript"></script>
 <script>
         var remTime = {!! Session::get('rem_time') !!};
-
         var currQRemTime  = 20;
         var timerID=startTimers(0.10);
-
-
-
 </script>
 @endsection

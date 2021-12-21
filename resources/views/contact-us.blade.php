@@ -57,6 +57,13 @@
         .breadcrumb-item a {
             color: rgb(255 255 255);
         }
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            margin-top: .25rem;
+            font-size: 87.5%;
+            color: #ff382b;
+        }
 
     </style>
     <section>
@@ -80,7 +87,6 @@
         <div class="container">
             <div class="section-title center-block text-center">
                 <h4>Get In Touch With Us</h4>
-                <h2 style="font-weight: 800">Request a Quote</h2>
             </div>
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
@@ -112,31 +118,61 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 d-block mx-auto">
                             <div class="bg-transparent">
-                                <div class="form">
-                                    <div class="form-group bg-white">
-                                        <label class="form-label text-dark">Full Name</label>
-                                        <input type="text" class="form-control" id="text4" placeholder="Full Name">
+                                @if(Session::has('success'))
+                                    <div class="alert alert-success">
+                                    {{ Session::get('success') }}
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-label text-dark">Email</label>
-                                        <input type="text" class="form-control" id="text5" placeholder="Email">
-                                    </div>
+                                @endif
+                                <form  action="{{ route('enquiry.contact') }}" method="POST">
+                                    @csrf
+                                    <div class="form">
+                                        <div class="form-group bg-white">
+                                            <label class="form-label text-dark">Full Name</label>
+                                            <input type="text" class="form-control"  value="{{ old('name') }}" name="name" placeholder="Full Name">
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label text-dark">Email</label>
+                                            <input type="email" class="form-control" name="email"  value="{{ old('email') }}" placeholder="Email" >
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label class="form-label text-dark">Mobile No</label>
-                                        <input class="form-control" type="number" placeholder="Mobile Number">
+                                        <div class="form-group">
+                                            <label class="form-label text-dark">Mobile No</label>
+                                            <input class="form-control" type="text"  name="mobile"  value="{{ old('mobile') }}" placeholder="Mobile Number">
+                                            @error('mobile')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label text-dark">Message</label>
+                                            <textarea class="form-control" name="message_txt"  cols="30" rows="3" placeholder="Message">
+                                                {{ old('message_txt') }}
+                                            </textarea>
+                                            @error('message')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="mt-5">
+                                            <button type="submit" class="btn btn-lg btn-block btn-primary"
+                                                style="background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);">
+                                                Submit
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-label text-dark">Message</label>
-                                        <textarea class="form-control" name="" id="" cols="30" rows="4" placeholder="Message	"></textarea>
-                                    </div>
-                                    <div class="mt-5">
-                                        <a type="submit" class="btn btn-lg btn-block btn-primary" href="javascript:void(0);"
-                                            style="background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);">
-                                            Submit
-                                        </a>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

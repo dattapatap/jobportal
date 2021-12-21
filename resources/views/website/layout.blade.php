@@ -122,18 +122,25 @@
                         <div class="top-bar-left d-flex">
                             <div class="clearfix">
                                 <ul class="socials">
+
+                                    @php
+                                        $social = DB::table('users_admin')->where('id', 1)->first();
+                                    @endphp
+
                                     <li>
-                                        <a class="social-icon" href="#"><i class="fa fa-facebook"></i></a>
+                                        <a class="social-icon" href="@if($social->facebook) {!! $social->facebook !!}  @else  javascript::void(0);  @endif" ><i class="fa fa-facebook"></i></a>
                                     </li>
                                     <li>
-                                        <a class="social-icon" href="#"><i class="fa fa-twitter"></i></a>
+                                        <a class="social-icon" href="@if($social->twiter) {!! $social->twiter !!}  @else  javascript::void(0);  @endif" ><i class="fa fa-twitter"></i></a>
                                     </li>
                                     <li>
-                                        <a class="social-icon" href="#"><i class="fa fa-linkedin"></i></a>
+                                        <a class="social-icon" href="@if($social->linkedin) {!! $social->linkedin !!}  @else  javascript::void(0);  @endif" ><i class="fa fa-linkedin"></i></a>
                                     </li>
                                     <li>
-                                        <a class="social-icon" href="#"><i class="fa fa-google-plus"></i></a>
+                                        <a class="social-icon" href="@if($social->youtub) {!! $social->youtub !!}  @else  javascript::void(0);  @endif"><i class="fa fa-youtube"></i></a>
                                     </li>
+
+
                                 </ul>
                             </div>
 
@@ -420,10 +427,10 @@
                             <h6>Resources</h6>
                             <hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#">Support</a></li>
-                                <li><a href="#">FAQ</a></li>
-                                <li><a href="#">Terms and Conditions</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="{{ url('about-us')}}">Support</a></li>
+                                <li><a href="{{ url('faq')}}">FAQ</a></li>
+                                <li><a href="{{ url('terms-condition')}}">Terms and Conditions</a></li>
+                                <li><a href="{{ url('privacy-policy')}}">Privacy Policy</a></li>
                             </ul>
                         </div>
                         <div class="col-lg-2 col-md-12">
@@ -440,7 +447,10 @@
                             <h6 class="mb-2">QR code</h6>
                             <hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
                             <div class="input-group w-100">
-                                <img src="https://www.emoderationskills.com/wp-content/uploads/2010/08/QR1.jpg">
+
+                                {!! QrCode::size(150)->generate(Request::url()); !!}
+
+                                {{-- <img src="https://www.emoderationskills.com/wp-content/uploads/2010/08/QR1.jpg"> --}}
                             </div>
 
 
@@ -457,24 +467,20 @@
                         </div>
                         <div class="col-lg-4 col-sm-12 ml-auto mb-2 mt-2 d-none d-lg-block">
                             <ul class="social mb-0">
+
                                 <li>
-                                    <a class="social-icon" href=""><i class="fa fa-facebook"></i></a>
+                                    <a class="social-icon" href="@if($social->facebook) {!! $social->facebook !!}  @else  javascript::void(0);  @endif" target="_blank"><i class="fa fa-facebook"></i></a>
                                 </li>
                                 <li>
-                                    <a class="social-icon" href=""><i class="fa fa-twitter"></i></a>
+                                    <a class="social-icon" href="@if($social->twiter) {!! $social->twiter !!}  @else  javascript::void(0);  @endif" target="_blank"><i class="fa fa-twitter"></i></a>
                                 </li>
                                 <li>
-                                    <a class="social-icon" href=""><i class="fa fa-rss"></i></a>
+                                    <a class="social-icon" href="@if($social->linkedin) {!! $social->linkedin !!}  @else  javascript::void(0);  @endif" target="_blank"><i class="fa fa-linkedin"></i></a>
                                 </li>
                                 <li>
-                                    <a class="social-icon" href=""><i class="fa fa-youtube"></i></a>
+                                    <a class="social-icon" href="@if($social->youtub) {!! $social->youtub !!}  @else  javascript::void(0);  @endif" target="_blank"><i class="fa fa-youtube"></i></a>
                                 </li>
-                                <li>
-                                    <a class="social-icon" href=""><i class="fa fa-linkedin"></i></a>
-                                </li>
-                                <li>
-                                    <a class="social-icon" href=""><i class="fa fa-google-plus"></i></a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>

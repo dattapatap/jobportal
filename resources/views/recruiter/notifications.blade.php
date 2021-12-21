@@ -22,14 +22,42 @@
         </div>
         <div class="row ">
             <div class="col-lg-12">
+                @php
+                        $tot = 0;
+                @endphp
+                @foreach ($notifications as $notif )
+                    @php
+                        if($notif->unread()){
+                            $tot++ ;
+                        }
+                    @endphp
+                    @if($loop->last)
+                        @if($tot > 0)
+                            <div class="col-md-12 p-4">
+                                <a href="#" class="mark-all float-right" id="pl-2">
+                                    Mark all as read
+                                </a>
+                            </div>
+                        @endif
+                    @endif
+                @endforeach
                 @forelse($notification as $notif)
                     <div class="row p-4 m-2 notifications @if($notif->unread()) unread @else  read @endif">
                             <div class="notifyimg">
                                 <i class="fa fa-bell-o"></i>
                             </div>
                             <div class="col-md-9">
-                                <strong>{{ $notif->data['data']}}</strong>
-                                <div class="small text-muted"> {{ $notif->created_at }}  </div>
+                                @if (isset($notif->data['recruiter_id']))
+                                    <a href="recruiter/view/{{ $notif->data['recruiter_id']}}"><strong>{{ $notif->data['data']}}</strong></a>
+                                    <div class="small text-muted"> {{ $notif->created_at }}  </div>
+                                @elseif (isset($notif->data['employee_id']))
+                                    <a href="employee/view/{{ $notif->data['employee_id']}} "><strong>{{ $notif->data['data']}}</strong></a>
+                                    <div class="small text-muted"> {{ $notif->created_at }}  </div>
+                                @else
+                                    <a href="{{ $notif->data['link']}}"><strong>{{ $notif->data['data']}}</strong></a>
+                                    <div class="small text-muted"> {{ $notif->created_at }}  </div>
+
+                                @endif
                             </div>
                             <div class="col-md-2 mt-2 text-white">
                                 @if($notif->unread())
@@ -39,13 +67,6 @@
                                 @endif
                             </div>
                     </div>
-                    @if($loop->last)
-                        <div class="col-md-12">
-                        <a href="#" class="mark-all" id="pl-2">
-                            Mark all as read
-                        </a>
-                        </div>
-                    @endif
                 @empty
                     There are no new notifications
                 @endforelse
@@ -69,7 +90,12 @@
                                     console.log('Succes!',response);
                                     div.parent('div').parent('div').removeClass('unread');
                                     div.parent('div').parent('div').addClass("read");
+                                    if(response.tot <= 0 ){
+                                        $('.mark-all').parent('div').remove();
+                                        window.location.reload();
+                                    }
                                     div.parent('div').remove();
+
                                 },
                                 error : function(err) {
                                     console.log('Error!', err.responseText);
@@ -86,6 +112,9 @@
                                     console.log(response);
                                     $("div.unread").removeClass("unread");
                                     $("div.notifications").addClass("read");
+                                    if(response.tot <= 0 ){
+                                        window.location.reload();
+                                    }
                                 },
                                 error : function(err) {
                                     console.log('Error!', err.responseText);

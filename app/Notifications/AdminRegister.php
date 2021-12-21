@@ -19,9 +19,10 @@ class AdminRegister extends Notification
      * @return void
      */
     public $user;
-    public function __construct($user)
+    public function __construct( $recruiter, $user)
     {
         $this->user = $user;
+        $this->recruiter =  $recruiter;
     }
     /**
      * Get the notification's delivery channels.
@@ -33,31 +34,24 @@ class AdminRegister extends Notification
     {
         return ['database'];
     }
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
 
     public function toDatabase($notifiable)
     {
         if($this->user->role_id==2){
                 return ([
-                    'data' => "New Recruiter has been registered - ".$this->user->name,
+                    'data' => "New Recruiter has been registered",
+                    'recruiter_id' => $this->recruiter->id,
+                    'link'=> '/admin/notifications',
                 ]);
         }else{
             return ([
-                'data' => "New Employee has been registered - ".$this->user->name,
+                'data' => "New Employee has been registered",
+                'employee_id' => $this->recruiter->id,
+                'link'=> '/admin/notifications',
             ]);
         }
     }
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
+
     public function toArray($notifiable)
     {
         return [

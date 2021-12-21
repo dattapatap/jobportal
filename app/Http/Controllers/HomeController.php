@@ -9,8 +9,11 @@ use App\Models\Employee\EmpJobSaved;
 use App\Models\Industries;
 use App\Models\JobPositions;
 use App\Models\Jobs;
+use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Input\Input;
 
 class HomeController extends Controller
@@ -193,5 +196,36 @@ class HomeController extends Controller
                 return view('jobs', compact('jobs', 'industry', 'locations'));
     }
 
+    public function contact_form(Request $request){
+        $rules = array(
+            'name' => 'required',
+            'email' => 'required|email',
+            'mobile' => 'required|digits:10',
+            'message_txt' => 'required'
+        );
+
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();;
+        }else{
+            $user = DB::table('users')->where('role_id', 1)->first();
+
+            Mail::send('email.contact_email',
+                    array(
+                        'name' => $request->get('name'),
+                        'email' => $request->get('email'),
+                        'phone_number' => $request->get('mobile'),
+                        'user_message' => $request->get('message_txt'),
+                    ), function($message) use ($user, $request)
+                    {
+                        $message->from($request->email);
+                        $message->to($user->email);
+                        $message->subject("Enquiry from India Pharma Job contact page");
+                    }
+            );
+            return back()->with('success', 'Thank you for contact us! we will touch soon');
+        }
+    }
 
 }

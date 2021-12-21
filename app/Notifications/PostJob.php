@@ -39,15 +39,15 @@ class PostJob extends Notification
                 ->salutation('Yours Faithfully')
                 ->line($this->recruiter)
                 ->line('You have posted new job successfully')
-                ->action('View', url(base_path().'/employee/notifications'));
+                ->action('View', url(base_path().'/recruiter/notifications'));
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'data' => $this->recruiter.', you have posted new job successfully',
+            'data' => 'You have posted new job successfully',
             'recruiter' => $this->recruiter,
-            'link'=> base_path().'/employee/notifications',
+            'link'=> '/recruiter/postedjobs',
         ];
     }
 

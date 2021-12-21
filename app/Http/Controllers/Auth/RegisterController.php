@@ -103,9 +103,9 @@ class RegisterController extends Controller
             ]);
 
             $user->notify(new UserRegistration($user));
-           
+
             $admin = User::find(1);
-            $admin->notify(new AdminRegister($user));
+            $admin->notify(new AdminRegister($employee, $user));
 
             DB::commit();
 
@@ -144,15 +144,15 @@ class RegisterController extends Controller
                         'mobile' => $request->mobile,
                         'password' => Hash::make($request->password),
                     ]);
-            $recruiter = Recruiter::create([
-                            'company_name' => $request->name,
-                            'user_id' => $user->id
-                         ]);
+                    $recruiter = Recruiter::create([
+                        'company_name' => $request->name,
+                        'user_id' => $user->id
+                    ]);
 
+                    $user->notify(new UserRegistration($user));
 
-                         $user->notify(new UserRegistration($user));
-                         $admin = User::find(1);
-                         $admin->notify(new AdminRegister($user));
+                    $admin = User::find(1);
+                    $admin->notify(new AdminRegister($recruiter, $user));
 
             DB::commit();
             Auth::login($user);
